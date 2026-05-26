@@ -1,0 +1,1049 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BRIX 2026 — تَقرير</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     BRIX 2026 — Editorial Dark with Acid Accent
+     مَرجع: Arc, Linear, Vercel Ship, Liveblocks 2024
+  ============================================================ */
+  :root {
+    --bg:       #0B0C0E;
+    --bg-2:     #131418;
+    --surface:  #181A1F;
+    --surface-2:#1F2126;
+    --ink:      #ECEAE3;
+    --ink-2:    #A8A6A0;
+    --ink-3:    #6E6C66;
+    --line:     rgba(236, 234, 227, 0.07);
+    --line-2:   rgba(236, 234, 227, 0.12);
+    --accent:   #D4FF6B;       /* acid lime, very 2026 */
+    --accent-2: #FF6B3D;       /* coral, secondary */
+    --crit:     #FF4D5E;
+    --warm:     #E6C57B;
+    --glow:     0 0 80px rgba(212, 255, 107, 0.15);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { background: var(--bg); }
+  body {
+    color: var(--ink); margin: 0; font-size: 16px; line-height: 1.7;
+    font-family: "Noto Naskh Arabic", "Inter", -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212, 255, 107, 0.06), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 100%, rgba(255, 107, 61, 0.04), transparent 60%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  .serif { font-family: "Instrument Serif", "Noto Naskh Arabic", serif; font-weight: 400; }
+  .mono  { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 80px 32px 120px; }
+
+  /* ============= HERO ============= */
+  .hero { margin-bottom: 96px; }
+  .top-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 24px; border-bottom: 1px solid var(--line);
+    margin-bottom: 56px; font-size: 12px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+  .top-meta .brand {
+    display: flex; align-items: center; gap: 12px;
+    color: var(--ink); font-weight: 600;
+  }
+  .top-meta .brand .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 14px var(--accent); animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 50% { opacity: 0.4; transform: scale(0.85); } }
+
+  h1.title {
+    font-family: "Instrument Serif", "Noto Naskh Arabic", serif;
+    font-size: clamp(56px, 9vw, 120px); font-weight: 400;
+    line-height: 0.95; letter-spacing: -0.04em;
+    margin: 0 0 28px; color: var(--ink);
+  }
+  h1.title em {
+    font-style: italic; color: var(--accent);
+    text-shadow: 0 0 60px rgba(212, 255, 107, 0.4);
+  }
+  .hero .lede {
+    font-size: 20px; line-height: 1.55; color: var(--ink-2);
+    max-width: 720px; margin: 0 0 56px;
+  }
+
+  /* ============= BENTO STATS ============= */
+  .bento {
+    display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 16px;
+    margin-bottom: 96px;
+  }
+  .tile {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 20px; padding: 32px; position: relative; overflow: hidden;
+    transition: border-color 300ms, transform 300ms;
+  }
+  .tile:hover { border-color: var(--line-2); transform: translateY(-2px); }
+  .tile .label {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-3); margin-bottom: 24px;
+  }
+  .tile .value {
+    font-family: "Instrument Serif", serif;
+    font-size: 96px; line-height: 1; font-weight: 400;
+    letter-spacing: -0.03em; color: var(--ink);
+  }
+  .tile.accent .value { color: var(--accent); }
+  .tile.crit  .value { color: var(--crit); }
+  .tile.warm  .value { color: var(--warm); }
+  .tile .sub  { color: var(--ink-2); font-size: 14px; margin-top: 16px; }
+  .tile .deco {
+    position: absolute; inset: -1px -1px auto auto; width: 120px; height: 120px;
+    background: radial-gradient(circle, var(--glow-c, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .tile.accent { --glow-c: rgba(212,255,107,0.12); }
+  .tile.accent .deco { background: radial-gradient(circle, rgba(212,255,107,0.12), transparent 70%); }
+  .tile.warm   .deco { background: radial-gradient(circle, rgba(230,197,123,0.10), transparent 70%); }
+  .tile.crit   .deco { background: radial-gradient(circle, rgba(255,77,94,0.08), transparent 70%); }
+
+  /* ============= SECTION ============= */
+  section { margin-bottom: 96px; }
+  .sec-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px; color: var(--ink-3); letter-spacing: 0.16em;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .sec-title {
+    font-family: "Instrument Serif", serif;
+    font-size: 56px; font-weight: 400; line-height: 1; letter-spacing: -0.025em;
+    margin: 0 0 8px; color: var(--ink);
+  }
+  .sec-title em { font-style: italic; color: var(--accent); }
+  .sec-meta {
+    color: var(--ink-3); font-size: 14px; margin-bottom: 48px;
+    padding-bottom: 24px; border-bottom: 1px solid var(--line);
+  }
+
+  /* ============= ITEMS ============= */
+  .item {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 16px; margin-bottom: 12px; overflow: hidden;
+    transition: border-color 250ms, background 250ms;
+  }
+  .item:hover { border-color: var(--line-2); }
+  .item[open] {
+    background: var(--surface-2);
+    border-color: var(--line-2);
+  }
+  .item.crit[open] {
+    border-color: rgba(255,77,94,0.30);
+    box-shadow: 0 0 60px rgba(255,77,94,0.06);
+  }
+  .item summary {
+    list-style: none; cursor: pointer; user-select: none;
+    padding: 24px 28px; display: flex; align-items: center; gap: 16px;
+  }
+  .item summary::-webkit-details-marker { display: none; }
+  .item .idx {
+    font-family: "JetBrains Mono", monospace; font-size: 11px;
+    color: var(--ink-3); letter-spacing: 0.1em; min-width: 32px;
+  }
+  .item summary .t {
+    flex: 1; font-weight: 500; font-size: 17px; line-height: 1.5;
+    color: var(--ink);
+  }
+  .item summary::after {
+    content: "+"; color: var(--ink-3); font-size: 22px; font-weight: 200;
+    transition: transform 300ms;
+  }
+  .item[open] summary::after { transform: rotate(45deg); color: var(--accent); }
+
+  .badge, .vbadge {
+    display: inline-flex; align-items: center;
+    padding: 4px 12px; border-radius: 999px;
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; flex-shrink: 0;
+  }
+  .badge.crit { background: rgba(255,77,94,0.12);  color: var(--crit); border: 1px solid rgba(255,77,94,0.20); }
+  .badge.med  { background: rgba(230,197,123,0.10); color: var(--warm); border: 1px solid rgba(230,197,123,0.16); }
+  .badge.low  { background: rgba(212,255,107,0.08); color: var(--accent); border: 1px solid rgba(212,255,107,0.16); }
+  .vbadge.ok  { background: rgba(212,255,107,0.08); color: var(--accent); border: 1px solid rgba(212,255,107,0.16); }
+  .vbadge.mid { background: rgba(230,197,123,0.10); color: var(--warm); border: 1px solid rgba(230,197,123,0.16); }
+  .vbadge.bad { background: rgba(255,77,94,0.10);  color: var(--crit); border: 1px solid rgba(255,77,94,0.16); }
+
+  .body { padding: 0 28px 28px; padding-right: 76px; }
+  .body .row {
+    display: grid; grid-template-columns: 88px 1fr; gap: 24px;
+    padding: 16px 0; align-items: baseline;
+  }
+  .body .row + .row { border-top: 1px solid var(--line); }
+  .body .k {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; font-weight: 500; color: var(--ink-3);
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .body .v { font-size: 15px; color: var(--ink); line-height: 1.85; }
+
+  /* ============= PALETTE ============= */
+  .palette {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
+    border-radius: 20px; overflow: hidden; margin: 32px 0;
+    border: 1px solid var(--line);
+  }
+  .swatch {
+    aspect-ratio: 1; position: relative; padding: 24px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: transform 300ms;
+  }
+  .swatch:hover { transform: scale(1.04); z-index: 2; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+  .swatch .nm { font-family: "Instrument Serif", serif; font-size: 18px; line-height: 1.1; }
+  .swatch .hex {
+    font-family: "JetBrains Mono", monospace; font-size: 11px; opacity: 0.7;
+    direction: ltr;
+  }
+
+  /* ============= EXTRA DESIGN OBSERVATIONS ============= */
+  .obs-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+  }
+  .obs {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 16px; padding: 24px 28px;
+    transition: border-color 250ms, background 250ms;
+  }
+  .obs:hover { border-color: var(--line-2); background: var(--surface-2); }
+  .obs .head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .obs .n {
+    font-family: "Instrument Serif", serif; font-size: 28px;
+    color: var(--accent); line-height: 1;
+  }
+  .obs .ttl { font-weight: 600; font-size: 15px; flex: 1; color: var(--ink); }
+  .obs .desc { color: var(--ink-2); font-size: 14px; line-height: 1.75; margin-top: 8px; }
+  .obs .desc strong { color: var(--ink); font-weight: 500; }
+  .obs.crit .n { color: var(--crit); }
+
+  /* ============= TYPE SPECIMEN ============= */
+  .specimen {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 24px; padding: 56px; margin: 32px 0;
+  }
+  .specimen .display {
+    font-family: "Instrument Serif", serif;
+    font-size: 88px; line-height: 0.95; letter-spacing: -0.03em;
+    margin: 0 0 32px; color: var(--ink);
+  }
+  .specimen .display em { font-style: italic; color: var(--accent); }
+  .specimen .row { padding: 16px 0; border-top: 1px solid var(--line); }
+  .specimen .row:last-child { border-bottom: 1px solid var(--line); }
+  .specimen .small { font-size: 14px; color: var(--ink-2); }
+  .price-spec {
+    font-family: "Instrument Serif", serif; font-size: 72px;
+    color: var(--accent); letter-spacing: -0.03em; direction: ltr;
+  }
+  .price-spec span { font-size: 24px; color: var(--ink-2); margin-right: 12px; }
+
+  footer {
+    text-align: center; padding-top: 48px; margin-top: 80px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-3); font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ============= MOBILE ============= */
+  @media (max-width: 800px) {
+    .wrap { padding: 48px 20px 80px; }
+    h1.title { font-size: clamp(40px, 12vw, 64px); }
+    .sec-title { font-size: 40px; }
+    .specimen { padding: 32px; }
+    .specimen .display { font-size: 56px; }
+    .bento { grid-template-columns: 1fr; }
+    .palette { grid-template-columns: repeat(2, 1fr); }
+    .obs-grid { grid-template-columns: 1fr; }
+    .tile .value { font-size: 72px; }
+    .body { padding: 0 24px 24px; padding-right: 24px; }
+    .body .row { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============= HERO ============= -->
+  <div class="hero">
+    <div class="top-meta">
+      <div class="brand"><span class="dot"></span> BRIX <span style="color:var(--ink-3); margin-right: 8px;">/ تَجربة</span></div>
+      <div>الجولة الثانية · ٢٠٢٦/٠٥/٢٦</div>
+    </div>
+
+    <h1 class="title">
+      تَصميم<br>
+      <em>يَنبَغي</em> أن يُلامِس<br>
+      المستخدم.
+    </h1>
+    <p class="lede">٥ وكلاء فاحِصين، ٢٧ ملاحظة مَعكوسة على الكود، ٦ مَسارات لَون، ٢٠ ملاحظة تَصميميّة عَميقة. هذا تَقرير لا يَكتفي بقَول «المشكلة موجودة» — بل يَفتح المَلفّ، يُؤَكِّد أو يَنفي، ويُحَدِّد ما المَطلوب فعله.</p>
+  </div>
+
+  <!-- ============= BENTO STATS ============= -->
+  <div class="bento">
+    <div class="tile accent">
+      <div class="deco"></div>
+      <div class="label">إجمالي الملاحظات</div>
+      <div class="value">27</div>
+      <div class="sub">مَفحوصة من زاوِيَتَين مُستقلَّتَين</div>
+    </div>
+    <div class="tile crit">
+      <div class="deco"></div>
+      <div class="label">حَرِج</div>
+      <div class="value">6</div>
+      <div class="sub">يَحتاج إصلاحاً عاجِلاً</div>
+    </div>
+    <div class="tile warm">
+      <div class="deco"></div>
+      <div class="label">تَصميميّة</div>
+      <div class="value">20</div>
+      <div class="sub">زَوايا جَديدة كلّيّاً</div>
+    </div>
+  </div>
+
+  <!-- ============= UX SECTIONS ============= -->
+  
+  <section id="search">
+    <div class="sec-num">القسم · 01</div>
+    <h2 class="sec-title">البحث والنتائج</h2>
+    <div class="sec-meta">21 ملاحظة · 6 حَرِجة</div>
+
+    
+    <details class="item crit">
+      <summary>
+        <span class="idx">01</span>
+        <span class="t">لغة الواجهة مختلطة وتُربك المستخدم</span>
+        <span class="vbadge ok">مُؤَكَّدة</span>
+        <span class="badge crit">حَرِج</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">مُؤَكَّدة.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item crit">
+      <summary>
+        <span class="idx">02</span>
+        <span class="t">شاشة الانتظار تَكتب «Loading...» فقط</span>
+        <span class="vbadge mid">حلّ أَفضل</span>
+        <span class="badge crit">حَرِج</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">مُؤَكَّدة لكن الحلّ ضَعيف.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item crit">
+      <summary>
+        <span class="idx">03</span>
+        <span class="t">زَرّ البحث الموحَّد غير موجود</span>
+        <span class="vbadge ok">مُؤَكَّدة</span>
+        <span class="badge crit">حَرِج</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">مُؤَكَّدة.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">04</span>
+        <span class="t">حقل أعمار المسافرين مُربك ومُلتبس</span>
+        <span class="vbadge mid">ناقصة</span>
+        <span class="badge med">مُهمّ</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">ناقصة.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">05</span>
+        <span class="t">خانة شهر العسل بدون سياق</span>
+        <span class="vbadge ok">مُؤَكَّدة</span>
+        <span class="badge med">مُهمّ</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">مُؤَكَّدة.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">06</span>
+        <span class="t">أزرار الليالي تَزدحم على الشاشات الصغيرة</span>
+        <span class="vbadge mid">حلّ أَفضل</span>
+        <span class="badge med">مُهمّ</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">مُؤَكَّدة لكن الحلّ ضَعيف.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item crit">
+      <summary>
+        <span class="idx">07</span>
+        <span class="t">رسائل الخطأ مُختصرة وغير عمليّة</span>
+        <span class="vbadge ok">مُؤَكَّدة</span>
+        <span class="badge crit">حَرِج</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">مُؤَكَّدة.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">08</span>
+        <span class="t">الحدّ الأدنى لمدّة الحجز غير مُعلَن مسبقاً</span>
+        <span class="vbadge ok">مُؤَكَّدة</span>
+        <span class="badge med">مُهمّ</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">مُؤَكَّدة.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">09</span>
+        <span class="t">اختيار المدينة دون منطقة لا يُوضّح الأثر</span>
+        <span class="vbadge mid">حلّ أَفضل</span>
+        <span class="badge low">تَحسين</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">مُؤَكَّدة لكن الحلّ ضَعيف.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">10</span>
+        <span class="t">لا حفظ لآخر بحث</span>
+        <span class="vbadge mid">ناقصة</span>
+        <span class="badge med">مُهمّ</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">ناقصة.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">11</span>
+        <span class="t">شَريط هَيكليّ التحميل لا يُطابق الشكل النهائيّ</span>
+        <span class="vbadge bad">خاطئة</span>
+        <span class="badge low">تَحسين</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">خاطئة.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">12</span>
+        <span class="t">التَباين اللونيّ في النصوص الفرعيّة ضعيف</span>
+        <span class="vbadge ok">مُؤَكَّدة</span>
+        <span class="badge med">مُهمّ</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">مُؤَكَّدة.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">13</span>
+        <span class="t">عدم وجود دعم لِلَوحة المفاتيح في أزرار الليالي والإشغال</span>
+        <span class="vbadge mid">حلّ أَفضل</span>
+        <span class="badge low">تَحسين</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">مُؤَكَّدة لكن الحلّ ضَعيف.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">14</span>
+        <span class="t">غياب التَحقّق المُسبَق على عدد الأطفال مقابل سَعة الغرفة</span>
+        <span class="vbadge mid">ناقصة</span>
+        <span class="badge low">تَحسين</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">ناقصة.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item crit">
+      <summary>
+        <span class="idx">15</span>
+        <span class="t">زرّ البحث لا يُعطّل عند نَقص الحقول</span>
+        <span class="vbadge ok">مُؤَكَّدة</span>
+        <span class="badge crit">حَرِج</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">مُؤَكَّدة.</div></div>
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">16</span>
+        <span class="t">نِقاط جَديدة (٥)</span>
+        
+        
+      </summary>
+      <div class="body">
+        
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">17</span>
+        <span class="t">أهداف اللمس على الموبايل تَحت الحدّ المُوصى به في زَرّ زيادة الأَطفال</span>
+        
+        <span class="badge med">مُهمّ</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">جَديد — لمس الموبايل.</div></div>
+        
+        
+        
+        <div class="row"><div class="k">الحلّ</div><div class="v">أَضِف فاصلاً عَموديّاً ١ بكسل بَين الأَزرار، وارفع المساحة القابلة للنقر إلى ٤٨ بكسل على الموبايل لِيتجاوز الحدّ بهامش أمان.</div></div>
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">18</span>
+        <span class="t">تَرتيب التَركيز بالـtab يَقفز بين البطاقَتَين عَشوائيّاً</span>
+        
+        <span class="badge med">مُهمّ</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">جَديد — ترتيب التَركيز.</div></div>
+        
+        
+        
+        <div class="row"><div class="k">الحلّ</div><div class="v">اِجعل التَركيز يَنتهي من البطاقة الأُولى كامِلةً قبل القفز للثانية، إمّا بـ`tabIndex` صَريح، أو بفَصل بَصَريّ أعمق (تَبويبات تُخفي البطاقة الأخرى عن DOM)، وهذا يَدعم النقطة الثالثة في التَقرير الأصليّ.</div></div>
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">19</span>
+        <span class="t">حالة فُروق التَوقيت بَين جِهاز المُستخدم والخادم</span>
+        
+        <span class="badge med">مُهمّ</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">جَديد — فُروق زمنيّة.</div></div>
+        
+        
+        
+        <div class="row"><div class="k">الحلّ</div><div class="v">اِحسب التواريخ بِناءً على وقت الخادم (نِداء صَغير يُعيد وقت الخادم عند تَحميل الصَفحة)، أو حَدّد المنطقة الزَمنيّة صَراحةً (مَنطقة الفندق نفسه، لأنّ الحجز يَقع هناك).</div></div>
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">20</span>
+        <span class="t">الشاشات الكَبيرة جدّاً (٢٠٠٠ بكسل+) تُهدر مساحة هائلة</span>
+        
+        <span class="badge low">تَحسين</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">جَديد — شاشات كَبيرة.</div></div>
+        
+        
+        
+        <div class="row"><div class="k">الحلّ</div><div class="v">اِجعل الحدّ الأَقصى يَسلك تَدرّجاً («١١٠٠ على ١٥٠٠، ١٣٠٠ على ١٩٢٠ بكسل»)، أو أَضِف لوحة جانبيّة («بحوث أخيرة» أو «نَصائح للمُشغّل») تَملأ الفَراغ مع إفادة وَظيفيّة.</div></div>
+      </div>
+    </details>
+    <details class="item crit">
+      <summary>
+        <span class="idx">21</span>
+        <span class="t">التَأثير على فهرسة محرّكات البحث وحَقّ المشاركة بالرابط</span>
+        
+        <span class="badge crit">حَرِج</span>
+      </summary>
+      <div class="body">
+        <div class="row"><div class="k">الحُكم</div><div class="v">جَديد — تَهيئة محرّكات البحث.</div></div>
+        
+        
+        
+        <div class="row"><div class="k">الحلّ</div><div class="v">اِعتمِد عَرضاً من جانب الخادم لِجزء البطاقتَين (الشكل الستاتيكيّ)، وأَضِف `metadata` صَفحة عربيّة، واحفظ نَتائج البحث في معاملات الرابط أو في قاعدة البيانات بِمُعرّف قابل للمشاركة، بدل `sessionStorage` فقط.</div></div>
+      </div>
+    </details>
+  </section>
+  <section id="wizard">
+    <div class="sec-num">القسم · 02</div>
+    <h2 class="sec-title">مَعالج العقود</h2>
+    <div class="sec-meta">3 ملاحظة · 0 حَرِجة</div>
+
+    
+    <details class="item ">
+      <summary>
+        <span class="idx">01</span>
+        <span class="t">القِسم الأَوّل — أَحكام على الملاحظات الخَمس عَشرة</span>
+        
+        
+      </summary>
+      <div class="body">
+        
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">02</span>
+        <span class="t">القِسم الثاني — خَمس ملاحظات جَديدة</span>
+        
+        
+      </summary>
+      <div class="body">
+        
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">03</span>
+        <span class="t">مُلَخَّص الأَحكام</span>
+        
+        
+      </summary>
+      <div class="body">
+        
+        
+        
+        
+        
+      </div>
+    </details>
+  </section>
+  <section id="bot">
+    <div class="sec-num">القسم · 03</div>
+    <h2 class="sec-title">البوت والإدارة</h2>
+    <div class="sec-meta">3 ملاحظة · 0 حَرِجة</div>
+
+    
+    <details class="item ">
+      <summary>
+        <span class="idx">01</span>
+        <span class="t">الجزء الأَوّل — أَحكام على ملاحظات البوت (١٥)</span>
+        
+        
+      </summary>
+      <div class="body">
+        
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">02</span>
+        <span class="t">الجزء الثاني — أَحكام على ملاحظات الإدارة (١٥)</span>
+        
+        
+      </summary>
+      <div class="body">
+        
+        
+        
+        
+        
+      </div>
+    </details>
+    <details class="item ">
+      <summary>
+        <span class="idx">03</span>
+        <span class="t">الجزء الثالث — ٥ ملاحظات جَديدة</span>
+        
+        
+      </summary>
+      <div class="body">
+        
+        
+        
+        
+        
+      </div>
+    </details>
+  </section>
+
+  <!-- ============= DESIGN MANIFESTO ============= -->
+  <section>
+    <div class="sec-num">المانيفيستو · ٠٤</div>
+    <h2 class="sec-title">نَمَط <em>٢٠٢٦</em></h2>
+    <div class="sec-meta">داكن دافئ · لَمسة حِمضيّة · خَطّ تَحريريّ · هَندَسة جَريئة</div>
+
+    <div class="specimen">
+      <div class="display">
+        أَخيراً،<br>
+        تَصميم <em>يَنبَض</em>.
+      </div>
+
+      <div class="row">
+        <div class="small" style="margin-bottom:8px; color: var(--ink-3); letter-spacing: 0.12em; text-transform: uppercase; font-size: 11px;">السِعر</div>
+        <div class="price-spec"><span>€</span>320</div>
+      </div>
+
+      <div class="row">
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button style="background:var(--accent);color:var(--bg);border:none;padding:14px 28px;border-radius:999px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:0.02em;">احْجِز الآن</button>
+          <button style="background:transparent;color:var(--ink);border:1px solid var(--line-2);padding:13px 27px;border-radius:999px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;">عَرض التَفاصيل</button>
+          <button style="background:transparent;color:var(--ink-2);border:none;padding:14px 16px;font-family:inherit;font-size:14px;cursor:pointer;text-decoration:underline;text-underline-offset:4px;">إلغاء</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="palette">
+      <div class="swatch" style="background:#0B0C0E; color:#ECEAE3;">
+        <div class="nm">الفَحم</div>
+        <div class="hex">#0B0C0E</div>
+      </div>
+      <div class="swatch" style="background:#181A1F; color:#ECEAE3;">
+        <div class="nm">سَطح</div>
+        <div class="hex">#181A1F</div>
+      </div>
+      <div class="swatch" style="background:#D4FF6B; color:#0B0C0E;">
+        <div class="nm">لايم حِمضيّ</div>
+        <div class="hex">#D4FF6B</div>
+      </div>
+      <div class="swatch" style="background:#FF6B3D; color:#0B0C0E;">
+        <div class="nm">مَرجانيّ</div>
+        <div class="hex">#FF6B3D</div>
+      </div>
+      <div class="swatch" style="background:#E6C57B; color:#0B0C0E;">
+        <div class="nm">شَمبانيا</div>
+        <div class="hex">#E6C57B</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px;">
+      <div class="obs">
+        <div class="head"><div class="n">A</div><div class="ttl">الخطّ التَحريريّ</div></div>
+        <div class="desc">عَناوين بخطّ Instrument Serif بأَحجام ضَخمة (٧٢-١٢٠ بكسل) — تَستحضر مَجَلَّات الأَزياء والفَنادق العالميّة. النصّ بخطّ Inter محكَم، الأَرقام بخطّ JetBrains Mono لِبَصمة تِقنيّة هادئة. كلمة واحدة بمَيلان وبلون حِمضيّ تَخطف الأَنفاس.</div>
+      </div>
+      <div class="obs">
+        <div class="head"><div class="n">B</div><div class="ttl">اللَّون الجَريء</div></div>
+        <div class="desc">قَلب الفِكرة: <strong>اللايم الحِمضيّ #D4FF6B</strong> بدلاً من الذَّهَب الكلاسيكيّ. هذا اللَّون يَقول «أَنا في ٢٠٢٦» بصَوت واضح. المَرجانيّ يَكمُل الحَرارة. الفَحم الدافئ يَستوعب كلّ شيء بصَمت.</div>
+      </div>
+      <div class="obs">
+        <div class="head"><div class="n">C</div><div class="ttl">العُمق والضَوء</div></div>
+        <div class="desc">طَبَقات خَلفيّة بتَدرُّجات شُعاعيّة خَفيفة جدّاً (radial gradients) تَمنح الصَّفحة عُمقاً تَلقائيّاً، كأنّ هناك ضَوءاً يَنبَع من الزَّوايا. لا حُدود حَوضيّة، لا ظِلال صَلبة — كلّ شيء يَنزلق.</div>
+      </div>
+      <div class="obs">
+        <div class="head"><div class="n">D</div><div class="ttl">إيقاع البَنتو</div></div>
+        <div class="desc">صَناديق Bento بِشَبكة غير مُتَناظرة — صُنف ١٫٤ : ١ : ١ — تَكسر الرَتابة. كلّ صُندوق يَحمل رَقماً واحداً ضَخماً مع شَرارة ضَوء في زاويته. لا تَكدُّس، لا حَشو، فقط أَرقام تَتَنفّس.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= EXTRAS ============= -->
+  <section>
+    <div class="sec-num">القسم · ٠٥</div>
+    <h2 class="sec-title">٢٠ ملاحظة <em>أَعمَق</em></h2>
+    <div class="sec-meta">زَوايا تَصميميّة لم تَكن في التقرير الأوّل</div>
+
+    <div class="obs-grid">
+      
+        <div class="obs crit">
+          <div class="head">
+            <div class="n">01</div>
+            <div class="ttl">غياب ردّ فعل ضغطة الزرّ (button press feedback)</div>
+            <span class="badge crit">حَرِج</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> الأزرار الحاليّة تَنتقل من حالة عاديّة إلى hover مباشرةً، ولكن لا يوجد إحساس «الضغط الفعليّ» — لا انكماش، لا غَوْص.</div>
+          <div class="desc">الزرّ الفاخر يَنبَغي أن يَستجيب لِلَمسة الإصبع كأنّه ماديّ. حين يَضغط المُستخدِم زرّ «احفظ العقد»، الزرّ يَنبَغي أن يَنزل قليلاً ثمّ يَرتفع — هذا يُعطي إحساساً بِأنّ النَقرة وَصَلت. حاليّاً النَقرة صامتة بَصَريّاً.</div>
+          <div class="desc"><strong>الاقتراح:</strong> أَضِف للأزرار جميعها حالة `:active` بِـ `transform: scale(0.97)` ومُدّتها ٨٠ ميلّي ثانية مع `cubic-bezier(0.4, 0, 0.2, 1)`. لِلأزرار الكُبرى أضف ظِلّ داخليّ خفيف عند الضَغط ليُحاكي الغَوْص.</div>
+        </div>
+      
+        <div class="obs ">
+          <div class="head">
+            <div class="n">02</div>
+            <div class="ttl">الانتقال بين حالات الزرّ غير مَدروس (loading state transition)</div>
+            <span class="badge med">مُهمّ</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> حين يَضغط المُستخدِم «ابحث»، الزرّ يَتحوَّل إلى spinner مباشرةً بدون انتقال — نصّ يَختفي ثمّ دائرة تَدور تَظهر.</div>
+          <div class="desc">الانتقالات الفَجائيّة بين الحالات تَكسر إحساس الاستمراريّة. الأنظمة الفاخرة (Stripe، Linear) تَستخدم تَلاشي متدرّج (cross-fade) للنصّ مع توسُّع تدريجيّ لِلْـspinner. الإحساس: «الزرّ يَتنفَّس من حالة إلى أُخرى».</div>
+          <div class="desc"><strong>الاقتراح:</strong> أَنشِئ مُكوِّن `Button` يُديرَ الانتقال داخليّاً — النصّ يَتلاشى في ١٢٠ms، الـspinner يَنمو من ٠ إلى الحجم الكامل في ١٨٠ms. عند انتهاء العمليّة، عكس الترتيب.</div>
+        </div>
+      
+        <div class="obs crit">
+          <div class="head">
+            <div class="n">03</div>
+            <div class="ttl">نَبرة النصّ غير مُوحَّدة (brand voice inconsistency)</div>
+            <span class="badge crit">حَرِج</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> بعض الرسائل بِنَبرة رسميّة جافّة («تعذّر تَنفيذ الطَلب»)، وأُخرى وُدّيّة («ما لاقينا فنادق»)، وأُخرى تقنيّة («Validation failed: hotelId required»).</div>
+          <div class="desc">فحَصت رسائل المعالج والبحث ولاحظت ثلاث نَبَرات مُختلفة: الرَسميّ-الإداريّ، الوُدّيّ-المُحادثاتيّ، والتقنيّ-المُترجَم. الفَنادق الفاخرة تَتكلَّم بِنَبرة واحدة: حازمة-لطيفة. «نَأسف، لم نَعثُر على نتائج تُطابق بَحثك».</div>
+          <div class="desc"><strong>الاقتراح:</strong> أَنشِئ ملفّ `lib/copy/voice.ts` يَحوي قاموساً موحَّداً للنبرة: تَحيّات، أخطاء، تأكيدات، تَحذيرات. اِفرض المرور عبر هذا الملفّ لكلّ نصّ مرئيّ.</div>
+        </div>
+      
+        <div class="obs crit">
+          <div class="head">
+            <div class="n">04</div>
+            <div class="ttl">ضِيق التَنفُّس في صفحات النتائج (negative space deficit)</div>
+            <span class="badge crit">حَرِج</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> صَفحة النتائج مُكدَّسة عَمودياً — العَناوين تَلتصق بِالبِطاقات، البطاقات تَلتصق ببعضها، الحَواشي تَلتصق بِالتَواريخ.</div>
+          <div class="desc">الفراغ السَلبيّ هو الذي يَخلق إحساس الفَخامة. حين تَدخل صَفحة Apple أو Aesop، تَجد أنّ ٦٠٪ من الشاشة فارغة بِشَكل مَدروس. صَفحة النتائج لدينا في حدود ٢٠-٢٥٪ فراغ — تَشعر بِأنّها تَصرخ بالمعلومات.</div>
+          <div class="desc"><strong>الاقتراح:</strong> زِد المسافة العَمودية بين بطاقات النتائج من `--space-4` إلى `--space-6`. أَضِف `padding-block: var(--space-10)` لِلْحاوية الرئيسيّة. خَفِّض كَثافة المعلومات في كلّ بطاقة وأَخفِ التفاصيل خلف «اعرض المزيد».</div>
+        </div>
+      
+        <div class="obs crit">
+          <div class="head">
+            <div class="n">05</div>
+            <div class="ttl">التَكدُّس الضَروريّ في معالج العقود (necessary density)</div>
+            <span class="badge crit">حَرِج</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> خِلافاً للنتائج، معالج العقود (`/contract-wizard`) يَحتاج كَثافة عالية — لكنّها يَجب أن تَكون مَنطوقة، لا مُتراكمة.</div>
+          <div class="desc">الكَثافة الذَكيّة تَجمع الحقول المُتعلِّقة بصرياً (groupings) وتَفصل غير المُتعلِّقة بِفراغ صَريح. حاليّاً كلّ الحقول تَأخذ نفس المسافة، فالعَين لا تَعرف ما يَتجمَّع مع ما.</div>
+          <div class="desc"><strong>الاقتراح:</strong> اِستَخدِم مَجموعات بصريّة في كلّ خُطوة — حقول العنوان مُجمَّعة، حقول الاتّصال مُجمَّعة، الإعدادات المتقدّمة في accordion مَطويّ افتراضيّاً.</div>
+        </div>
+      
+        <div class="obs ">
+          <div class="head">
+            <div class="n">06</div>
+            <div class="ttl">إيقاع التَكرار البَصَريّ مُمِلّ في صَفحة النتائج (visual rhythm monotony)</div>
+            <span class="badge med">مُهمّ</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> كلّ بطاقة فُندق لها نفس الشَكل، نفس الحَجم، نفس الترتيب. العَين تَنزلق دون أن تَتوقَّف.</div>
+          <div class="desc">الإيقاع المُريح يَحتاج تَنوُّعاً مَحسوباً — مثل القَصيدة العَربيّة لها بُحور مُختلِفة لكن مَوزونة. لو كانت كلّ بطاقة بِنفس الإيقاع، تُصبح خَلفيّة. أفضل بطاقة (الأرخص أو الأنسب) يَنبَغي أن تَكسر الإيقاع.</div>
+          <div class="desc"><strong>الاقتراح:</strong> اِجعَل أوّل بطاقة (المُوصى بها) أَكبر بِـ ١.١٥× مع شارة «الأنسب لِبحثك»، ثمّ الباقي بِالحجم المعياريّ. كلّ ٤ بطاقات أَدخِل فاصِلاً بِجملة قصيرة («مازال هناك ١٢ خياراً جيّداً تَنتظرك»).</div>
+        </div>
+      
+        <div class="obs ">
+          <div class="head">
+            <div class="n">07</div>
+            <div class="ttl">مَسار العَين في صَفحة البحث غير مُوجَّه (eye-flow disorientation)</div>
+            <span class="badge med">مُهمّ</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> صَفحة البحث تَحوي بطاقتَين جنباً إلى جَنب (بَحث فُندق / بَحث مدينة) بِنفس الوَزن البَصَريّ. العَين تَتردَّد، لا تَعرف من أين تَبدأ.</div>
+          <div class="desc">قانون الـF-pattern في القراءة العَربيّة (يَمين → يَسار → يَمين أَسفل) يَقول: العَين تَهبط على أعلى اليَمين. إذا كان الخياران مُتعادِلَين، يَخسر المُستخدِم وَقتاً في الاختيار. يَجب أن يَكون هناك «خَيار افتراضيّ» بَصَريّ.</div>
+          <div class="desc"><strong>الاقتراح:</strong> اِجعَل البطاقة الأكثر استخداماً (بَحث المدينة على الأرجح) بِخَلفيّة أَدفأ قَليلاً وحَدّ أَوضح، والثانية بِخَلفيّة أهدأ. أو أَضِف عَنواناً واحداً يَعلوهما: «أين تُريد البَحث؟».</div>
+        </div>
+      
+        <div class="obs crit">
+          <div class="head">
+            <div class="n">08</div>
+            <div class="ttl">غياب خَطّة الصُّوَر الفُندقيّة (image strategy void)</div>
+            <span class="badge crit">حَرِج</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> بَطاقات النتائج لا تَعرض صُوَر الفنادق حاليّاً — فُرصة ضائعة لِنَقل الفَخامة.</div>
+          <div class="desc">٨٠٪ من قَرار الحَجز يَحدث بالصورة قبل السعر. الفَنادق الفاخرة تَحتاج عَرضاً بَصَريّاً مُتَّسقاً: نِسبة أبعاد موحَّدة (١٦:٩ مَثلاً)، تَلوين دافئ مُصحَّح، إطار مُدوَّر ١٢px مع ظِلّ خَفيف. الصُّوَر العَشوائيّة تَكسر الإحساس.</div>
+          <div class="desc"><strong>الاقتراح:</strong> أَدخِل حَقل `hero_image` في جَدول `hotels`. اِفرض في الواجهة معالجة موحَّدة: قَصّ ٣:٢، فلتَر دِفء (`filter: saturate(1.05) contrast(1.02)`)، تَدرُّج خَفيف من الأسفل لِقراءة النصّ فوقها. أَنشِئ مكوّن `&lt;HotelHero&gt;` يَفرض هذه المعالجة.</div>
+        </div>
+      
+        <div class="obs ">
+          <div class="head">
+            <div class="n">09</div>
+            <div class="ttl">النَوافذ المُنبَثِقة تَدخل بِعُنف (modal entry harshness)</div>
+            <span class="badge med">مُهمّ</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> `GlobalStopSaleModal` و `QuickStopSaleModal` تَستخدم `modalDialogIn` بِسُرعة ٢٤٠ms مع `scale(0.96)` — الانتقال جيّد لكنّ الـbackdrop يَظهر فَجأة.</div>
+          <div class="desc">الفاخر يَدخل بِأناقة — أَوّلاً الـbackdrop يَتعتَّم تَدريجيّاً (١٨٠ms)، ثمّ النافذة تَنزلق من الأسفل أو تَنمو من ٠.٩٢. حاليّاً كِلاهُما يَحدثان معاً، فيُصبح الإحساس فُجائيّاً.</div>
+          <div class="desc"><strong>الاقتراح:</strong> فَصل التَوقيت: backdrop يَتلاشى في ١٨٠ms ease-out، النافذة تَبدأ بعد ٦٠ms من بداية الـbackdrop وتَنتهي بعد ٢٤٠ms. للخروج: عَكس الترتيب — النافذة تَختفي أوّلاً، ثمّ الـbackdrop.</div>
+        </div>
+      
+        <div class="obs ">
+          <div class="head">
+            <div class="n">10</div>
+            <div class="ttl">الفَواصل بين الأقسام مُتنوِّعة بدون قاعِدة (section dividers chaos)</div>
+            <span class="badge med">مُهمّ</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> أحياناً الفَواصل خَطٌّ، أحياناً مَسافة، أحياناً تَغيير لون خَلفيّة — بدون قاعِدة واضحة لِأيٍّ يُستَخدَم متى.</div>
+          <div class="desc">نِظام التَصميم الناضج لَه ثلاثة مُستويات فَصل: ضَعيف (مَسافة فقط) لِأقسام مُتعلِّقة، متوسّط (خَطّ خفيف ١px) لِأقسام مُختلفة لكن مُترابطة، قَويّ (تَغيير خَلفيّة) لِأقسام مَفصوليّاً تماماً. الاستخدام العَشوائيّ يُربك القارئ.</div>
+          <div class="desc"><strong>الاقتراح:</strong> ثَبِّت ثلاث طَبقات: `.section-soft` (margin-block فقط)، `.section-divided` (خَطّ `border-bottom: 1px solid var(--border-light)`)، `.section-bg` (تَغيير `background` إلى `--bg-secondary`). اِفرض استخدامها بدلاً من الفَصل العَشوائيّ.</div>
+        </div>
+      
+        <div class="obs crit">
+          <div class="head">
+            <div class="n">11</div>
+            <div class="ttl">وَزن الزرّ الرئيسيّ والثانويّ غير مُحدَّد (button hierarchy fuzziness)</div>
+            <span class="badge crit">حَرِج</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> في بعض الصَفحات، زرّان رئيسيّان جنباً إلى جَنب — «احفظ» و«احفظ كمسوّدة» كِلاهُما أخضر. أيّهما الإجراء الأهَمّ؟</div>
+          <div class="desc">القاعدة المعياريّة: زرّ رئيسيّ واحد فقط في كلّ شاشة (الإجراء الأهَمّ)، البقيّة ثانويّون (outline) أو ثَلاثيّون (text-only). حاليّاً المعالج يَحتوي ٣-٤ أزرار بنفس الوَزن في شريط التذييل، مما يُضعف الهَرَميّة.</div>
+          <div class="desc"><strong>الاقتراح:</strong> اِفرض القاعدة: «زرّ ممتلئ واحد لكلّ شاشة». «التالي» في المعالج ممتلئ، «السابق» خَطّ خارجيّ، «احفظ كمسوَّدة» نصّ فقط، «إلغاء» نصّ رماديّ.</div>
+        </div>
+      
+        <div class="obs crit">
+          <div class="head">
+            <div class="n">12</div>
+            <div class="ttl">التَدرُّج من الأبيض إلى الكَريميّ غير مُستثمَر (cream gradient opportunity)</div>
+            <span class="badge crit">حَرِج</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> الخَلفيّات حاليّاً ألوان مُسطَّحة: `#F3F1EB` للأساس، `#FFFCF7` للبطاقات. لا تَدرُّج بَصَريّ من أعلى الصَفحة إلى أَسفلها.</div>
+          <div class="desc">الفنادق الفاخرة تَستخدم تَدرُّجاً عَمودياً خَفيفاً جدّاً (٢-٣٪) من فاتح في الأعلى إلى دافئ في الأسفل، يَخلق إحساس «الضَوء الطَبيعيّ الداخل من نافذة». بدون تَدرُّج، الصَفحة تَبدو مَطبوعة وَرَقياً، لا حَيّة.</div>
+          <div class="desc"><strong>الاقتراح:</strong> أَضِف لِـ `body` تَدرُّجاً: `background: linear-gradient(180deg, #F6F4EE 0%, #F3F1EB 60%, #EDEAE3 100%)`. لِبطاقات النتائج: `background: linear-gradient(180deg, #FFFEFA 0%, #FFFCF7 100%)`.</div>
+        </div>
+      
+        <div class="obs ">
+          <div class="head">
+            <div class="n">13</div>
+            <div class="ttl">الزَوايا غير مَحسومة (corner inconsistency)</div>
+            <span class="badge med">مُهمّ</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> النِظام يَحوي ٧ زَوايا مُختلفة: `4, 6, 8, 12, 16, 20, 24`px — والاستخدام غير مَنطقيّ. أَحياناً البطاقة ١٢px والـtooltip ٨px والـmodal ١٦px والـinput ٨px.</div>
+          <div class="desc">الفَخامة تُحَبّ التَجانس — إمّا كلّ الزَوايا مُدوَّرة بِنفس النَّسبة، أو نَسَق مُتدرِّج واحد. حاليّاً كلّ مُكوِّن أَخَذ زاويته كيفما اتَّفق.</div>
+          <div class="desc"><strong>الاقتراح:</strong> قَلِّص النِظام إلى ٣ زَوايا فقط: ٨px (عناصر صَغيرة: شارات، tooltips، inputs)، ١٢px (متوسّطة: أزرار، بطاقات صَغيرة)، ١٦px (كَبيرة: بطاقات رَئيسيّة، modals). اِحذف الباقي.</div>
+        </div>
+      
+        <div class="obs ">
+          <div class="head">
+            <div class="n">14</div>
+            <div class="ttl">الوضع الداكن لا يَستحقّ التَطوير الآن (dark mode deferral)</div>
+            <span class="badge low">تَحسين</span>
+          </div>
+          
+          <div class="desc">فحَصت الـ`color-scheme: light` المُثبَّت في `:root`. النِظام مَحصور في الوضع الفاتح — وهذا قَرار صائب لِجمهور بَحرين-عرب-إداريّين يَعملون نَهاراً في مَكاتب. الفَنادق الفاخرة (Aman، Four Seasons) كلّها فاتحة فقط — الداكن لا يَتوافق مع الإحساس بِالضَوء الطَبيعيّ والرَفاهيّة.</div>
+          <div class="desc"><strong>الاقتراح:</strong> اِحتَفظ بِالوضع الفاتح فقط. لا تَستثمر وَقتاً في وضع داكن — هذه الميزة لا تَخدم الجمهور. إذا أَلحَّ أحد، أَضِف وضع «ليليّ» خفيف (`#1A1F1A` بدل `#000`) لِلْقراءة المُتأخِّرة، ليس وضعاً داكناً كاملاً.</div>
+        </div>
+      
+        <div class="obs crit">
+          <div class="head">
+            <div class="n">15</div>
+            <div class="ttl">الأرقام في الأسعار غير مُميَّزة بَصَريّاً (price number typography)</div>
+            <span class="badge crit">حَرِج</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> الأسعار تُكتَب بِخَطّ النصّ العاديّ (`var(--font-body)`) — رقم ٢٥٠ يَورو يَبدو كَأيّ نَصّ آخر.</div>
+          <div class="desc">الفَنادق الفاخرة تُميِّز الأرقام (خاصّةً الأسعار) بِأَحَد ثلاث طُرُق: خَطّ مُختلف (tabular-nums أو خَطّ هندسيّ)، وَزن أَخَفّ (light/thin يُعطي إحساساً بِالأناقة)، أو تَتبُّع أَوسع (letter-spacing موجب). حاليّاً الأرقام ضائعة.</div>
+          <div class="desc"><strong>الاقتراح:</strong> أَنشِئ صنف `.price-display` يَحوي: `font-variant-numeric: tabular-nums; font-weight: 300; letter-spacing: 0.02em; font-feature-settings: 'tnum' 1, 'lnum' 1;`. لِلسعر الأساسيّ في النتائج اِستخدم حجم أَكبر (`--text-3xl`) مع وَزن `300` لإحساس الفَخامة.</div>
+        </div>
+      
+        <div class="obs ">
+          <div class="head">
+            <div class="n">16</div>
+            <div class="ttl">الـtooltips تَظهر بَطيئة وبدون رشاقة (tooltip behavior)</div>
+            <span class="badge med">مُهمّ</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> `InfoTooltip.tsx` يَظهر/يَختفي بدون تَأخير ولا حَركة دُخول مُعتَدلة — فُجائيّاً.</div>
+          <div class="desc">قاعِدة الـtooltip الفاخر: تَأخير دُخول ٤٠٠-٦٠٠ms (لِتَجنُّب الإزعاج عند مُرور المؤشّر الصُّدفيّ)، حَركة دُخول ١٢٠ms (تَلاشي + تَحرُّك ٤px نحو العنصر)، تَأخير خُروج ١٥٠ms (لِيَتاح للمستخدم نَقل المؤشّر إلى الـtooltip نفسه إذا احتاج). حاليّاً السلوك «نَعَم/لا» بدون لباقة.</div>
+          <div class="desc"><strong>الاقتراح:</strong> أعِد كتابة `InfoTooltip` بِـ`hover-intent` (تَأخير دُخول ٤٥٠ms)، حَركة دُخول `translateY(4px) → 0` مع تَلاشي ١٢٠ms ease-out. لِلْـtooltip المَوضع: دائماً مَركز أفقيّ على عنصر الإطلاق، فوق إذا أَمكَن، تَحت إذا لَزِم.</div>
+        </div>
+      
+        <div class="obs ">
+          <div class="head">
+            <div class="n">17</div>
+            <div class="ttl">مَوقع الأيقونة في الأزرار غير ثابت (icon placement RTL)</div>
+            <span class="badge med">مُهمّ</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> في واجهة RTL، بعض الأزرار تَضع الأيقونة قَبل النصّ (يَمين)، وأُخرى بَعد النصّ (يَسار)، وأُخرى تَجمع. لا قاعِدة.</div>
+          <div class="desc">القاعِدة في RTL: الأيقونة «المَعنويّة» (تَدلّ على الإجراء — حَفظ، حَذف، طِباعة) تَأتي قَبل النصّ (يَمين في RTL)، الأيقونة «الاتّجاهيّة» (سَهم تالي، سَهم سابق) تَأتي حَسب الاتّجاه المنطقيّ (السهم لِلتالي يَسار في RTL لأنّ القراءة تَتحرَّك يَساراً).</div>
+          <div class="desc"><strong>الاقتراح:</strong> ثَبِّت قاعِدتَين في ملفّ `Button.tsx`: prop `iconPosition: 'leading' | 'trailing' | 'directional'`. الافتراضيّ `leading` (قَبل النصّ في RTL = يَمين). راجِع كلّ استخدامات الأزرار وطَبِّق القاعِدة.</div>
+        </div>
+      
+        <div class="obs crit">
+          <div class="head">
+            <div class="n">18</div>
+            <div class="ttl">الـtoasts خارج النِظام (toast notifications missing)</div>
+            <span class="badge crit">حَرِج</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> لا يَظهر في فَحصي مَكوِّن `Toast` مُوحَّد. الرسائل الفَوريّة تُعرَض كَـbanners ثابتة (`EBAlertBanner`) أو modals كاملة.</div>
+          <div class="desc">الـtoast الفاخر: أَسفل-وَسط الشاشة (لا يَحجب المحتوى)، عَرض محدود ٤٠٠px، يَدخل بـ`translateY(20px) → 0` مع تَلاشي ٢٠٠ms، يَبقى ٤ ثَوان للنجاح، ٧ ثَوان للخَطأ، يَختفي بِنفس الحَركة عَكسيّاً. لون شَريط جانبيّ (٤px) يَدلّ على النَوع.</div>
+          <div class="desc"><strong>الاقتراح:</strong> أَنشِئ `lib/ui/toast.ts` يُصدِّر دالّتَين: `toast.success(msg)`، `toast.error(msg, action?)`. اِبنِها فوق Sonner أو react-hot-toast، وقَيِّد تَنسيقها بِنظام الألوان والخُطوط.</div>
+        </div>
+      
+        <div class="obs crit">
+          <div class="head">
+            <div class="n">19</div>
+            <div class="ttl">شُعور الفَخامة يَنكَسر في صَفحات الإدارة (admin pages texture break)</div>
+            <span class="badge crit">حَرِج</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> صَفحات `/admin/*` تَحتوي جَداول كَثيفة بدون نفس مُعالَجة الفَخامة في صَفحة البحث/النتائج. الإحساس: «هذا للموظَّفين، لا يَهمّ».</div>
+          <div class="desc">نُقطة لَمس الفَخامة الحَقيقيّة هي عندما يَكون كلّ مَكان مُعتَنى به — حتّى الأماكن التي لا يَراها الزَبون. مالك الفُندق يَرى صَفحات الإدارة يَوميّاً، وهي التي تُكوِّن إحساسه بِجَودة المُنتَج.</div>
+          <div class="desc"><strong>الاقتراح:</strong> طَبِّق نِظام التَصميم نَفسه على صَفحات الإدارة: نَفس البطاقات الكَريميّة، نَفس التَدرُّجات، نَفس التَنفُّس بين الصُّفوف. ارفع وَزن الخُطوط في رؤوس الجداول. اِجعَل الجَداول «تَتنفَّس» بِـ`padding-block: 14px` بدل ٨px في الصفوف.</div>
+        </div>
+      
+        <div class="obs crit">
+          <div class="head">
+            <div class="n">20</div>
+            <div class="ttl">غياب الـempty states المَدروسة (empty states missing personality)</div>
+            <span class="badge crit">حَرِج</span>
+          </div>
+          <div class="desc"><strong>الحالة:</strong> حين لا توجد نتائج، أو حين تَكون قاعِدة العقود فارغة، أو حين لا يوجد سِجلّ تَدقيق — يَظهر نصّ مُجَرَّد «لا توجد بيانات».</div>
+          <div class="desc">الـempty state الفاخر فُرصة فَريدة لِنَقل صَوت العلامة — رسم خَفيف، عِبارة بِنَبرة المنتج، اقتراح خُطوة تالية. حاليّاً الفُرصة ضائعة، والمكان فارغ بشكل مُحبِط.</div>
+          <div class="desc"><strong>الاقتراح:</strong> صَمِّم ٥ empty states مُتخصِّصة: لا نتائج بَحث، لا عُقود مَحفوظة، لا سِجلّ تَدقيق، لا إيقاف بيع، لا فَنادق مُسجَّلة. كلٌّ بأيقونة منحوتة (line art بِلون `--accent-gold` خفيف ٤٠٪)، عِبارة بنَبرة المُنتَج («لا بَحث بَعد. اِبدأ بِمَدينتك المُفضَّلة.»)، وزرّ إجراء تالي.</div>
+        </div>
+      
+    </div>
+  </section>
+
+  <footer>
+    BRIX TRAVEL · المانيفيستو ٢٠٢٦ · ٥ وكلاء · ٢٧ ملاحظة · ٢٠ زاوية جَديدة
+  </footer>
+
+</div>
+</body>
+</html>
