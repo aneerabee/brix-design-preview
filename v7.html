@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BRIX v7 — Feature Library · Bureau Borsche Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0A0A; --ink2:#3A3A3A; --mute:#6A6A6A;
+  --hair:#E8E6E1; --paper:#FAFAF7; --paper2:#F3F1EA;
+  --emerald:#047857; --emerald-deep:#035E45; --emerald-soft:#ECFDF5;
+  --gold:#C9A961; --gold-deep:#856A30; --gold-soft:#FBF6E7;
+  --warn:#DC2626; --warn-soft:#FCEFEC;
+  --amber:#B4530A; --amber-soft:#FCF1DE;
+  --info:#0284C7; --info-soft:#F0F9FF;
+  --r1:#3B82F6; --r2:#16A34A; --r3:#9333EA; --r4:#EA580C;
+  --r5:#06B6D4; --r6:#EC4899; --r7:#6366F1; --r8:#F59E0B;
+  --r9:#0EA5E9; --r10:#E11D48;
+  --f-display:'Inter Tight',sans-serif;
+  --f-ar:'IBM Plex Sans Arabic',sans-serif;
+  --f-mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--f-display);
+  background:var(--paper2);
+  color:var(--ink);
+  padding:24px 16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ───────────────────────────────────────────────────────
+   MASTHEAD
+   ─────────────────────────────────────────────────────── */
+.master{
+  max-width:1280px;margin:0 auto 32px;
+  padding:48px 40px;
+  background:var(--paper);
+  border:1px solid var(--ink);
+  position:relative;
+}
+.master::after{
+  content:"";position:absolute;inset:6px;
+  border:1px solid var(--ink);opacity:.08;pointer-events:none;
+}
+.master__kicker{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:14px;
+}
+.master__title{
+  font-weight:800;font-size:64px;line-height:.92;letter-spacing:-.04em;
+}
+.master__title em{font-style:italic;font-weight:400;color:var(--emerald)}
+.master__sub{
+  margin-top:18px;font-size:15px;color:var(--ink2);max-width:680px;
+}
+.master__meta{
+  margin-top:28px;padding-top:18px;border-top:1px solid var(--hair);
+  display:flex;justify-content:space-between;
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--mute);
+}
+.master__meta strong{color:var(--ink);font-weight:600}
+
+/* ───────────────────────────────────────────────────────
+   TOC
+   ─────────────────────────────────────────────────────── */
+.toc{
+  max-width:1280px;margin:0 auto 48px;
+  padding:32px 40px;
+  background:var(--paper);
+  border:1px solid var(--hair);
+}
+.toc__h{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--mute);
+  padding-bottom:14px;border-bottom:1px solid var(--ink);margin-bottom:18px;
+}
+.toc__grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:6px 24px;
+}
+.toc__item{
+  display:grid;grid-template-columns:32px 1fr;align-items:baseline;gap:10px;
+  padding:8px 0;border-bottom:1px dotted var(--hair);
+  font-size:13px;color:var(--ink);text-decoration:none;
+  transition:color 180ms var(--ease);
+}
+.toc__item:hover{color:var(--emerald)}
+.toc__num{
+  font-family:var(--f-mono);font-size:11px;color:var(--gold-deep);
+  font-weight:600;letter-spacing:.06em;
+}
+
+/* ───────────────────────────────────────────────────────
+   FEATURE SECTION
+   ─────────────────────────────────────────────────────── */
+.feat{
+  max-width:1280px;margin:0 auto 48px;
+  background:var(--paper);
+  border:1px solid var(--hair);
+  scroll-margin-top:32px;
+  overflow:hidden;
+}
+.feat__head{
+  padding:24px 40px 22px;
+  border-bottom:1px solid var(--hair);
+  display:grid;grid-template-columns:auto 1fr auto;align-items:end;
+  gap:24px;background:rgba(243,241,234,.5);
+}
+.feat__idx{
+  font-family:var(--f-display);font-weight:800;font-size:56px;line-height:.84;
+  letter-spacing:-.04em;color:var(--emerald);
+  font-variant-numeric:tabular-nums;
+}
+.feat__body{min-width:0}
+.feat__kicker{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:6px;
+}
+.feat__title{
+  font-weight:800;font-size:30px;line-height:1.05;letter-spacing:-.03em;
+}
+.feat__desc{
+  font-size:13px;color:var(--ink2);margin-top:8px;max-width:560px;
+}
+.feat__tag{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.22em;
+  text-transform:uppercase;padding:6px 10px;background:var(--ink);color:#fff;
+  align-self:start;
+}
+.feat__tag--star{background:var(--gold);color:var(--ink)}
+
+.feat__demo{padding:32px 40px}
+.feat__demo h4{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.20em;
+  text-transform:uppercase;color:var(--mute);
+  padding-bottom:8px;border-bottom:1px solid var(--hair);margin:24px 0 16px;
+}
+.feat__demo h4:first-child{margin-top:0}
+.feat__notes{
+  margin:0 40px 32px;padding:16px 18px;
+  background:var(--gold-soft);border-inline-start:3px solid var(--gold);
+  font-family:var(--f-ar);font-size:13px;color:var(--ink2);direction:rtl;
+}
+.feat__notes strong{color:var(--ink);font-weight:700}
+
+/* ═══════════════════════════════════════════════════════
+   01 · CALENDAR
+   ═══════════════════════════════════════════════════════ */
+.cal{
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;
+  background:#fff;border:1px solid var(--ink);padding:24px;
+  box-shadow:8px 8px 0 var(--ink);
+}
+.cal__month-head{
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink);font-weight:600;
+  padding-bottom:12px;border-bottom:1px solid var(--ink);margin-bottom:10px;
+}
+.cal__nav{
+  width:28px;height:28px;border:1px solid var(--ink);background:transparent;
+  cursor:pointer;font-weight:700;
+}
+.cal__nav:hover{background:var(--ink);color:#fff}
+.cal__weekdays{
+  display:grid;grid-template-columns:repeat(7,1fr);gap:2px;
+  font-family:var(--f-mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mute);text-align:center;
+  margin-bottom:6px;
+}
+.cal__grid{
+  display:grid;grid-template-columns:repeat(7,1fr);gap:2px;
+}
+.cal__day{
+  position:relative;aspect-ratio:1;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-mono);font-size:12px;
+  font-variant-numeric:tabular-nums;
+  cursor:pointer;border:1px solid transparent;
+  transition:all 160ms var(--ease);
+}
+.cal__day:hover:not(.cal__day--off){background:var(--hair)}
+.cal__day--off{color:var(--hair);cursor:not-allowed}
+.cal__day--today{color:var(--gold-deep);font-weight:700}
+.cal__day--today::after{
+  content:"";position:absolute;bottom:3px;left:30%;right:30%;
+  height:2px;background:var(--gold);
+}
+.cal__day--range{background:rgba(4,120,87,.12)}
+.cal__day--preview{
+  background:rgba(4,120,87,.06);
+  outline:1px dashed var(--emerald);outline-offset:-2px;
+}
+.cal__day--start,.cal__day--end{
+  background:var(--emerald);color:#fff;font-weight:700;
+}
+.cal__day--period-1{box-shadow:inset 0 -3px 0 var(--gold)}
+.cal__day--period-2{box-shadow:inset 0 -3px 0 var(--emerald)}
+.cal__day--stop-full{
+  background:repeating-linear-gradient(45deg,#FEE,#FEE 3px,var(--warn) 3px,var(--warn) 6px);
+  color:#fff;cursor:not-allowed;
+}
+.cal__day--stop-partial{
+  background:repeating-linear-gradient(45deg,#FED,#FED 3px,var(--gold) 3px,var(--gold) 6px);
+  cursor:pointer;
+}
+.cal__day--late{outline:2px solid var(--amber);outline-offset:-2px}
+.cal__legend{
+  grid-column:1/-1;margin-top:18px;padding-top:18px;
+  border-top:1px solid var(--hair);
+  display:flex;flex-wrap:wrap;gap:14px;
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;color:var(--mute);
+}
+.cal__legend i{display:inline-block;width:12px;height:12px;margin-inline-end:6px;vertical-align:middle;border:1px solid var(--hair)}
+
+/* ═══════════════════════════════════════════════════════
+   02 · DATE RANGE PAIR
+   ═══════════════════════════════════════════════════════ */
+.drp{
+  display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;
+  padding:20px;background:#fff;border:1px solid var(--hair);
+}
+.drp__field{
+  position:relative;padding:14px 16px;
+  border:2px solid var(--hair);background:var(--paper);
+  font-family:var(--f-mono);font-size:13px;cursor:pointer;
+  transition:border-color 200ms var(--ease);
+}
+.drp__field--complete{border-color:var(--emerald);background:var(--emerald-soft)}
+.drp__field--partial{border-color:var(--gold);background:var(--gold-soft)}
+.drp__field--error{border-color:var(--warn);background:var(--warn-soft)}
+.drp__field--empty{border-style:dashed}
+.drp__lbl{
+  display:block;font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--mute);margin-bottom:4px;
+}
+.drp__val{font-weight:600;color:var(--ink);font-size:14px}
+.drp__field--empty .drp__val{color:var(--mute);font-weight:400}
+.drp__bridge{
+  width:120px;height:4px;border-radius:2px;background:var(--hair);
+  position:relative;
+}
+.drp__bridge i{
+  display:block;height:100%;background:var(--emerald);border-radius:2px;
+  transition:width 280ms var(--ease);
+}
+.drp__bridge--err i{background:var(--warn)}
+.drp__nights{
+  position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink);font-weight:600;
+  background:#fff;padding:2px 8px;border:1px solid var(--ink);
+}
+
+/* ═══════════════════════════════════════════════════════
+   03 · HOTEL SEARCH CARD
+   ═══════════════════════════════════════════════════════ */
+.hsc{padding:24px;background:#fff;border:1px solid var(--hair)}
+.hsc__row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px;align-items:end}
+.hsc__field{flex:1;min-width:140px;display:flex;flex-direction:column;gap:6px}
+.hsc__lbl{
+  font-family:var(--f-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--mute);
+}
+.hsc__inp,.hsc__sel{
+  padding:10px 12px;border:1px solid var(--hair);background:var(--paper);
+  font-family:var(--f-mono);font-size:13px;color:var(--ink);
+}
+.hsc__inp:focus,.hsc__sel:focus{outline:2px solid var(--gold);outline-offset:1px}
+.hsc__chips{display:flex;gap:6px;flex-wrap:wrap}
+.hsc__chip{
+  padding:5px 11px;border:1px solid var(--hair);background:#fff;
+  font-family:var(--f-mono);font-size:11px;cursor:pointer;
+  transition:all 140ms var(--ease);
+}
+.hsc__chip:hover{border-color:var(--ink)}
+.hsc__chip--on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.hsc__step{display:inline-flex;align-items:center;border:1px solid var(--ink);overflow:hidden}
+.hsc__step button{
+  width:32px;height:32px;background:#fff;border:0;font-weight:700;font-size:16px;
+  cursor:pointer;font-family:var(--f-mono);
+}
+.hsc__step button:hover{background:var(--ink);color:#fff}
+.hsc__step span{
+  width:44px;text-align:center;font-family:var(--f-mono);font-weight:600;
+  border-inline:1px solid var(--ink);padding:6px 0;font-variant-numeric:tabular-nums;
+}
+.hsc__age-chip{
+  position:relative;padding:5px 10px;border:1px solid var(--hair);
+  font-family:var(--f-mono);font-size:11px;background:#fff;
+}
+.hsc__age-chip--cut{background:var(--gold-soft);border-color:var(--gold)}
+.hsc__age-chip--cut::after{content:"✂";margin-inline-start:4px;color:var(--gold-deep)}
+.hsc__tip{
+  margin-top:6px;font-family:var(--f-ar);font-size:11px;color:var(--gold-deep);
+  background:var(--gold-soft);border-inline-start:3px solid var(--gold);
+  padding:6px 10px;direction:rtl;
+}
+.hsc__honeymoon{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;
+  background:var(--paper2);border:1px solid var(--hair);
+  font-size:12px;color:var(--ink2);cursor:pointer;
+}
+.hsc__honeymoon input[type=checkbox]{accent-color:var(--emerald)}
+
+/* ═══════════════════════════════════════════════════════
+   04 · POLICY WARNING (strongest-only)
+   ═══════════════════════════════════════════════════════ */
+.pwarn{
+  padding:14px 18px;background:var(--warn-soft);
+  border:1px solid var(--warn);border-inline-start-width:4px;
+  display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+}
+.pwarn__icon{
+  width:32px;height:32px;background:var(--warn);color:#fff;
+  display:grid;place-items:center;font-weight:700;font-size:16px;border-radius:50%;
+}
+.pwarn__title{font-weight:700;font-size:14px;color:var(--warn);margin-bottom:2px}
+.pwarn__msg{font-size:12.5px;color:#5C1A12}
+.pwarn__more{
+  padding:6px 10px;border:1px solid var(--warn);background:#fff;
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;cursor:pointer;color:var(--warn);
+}
+.pwarn__chips{
+  grid-column:1/-1;margin-top:10px;padding-top:10px;
+  border-top:1px solid rgba(220,38,38,.2);
+  display:flex;gap:6px;flex-wrap:wrap;
+}
+.pwarn__chip{
+  padding:4px 8px;background:#fff;border:1px solid var(--warn);
+  font-family:var(--f-mono);font-size:10px;color:var(--warn);
+}
+
+/* ═══════════════════════════════════════════════════════
+   05 · LATE BOOKING BANNER
+   ═══════════════════════════════════════════════════════ */
+.late{
+  padding:18px 22px;background:var(--amber-soft);
+  border:1px solid var(--amber);border-inline-start-width:5px;
+  display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;
+}
+.late__icon{
+  font-size:32px;color:var(--amber);
+}
+.late__title{
+  font-weight:800;font-size:18px;color:var(--amber);margin-bottom:4px;
+  font-family:var(--f-display);letter-spacing:-.02em;
+}
+.late__msg{font-size:13px;color:#6B3B0B;line-height:1.55}
+.late__msg strong{color:var(--ink)}
+
+/* ═══════════════════════════════════════════════════════
+   06 · RECEIPT BREAKDOWN
+   ═══════════════════════════════════════════════════════ */
+.rcpt{
+  background:#fff;border:1px solid var(--ink);padding:0;
+  box-shadow:8px 8px 0 var(--ink);
+}
+.rcpt__head{
+  padding:24px 28px;border-bottom:1px solid var(--ink);
+  background:var(--paper);
+}
+.rcpt__title{font-weight:800;font-size:22px;letter-spacing:-.02em}
+.rcpt__sub{
+  font-family:var(--f-mono);font-size:11px;color:var(--mute);
+  letter-spacing:.06em;margin-top:6px;
+}
+.rcpt__guests{
+  padding:16px 28px;background:var(--paper2);border-bottom:1px solid var(--hair);
+  font-family:var(--f-mono);font-size:12px;color:var(--ink2);
+}
+.rcpt__guests strong{color:var(--ink)}
+.rcpt__sect{padding:16px 28px;border-bottom:1px solid var(--hair)}
+.rcpt__sect-h{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold-deep);
+  font-weight:600;margin-bottom:12px;
+  display:flex;justify-content:space-between;
+}
+.rcpt__row{
+  display:grid;grid-template-columns:1fr auto;gap:14px;
+  padding:6px 0;font-family:var(--f-mono);font-size:13px;
+  border-bottom:1px dotted var(--hair);
+}
+.rcpt__row:last-child{border-bottom:0}
+.rcpt__row dt{color:var(--ink2)}
+.rcpt__row dd{margin:0;font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600}
+.rcpt__row--disc dt,.rcpt__row--disc dd{color:var(--emerald)}
+.rcpt__row--add dt,.rcpt__row--add dd{color:var(--amber)}
+.rcpt__row .formula{
+  font-size:11px;color:var(--mute);margin-top:2px;display:block;
+}
+.rcpt__total{
+  padding:24px 28px;background:var(--ink);color:#fff;
+  display:grid;grid-template-columns:1fr auto;align-items:end;gap:16px;
+}
+.rcpt__total-lbl{
+  grid-column:1/-1;font-family:var(--f-mono);font-size:10px;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--gold);
+}
+.rcpt__total-amt{
+  font-weight:800;font-size:42px;line-height:.9;letter-spacing:-.04em;
+  font-variant-numeric:tabular-nums;
+}
+.rcpt__total-amt .ccy{
+  font-family:var(--f-mono);font-size:13px;letter-spacing:.18em;
+  color:var(--gold);font-weight:500;margin-inline-end:8px;
+}
+.rcpt__save{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gold);
+}
+.rcpt__stop-strip{
+  margin-top:14px;padding:10px 14px;background:#5C1A12;
+  border:1px solid var(--warn);font-family:var(--f-mono);font-size:11px;
+  color:#FFB8B0;letter-spacing:.06em;
+}
+
+/* ═══════════════════════════════════════════════════════
+   07 · TIMELINE
+   ═══════════════════════════════════════════════════════ */
+.tl{padding:24px;background:#fff;border:1px solid var(--hair)}
+.tl__head{
+  display:flex;justify-content:space-between;
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.20em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:14px;
+}
+.tl__track{
+  position:relative;height:48px;background:var(--paper2);
+  border:1px solid var(--hair);
+}
+.tl__seg{
+  position:absolute;top:4px;height:40px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-mono);font-size:10px;color:#fff;font-weight:600;
+  text-transform:uppercase;letter-spacing:.06em;
+  opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 6px;
+}
+.tl__seg--active{
+  top:0;height:48px;opacity:1;z-index:3;
+  box-shadow:0 0 0 2px var(--ink),0 0 20px rgba(0,0,0,.2);
+}
+.tl__labels{
+  display:flex;justify-content:space-between;margin-top:8px;
+  font-family:var(--f-mono);font-size:9px;color:var(--mute);
+}
+
+/* ═══════════════════════════════════════════════════════
+   08 · ROOM CAROUSEL
+   ═══════════════════════════════════════════════════════ */
+.rcar{padding:24px;background:#fff;border:1px solid var(--hair)}
+.rcar__head{
+  display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+}
+.rcar__nav{
+  display:flex;gap:6px;
+}
+.rcar__nav button{
+  width:36px;height:36px;border:1px solid var(--ink);background:#fff;
+  font-size:20px;cursor:pointer;border-radius:50%;
+}
+.rcar__nav button:hover{background:var(--ink);color:#fff}
+.rcar__track{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px}
+.rcar__room{
+  flex:0 0 auto;min-width:140px;
+  padding:12px 14px 18px;background:var(--paper);
+  border:1px solid var(--hair);position:relative;cursor:pointer;
+  transition:all 200ms var(--ease);
+}
+.rcar__room--active{
+  border-color:var(--ink);background:linear-gradient(135deg,var(--r2),var(--emerald));
+  color:#fff;
+}
+.rcar__room--done{
+  background:var(--emerald-soft);border-color:var(--emerald);
+}
+.rcar__room-name{
+  font-family:var(--f-display);font-weight:700;font-size:13px;letter-spacing:-.01em;
+  margin-bottom:4px;
+}
+.rcar__room-pct{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;opacity:.85;
+}
+.rcar__room--done .rcar__room-pct::before{content:"✓ ";color:var(--emerald);font-weight:700}
+.rcar__room-bar{
+  position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(0,0,0,.06);
+}
+.rcar__room-bar i{display:block;height:100%;background:var(--emerald)}
+.rcar__room--active .rcar__room-bar i{background:var(--gold)}
+
+/* ═══════════════════════════════════════════════════════
+   09 · COPY PRICES MODAL
+   ═══════════════════════════════════════════════════════ */
+.modal{
+  background:#fff;border:1px solid var(--ink);
+  box-shadow:8px 8px 0 var(--ink);max-width:520px;
+}
+.modal__h{
+  padding:18px 22px;border-bottom:1px solid var(--ink);
+  background:var(--paper);display:flex;justify-content:space-between;align-items:start;
+}
+.modal__h-eyebrow{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold-deep);margin-bottom:4px;
+}
+.modal__h-title{font-weight:800;font-size:20px;letter-spacing:-.02em}
+.modal__h-title small{
+  display:block;font-family:var(--f-mono);font-size:11px;font-weight:400;
+  color:var(--mute);margin-top:3px;letter-spacing:.06em;
+}
+.modal__x{
+  width:28px;height:28px;border:1px solid var(--ink);background:transparent;
+  cursor:pointer;font-weight:700;
+}
+.modal__body{padding:22px;display:flex;flex-direction:column;gap:18px}
+.modal__sect-h{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.20em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:10px;
+  display:flex;justify-content:space-between;
+}
+.modal__sect-h a{color:var(--emerald);cursor:pointer;text-decoration:none}
+.modal__opt{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border:1px solid var(--hair);
+  background:#fff;cursor:pointer;font-size:13px;
+}
+.modal__opt--on{border-color:var(--emerald);background:var(--emerald-soft)}
+.modal__check{
+  width:18px;height:18px;border:1px solid var(--hair);
+  display:grid;place-items:center;font-size:11px;font-weight:700;color:transparent;
+}
+.modal__opt--on .modal__check{background:var(--emerald);color:#fff;border-color:var(--emerald)}
+.modal__opt small{display:block;color:var(--mute);font-size:11px;margin-top:2px}
+.modal__chips{display:flex;flex-wrap:wrap;gap:6px}
+.modal__chip{
+  padding:5px 11px;border:1px solid var(--hair);background:#fff;
+  font-family:var(--f-mono);font-size:11px;cursor:pointer;
+}
+.modal__chip--on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.modal__dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.modal__undo{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 14px;background:var(--paper2);border:1px solid var(--hair);
+  font-family:var(--f-mono);font-size:11px;color:var(--ink2);
+}
+.modal__undo button{
+  background:transparent;border:0;color:var(--emerald);cursor:pointer;
+  font-family:var(--f-mono);font-size:11px;font-weight:600;
+}
+.modal__f{
+  padding:14px 22px;border-top:1px solid var(--hair);background:var(--paper);
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  font-family:var(--f-mono);font-size:10px;color:var(--mute);
+}
+.btn{
+  padding:9px 18px;font-family:var(--f-mono);font-size:11px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;cursor:pointer;
+  border:1px solid var(--ink);background:#fff;color:var(--ink);
+  transition:all 160ms var(--ease);
+}
+.btn:hover{background:var(--ink);color:#fff}
+.btn--primary{background:var(--ink);color:#fff}
+.btn--primary:hover{background:var(--emerald);border-color:var(--emerald)}
+.btn--ghost{border-color:var(--hair);color:var(--mute)}
+
+/* ═══════════════════════════════════════════════════════
+   10 · FLIPPED PRICING TABLE
+   ═══════════════════════════════════════════════════════ */
+.ftbl{overflow-x:auto;background:#fff;border:1px solid var(--hair)}
+.ftbl table{width:100%;border-collapse:separate;border-spacing:0;font-size:12px}
+.ftbl th,.ftbl td{
+  padding:10px 12px;border-bottom:1px solid var(--hair);
+  border-inline-start:1px solid var(--hair);text-align:center;
+  font-family:var(--f-mono);
+}
+.ftbl th:first-child,.ftbl td:first-child{
+  position:sticky;inset-inline-start:0;z-index:2;text-align:start;
+  white-space:nowrap;font-weight:700;background:#fff;
+  box-shadow:-4px 0 8px -2px rgba(0,0,0,.04);
+}
+.ftbl thead th{
+  background:var(--paper);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink);font-weight:700;
+}
+.ftbl thead th:first-child{background:var(--emerald);color:#fff}
+.ftbl .ph-name{display:block;font-size:11px;color:var(--ink)}
+.ftbl .ph-dates{display:block;font-size:9px;color:var(--mute);margin-top:2px}
+.ftbl .pp{background:var(--emerald-soft);font-weight:700;color:var(--emerald-deep)}
+.ftbl .pp td:first-child{background:var(--emerald);color:#fff}
+.ftbl .occ-1 td:first-child{border-inline-start:3px solid var(--r1);background:rgba(59,130,246,.06)}
+.ftbl .occ-2 td:first-child{border-inline-start:3px solid var(--r2);background:rgba(22,163,74,.06)}
+.ftbl .occ-3 td:first-child{border-inline-start:3px solid var(--r3);background:rgba(147,51,234,.06)}
+.ftbl .occ-4 td:first-child{border-inline-start:3px solid var(--r4);background:rgba(234,88,12,.06)}
+.ftbl .miss{background:var(--warn-soft);color:var(--warn);font-style:italic}
+.ftbl .miss::before{content:"⊘ "}
+.ftbl .mult{color:var(--mute);font-size:10px;display:block}
+
+/* ═══════════════════════════════════════════════════════
+   11 · CONTRACT DASHBOARD
+   ═══════════════════════════════════════════════════════ */
+.cdash__stats{
+  display:flex;gap:14px;flex-wrap:wrap;padding:14px 22px;
+  background:var(--paper2);border-bottom:1px solid var(--hair);
+  font-family:var(--f-mono);font-size:11px;
+}
+.cdash__stat{display:flex;align-items:baseline;gap:6px;color:var(--mute)}
+.cdash__stat strong{color:var(--ink);font-weight:700;font-size:13px}
+.cdash__stat--ok strong{color:var(--emerald)}
+.cdash__stat--err strong{color:var(--warn)}
+.cdash__filters{display:flex;gap:8px;padding:14px 22px;flex-wrap:wrap}
+.cdash__chip{
+  padding:6px 12px;border:1px solid var(--hair);background:#fff;
+  font-family:var(--f-mono);font-size:11px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.cdash__chip--on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.cdash__chip i{width:7px;height:7px;border-radius:50%;background:var(--warn)}
+.cdash__rules{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:22px;
+}
+.cdash__rule{
+  padding:16px;background:#fff;border:1px solid var(--hair);
+  border-top:3px solid var(--mute);
+}
+.cdash__rule--disc{border-top-color:var(--r3)}
+.cdash__rule--supp{border-top-color:var(--r1)}
+.cdash__rule--stop{border-top-color:var(--warn)}
+.cdash__rule h5{
+  font-weight:700;font-size:13px;margin-bottom:10px;
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+.cdash__rule h5 span{
+  font-family:var(--f-mono);font-size:10px;color:var(--mute);
+  background:var(--paper2);padding:2px 8px;border-radius:999px;
+}
+.cdash__rule-row{
+  padding:8px 0;border-top:1px dashed var(--hair);
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-size:12px;
+}
+.cdash__rule-row:first-of-type{border-top:0}
+.cdash__rule-val{
+  font-family:var(--f-mono);font-size:11px;font-weight:700;
+  padding:2px 8px;border-radius:999px;white-space:nowrap;
+}
+
+/* ═══════════════════════════════════════════════════════
+   12 · WIZARD PROGRESS
+   ═══════════════════════════════════════════════════════ */
+.wiz{padding:24px;background:#fff;border:1px solid var(--hair)}
+.wiz__bar{
+  height:3px;background:var(--hair);position:relative;margin-bottom:18px;
+}
+.wiz__bar i{
+  display:block;height:100%;background:var(--emerald);transition:width 300ms var(--ease);
+}
+.wiz__steps{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.wiz__step{
+  flex:1;min-width:100px;display:flex;flex-direction:column;align-items:center;
+  gap:6px;cursor:pointer;
+}
+.wiz__num{
+  width:32px;height:32px;border-radius:50%;border:1.5px solid var(--hair);
+  display:grid;place-items:center;font-family:var(--f-mono);font-weight:600;
+  font-size:12px;background:#fff;
+}
+.wiz__step--done .wiz__num{background:var(--emerald);color:#fff;border-color:var(--emerald)}
+.wiz__step--active .wiz__num{
+  background:var(--ink);color:#fff;border-color:var(--ink);
+  box-shadow:0 0 0 4px rgba(10,10,10,.1);
+}
+.wiz__lbl{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.10em;
+  text-transform:uppercase;color:var(--mute);text-align:center;
+}
+.wiz__step--active .wiz__lbl{color:var(--ink);font-weight:700}
+
+/* ═══════════════════════════════════════════════════════
+   13 · CONTRACT FILES BUTTON
+   ═══════════════════════════════════════════════════════ */
+.cfb{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 11px;background:var(--emerald-soft);
+  border:1px solid var(--emerald);border-radius:999px;
+  font-family:var(--f-mono);font-size:11px;color:var(--emerald-deep);
+  font-weight:600;cursor:pointer;
+}
+.cfb:hover{background:#fff}
+.cfb-menu{
+  position:relative;display:inline-block;margin-inline-start:14px;
+}
+.cfb-list{
+  margin-top:8px;background:#fff;border:1px solid var(--ink);
+  box-shadow:4px 4px 0 var(--ink);min-width:280px;
+}
+.cfb-list a{
+  display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center;
+  padding:10px 14px;text-decoration:none;color:var(--ink);
+  border-bottom:1px solid var(--hair);
+}
+.cfb-list a:last-child{border-bottom:0}
+.cfb-list a:hover{background:var(--paper2)}
+.cfb-icon{
+  width:30px;height:30px;border-radius:4px;display:grid;place-items:center;
+  font-family:var(--f-mono);font-size:9px;font-weight:700;color:#fff;letter-spacing:.06em;
+}
+.cfb-icon--pdf{background:var(--warn)}
+.cfb-icon--xls{background:var(--emerald)}
+.cfb-name{font-size:13px;font-weight:600;font-family:var(--f-display)}
+.cfb-meta{font-family:var(--f-mono);font-size:10px;color:var(--mute)}
+
+/* ═══════════════════════════════════════════════════════
+   14 · COPY OFFER BUTTON
+   ═══════════════════════════════════════════════════════ */
+.cob{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 12px;border:1px solid var(--hair);background:#fff;
+  font-family:var(--f-mono);font-size:11px;font-weight:600;
+  cursor:pointer;letter-spacing:.08em;
+}
+.cob--copied{
+  background:var(--emerald-soft);border-color:var(--emerald);color:var(--emerald-deep);
+}
+.cob-preview{
+  margin-top:14px;padding:14px;background:var(--paper2);
+  border:1px dashed var(--hair);font-family:var(--f-mono);font-size:11px;
+  white-space:pre-line;color:var(--ink2);
+}
+
+/* ═══════════════════════════════════════════════════════
+   15 · PERIOD PRICE LIST
+   ═══════════════════════════════════════════════════════ */
+.ppl{padding:18px 22px;background:var(--paper);border-inline-start:3px solid var(--gold)}
+.ppl__row{
+  display:grid;grid-template-columns:auto 1fr auto auto;gap:14px;align-items:baseline;
+  padding:10px 0;border-bottom:1px dotted var(--hair);
+  font-family:var(--f-mono);font-size:12px;
+}
+.ppl__row:last-child{border-bottom:0}
+.ppl__color{width:8px;height:24px;border-radius:2px}
+.ppl__dates{color:var(--ink)}
+.ppl__nights{color:var(--mute);font-size:11px;letter-spacing:.06em}
+.ppl__price{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.ppl__strike{
+  display:block;font-size:10px;color:var(--mute);
+  text-decoration:line-through;text-decoration-color:var(--warn);
+}
+
+/* ═══════════════════════════════════════════════════════
+   16 · GLOBAL RULES BAR
+   ═══════════════════════════════════════════════════════ */
+.grb{
+  padding:14px 22px;background:var(--emerald-soft);
+  border:1px solid var(--emerald);
+}
+.grb__h{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.20em;
+  text-transform:uppercase;color:var(--emerald-deep);
+  font-weight:700;margin-bottom:10px;
+  display:flex;justify-content:space-between;
+}
+.grb__chips{display:flex;gap:8px;flex-wrap:wrap}
+.grb__chip{
+  padding:6px 12px;background:#fff;border:1px solid var(--emerald);
+  font-family:var(--f-mono);font-size:11px;color:var(--emerald-deep);
+  cursor:pointer;
+}
+.grb__chip--on{background:var(--emerald);color:#fff}
+.grb__chip--ghost{border-style:dashed}
+
+/* ═══════════════════════════════════════════════════════
+   17 · SEQUENTIAL INPUT
+   ═══════════════════════════════════════════════════════ */
+.seq{padding:24px;background:#fff;border:1px solid var(--hair);max-width:520px}
+.seq__progress{
+  height:3px;background:var(--hair);margin-bottom:18px;
+}
+.seq__progress i{display:block;height:100%;background:var(--emerald);transition:width 300ms var(--ease)}
+.seq__period{
+  padding:20px;background:var(--paper);border:1px solid var(--hair);
+  text-align:center;margin-bottom:18px;
+}
+.seq__period h5{
+  font-family:var(--f-display);font-weight:800;font-size:22px;letter-spacing:-.02em;
+}
+.seq__period .range{
+  font-family:var(--f-mono);font-size:11px;color:var(--mute);margin-top:4px;
+  letter-spacing:.06em;
+}
+.seq__inp{
+  width:100%;padding:14px;text-align:center;font-size:24px;
+  font-family:var(--f-mono);font-weight:700;border:2px solid var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+.seq__dots{display:flex;justify-content:center;gap:8px;margin-top:16px}
+.seq__dot{
+  width:10px;height:10px;border-radius:50%;background:var(--hair);
+  transition:all 240ms var(--ease);
+}
+.seq__dot--done{background:var(--emerald)}
+.seq__dot--curr{background:var(--ink);transform:scale(1.3)}
+
+/* ═══════════════════════════════════════════════════════
+   18 · ROOM CONTEXT CARD
+   ═══════════════════════════════════════════════════════ */
+.rcx{
+  padding:18px;background:linear-gradient(135deg,var(--emerald-soft),#fff);
+  border:1px solid var(--emerald);max-width:300px;
+}
+.rcx__top{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.rcx__icon{
+  width:44px;height:44px;background:var(--emerald);color:#fff;
+  display:grid;place-items:center;font-weight:800;font-size:18px;border-radius:8px;
+  font-family:var(--f-display);
+}
+.rcx__name{font-weight:700;font-size:15px;letter-spacing:-.01em}
+.rcx__board{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--emerald-deep);margin-top:3px;
+}
+.rcx__stats{display:flex;gap:12px;padding-top:14px;border-top:1px solid var(--hair)}
+.rcx__stat{flex:1;text-align:center}
+.rcx__stat-v{font-weight:800;font-size:18px;color:var(--ink)}
+.rcx__stat-l{
+  font-family:var(--f-mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mute);margin-top:2px;
+}
+.rcx__tip{
+  margin-top:12px;padding:8px 10px;background:var(--gold-soft);
+  font-family:var(--f-ar);font-size:11px;color:var(--gold-deep);direction:rtl;
+}
+
+/* ═══════════════════════════════════════════════════════
+   19 · BATCH PERIODS PANEL
+   ═══════════════════════════════════════════════════════ */
+.batch{padding:22px;background:#fff;border:1px solid var(--hair)}
+.batch__tip{
+  padding:10px 12px;background:var(--gold-soft);border:1px dashed var(--gold);
+  font-family:var(--f-mono);font-size:11px;color:var(--gold-deep);margin-bottom:14px;
+}
+.batch__table{width:100%;border-collapse:collapse}
+.batch__table th{
+  text-align:start;padding:10px;font-family:var(--f-mono);font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--mute);
+  border-bottom:1px solid var(--hair);background:var(--paper2);font-weight:600;
+}
+.batch__table td{padding:6px;border-bottom:1px solid var(--hair)}
+.batch__table input{
+  width:100%;padding:8px;border:1px solid transparent;background:transparent;
+  font-family:var(--f-mono);font-size:12px;
+}
+.batch__table input:focus{border-color:var(--emerald);outline:none;background:#fff}
+.batch__x{
+  width:24px;height:24px;border-radius:50%;border:0;background:var(--warn-soft);
+  color:var(--warn);cursor:pointer;font-weight:700;
+}
+.batch__bar{
+  margin-top:14px;display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--f-mono);font-size:11px;color:var(--mute);
+}
+.batch__bar strong{color:var(--emerald)}
+
+/* ═══════════════════════════════════════════════════════
+   20 · DRAFTS LIST
+   ═══════════════════════════════════════════════════════ */
+.drafts{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.draft{
+  padding:16px;background:#fff;border:1px solid var(--hair);
+  position:relative;display:flex;flex-direction:column;gap:8px;
+}
+.draft::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);
+}
+.draft__name{font-weight:700;font-size:14px;letter-spacing:-.01em}
+.draft__step{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;color:var(--mute);
+}
+.draft__step strong{color:var(--ink);font-weight:600}
+.draft__actions{display:flex;gap:8px;margin-top:6px}
+.draft__resume{
+  flex:1;padding:7px 10px;background:var(--emerald);color:#fff;border:0;
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:600;cursor:pointer;
+}
+.draft__del{
+  padding:7px 10px;background:transparent;border:1px solid var(--hair);
+  color:var(--mute);cursor:pointer;font-family:var(--f-mono);font-size:10px;
+}
+.draft__del:hover{color:var(--warn);border-color:var(--warn)}
+
+/* ═══════════════════════════════════════════════════════
+   21 · SUCCESS SCREEN
+   ═══════════════════════════════════════════════════════ */
+.success{
+  padding:48px 32px;text-align:center;background:#fff;border:1px solid var(--emerald);
+}
+.success__check{
+  width:88px;height:88px;border-radius:50%;background:var(--emerald);
+  color:#fff;display:grid;place-items:center;font-size:44px;margin:0 auto 24px;
+  box-shadow:0 0 0 12px var(--emerald-soft);animation:pop 600ms var(--ease) both;
+}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.success__h{font-weight:800;font-size:32px;letter-spacing:-.03em;margin-bottom:8px}
+.success__sub{font-size:14px;color:var(--mute);margin-bottom:24px}
+.success__stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+  padding:20px;background:var(--paper);border:1px solid var(--hair);max-width:480px;
+  margin:0 auto 24px;
+}
+.success__stat-v{font-weight:800;font-size:24px;color:var(--emerald)}
+.success__stat-l{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--mute);margin-top:4px;
+}
+.success__id{
+  font-family:var(--f-mono);font-size:11px;color:var(--mute);
+  letter-spacing:.14em;margin-bottom:24px;
+}
+.success__actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+
+/* ═══════════════════════════════════════════════════════
+   22 · ERROR BOUNDARY
+   ═══════════════════════════════════════════════════════ */
+.err{
+  padding:32px;background:var(--warn-soft);border:1px solid var(--warn);
+  text-align:center;max-width:480px;
+}
+.err__icon{
+  width:56px;height:56px;border-radius:50%;background:var(--warn);color:#fff;
+  display:grid;place-items:center;font-size:32px;margin:0 auto 18px;
+  animation:shake 600ms var(--ease) both;
+}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.err__h{font-weight:800;font-size:20px;color:var(--warn);margin-bottom:6px}
+.err__msg{font-size:13px;color:#5C1A12;margin-bottom:18px}
+.err__actions{display:flex;justify-content:center;gap:10px}
+
+/* ═══════════════════════════════════════════════════════
+   23 · BADGE VARIANTS
+   ═══════════════════════════════════════════════════════ */
+.badges{display:flex;gap:10px;flex-wrap:wrap;padding:18px;background:#fff;border:1px solid var(--hair)}
+.b{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  padding:5px 9px;border:1px solid;font-weight:600;
+}
+.b::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+.b--ok{color:var(--emerald);border-color:var(--emerald);background:var(--emerald-soft)}
+.b--draft{color:var(--mute);border-color:var(--mute)}
+.b--warn{color:var(--amber);border-color:var(--amber);background:var(--amber-soft)}
+.b--archived{color:var(--ink);border-color:var(--ink);opacity:.55;text-decoration:line-through}
+.b--block{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.b--info{color:var(--info);border-color:var(--info);background:var(--info-soft)}
+
+/* ═══════════════════════════════════════════════════════
+   24 · PAGE TOP BAR
+   ═══════════════════════════════════════════════════════ */
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;gap:24px;
+  padding:18px 22px;background:#fff;border:1px solid var(--ink);position:relative;
+}
+.topbar__left{display:flex;align-items:center;gap:16px;min-width:0}
+.topbar__back{
+  padding:7px 12px;border:1px solid var(--ink);background:transparent;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  cursor:pointer;color:var(--ink);text-decoration:none;
+}
+.topbar__back:hover{background:var(--ink);color:#fff}
+.topbar__sep{width:1px;height:28px;background:var(--ink);opacity:.3}
+.topbar__title{font-weight:800;font-size:20px;letter-spacing:-.02em;line-height:1}
+.topbar__sub{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mute);margin-top:3px;
+}
+.topbar__right{display:flex;gap:8px;align-items:center}
+
+/* ═══════════════════════════════════════════════════════
+   25 · NO OFFERS SCREEN
+   ═══════════════════════════════════════════════════════ */
+.noof{
+  padding:32px;background:#fff;border:1px solid var(--hair);
+  text-align:center;
+}
+.noof__icon{font-size:48px;margin-bottom:14px}
+.noof__h{font-weight:800;font-size:24px;letter-spacing:-.02em;margin-bottom:8px}
+.noof__sub{font-size:13px;color:var(--mute);margin-bottom:24px}
+.noof__reasons{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  text-align:start;max-width:680px;margin:0 auto;
+}
+.noof__reason{
+  padding:14px;background:var(--paper);border:1px solid var(--hair);
+  border-top:3px solid var(--warn);
+}
+.noof__reason--med{border-top-color:var(--amber)}
+.noof__reason--info{border-top-color:var(--info)}
+.noof__r-h{font-weight:700;font-size:13px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.noof__r-msg{font-size:11.5px;color:var(--mute);line-height:1.5}
+
+/* ═══════════════════════════════════════════════════════
+   26 · PAGINATION
+   ═══════════════════════════════════════════════════════ */
+.pgn{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 22px;background:#fff;border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+}
+.pgn__meta{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mute);
+}
+.pgn__meta b{color:var(--ink);font-weight:600}
+.pgn__pages{display:flex;align-items:center}
+.pgn__pages a,.pgn__pages span{
+  min-width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid var(--ink);border-inline-end:0;text-decoration:none;color:var(--ink);
+  font-family:var(--f-mono);font-size:11px;font-variant-numeric:tabular-nums;cursor:pointer;
+}
+.pgn__pages a:last-child{border-inline-end:1px solid var(--ink)}
+.pgn__pages a:hover{background:var(--ink);color:#fff}
+.pgn__pages .curr{background:var(--ink);color:#fff;font-weight:600}
+.pgn__pages .gap{border-block:0;cursor:default}
+.pgn__pages .nav{padding:0 14px;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .master{padding:32px 24px}
+  .master__title{font-size:42px}
+  .feat__head{grid-template-columns:1fr;padding:20px 24px}
+  .feat__idx{font-size:42px}
+  .feat__demo{padding:20px 24px}
+  .cal{grid-template-columns:1fr}
+  .cdash__rules{grid-template-columns:1fr}
+  .noof__reasons{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ───── MASTHEAD ───── -->
+<header class="master">
+  <div class="master__kicker">BRIX · Travel — v7 Feature Library</div>
+  <h1 class="master__title">Twenty-Six <em>features</em>, one editorial language.</h1>
+  <p class="master__sub">
+    دِراسة كامِلة وَتَطبيق دَقيق لِكُلّ المُمَيِّزات المُستَخرَجة مِن النِظام الحاليّ، مُعاد بِناؤها بِنَمَط Bureau Borsche
+    التَحريريّ — تَقويم، تَنبيهات، إيصالات، خَطّ زَمَنيّ، نَوافِذ مَعالِج، أَزرار نَسخ، شَريط القَواعِد العامّة، وَأَكثَر.
+  </p>
+  <div class="master__meta">
+    <span><strong>26 features</strong> · drawn from production</span>
+    <span><strong>Edition</strong> v7.0 · 2026·05·29</span>
+    <span><strong>Reference</strong> brix-bot/hotel-web-app</span>
+  </div>
+</header>
+
+<!-- ───── TABLE OF CONTENTS ───── -->
+<nav class="toc">
+  <div class="toc__h">Table of contents · 26 features</div>
+  <div class="toc__grid">
+    <a class="toc__item" href="#f01"><span class="toc__num">01</span>التَقويم بِشَهرَين</a>
+    <a class="toc__item" href="#f02"><span class="toc__num">02</span>زَوج التَواريخ</a>
+    <a class="toc__item" href="#f03"><span class="toc__num">03</span>بِطاقة البَحث</a>
+    <a class="toc__item" href="#f04"><span class="toc__num">04</span>تَنبيه الأَقوى-فَقَط</a>
+    <a class="toc__item" href="#f05"><span class="toc__num">05</span>تَنبيه الحَجز القَريب</a>
+    <a class="toc__item" href="#f06"><span class="toc__num">06</span>إيصال السِعر التَفصيليّ</a>
+    <a class="toc__item" href="#f07"><span class="toc__num">07</span>الشَريط الزَمَنيّ</a>
+    <a class="toc__item" href="#f08"><span class="toc__num">08</span>قاطِرة الغُرَف</a>
+    <a class="toc__item" href="#f09"><span class="toc__num">09</span>نَسخ الأَسعار</a>
+    <a class="toc__item" href="#f10"><span class="toc__num">10</span>الجَدول المَقلوب</a>
+    <a class="toc__item" href="#f11"><span class="toc__num">11</span>لَوحة العَقد</a>
+    <a class="toc__item" href="#f12"><span class="toc__num">12</span>مُؤَشِّر المَعالِج</a>
+    <a class="toc__item" href="#f13"><span class="toc__num">13</span>مَرفَقات العَقد</a>
+    <a class="toc__item" href="#f14"><span class="toc__num">14</span>نَسخ العَرض</a>
+    <a class="toc__item" href="#f15"><span class="toc__num">15</span>أَسعار الفَترات</a>
+    <a class="toc__item" href="#f16"><span class="toc__num">16</span>القَواعِد العامّة</a>
+    <a class="toc__item" href="#f17"><span class="toc__num">17</span>الإدخال المُتَتالي</a>
+    <a class="toc__item" href="#f18"><span class="toc__num">18</span>سياق الغُرفة</a>
+    <a class="toc__item" href="#f19"><span class="toc__num">19</span>الوَضع الجَماعيّ</a>
+    <a class="toc__item" href="#f20"><span class="toc__num">20</span>المُسَوَّدات</a>
+    <a class="toc__item" href="#f21"><span class="toc__num">21</span>شاشة النَجاح</a>
+    <a class="toc__item" href="#f22"><span class="toc__num">22</span>مَصيدة الخَطأ</a>
+    <a class="toc__item" href="#f23"><span class="toc__num">23</span>الشارات</a>
+    <a class="toc__item" href="#f24"><span class="toc__num">24</span>الشَريط العُلويّ</a>
+    <a class="toc__item" href="#f25"><span class="toc__num">25</span>شاشة لا عُروض</a>
+    <a class="toc__item" href="#f26"><span class="toc__num">26</span>تَنَقُّل الصَفحات</a>
+  </div>
+</nav>
+
+<!-- ═══════════ 01 · CALENDAR ═══════════ -->
+<section class="feat" id="f01">
+  <header class="feat__head">
+    <div class="feat__idx">01</div>
+    <div class="feat__body">
+      <div class="feat__kicker">Calendar · DatePicker</div>
+      <h2 class="feat__title">التَقويم الذَكيّ بِشَهرَين</h2>
+      <p class="feat__desc">شَهران جَنباً لِجَنب، طَبَقات تَلوين لِلفَترات وَإيقاف البَيع وَالحَجز القَريب، مُعايَنة مَدى عِند التَمرير، ٩ حالات بَصَريّة لِليَوم.</p>
+    </div>
+    <span class="feat__tag feat__tag--star">★ Hero</span>
+  </header>
+  <div class="feat__demo">
+    <h4>Two-month grid</h4>
+    <div class="cal">
+      <div>
+        <div class="cal__month-head"><button class="cal__nav">‹</button><span>June 2026</span><span></span></div>
+        <div class="cal__weekdays"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div>
+        <div class="cal__grid">
+          <span class="cal__day cal__day--off">26</span><span class="cal__day cal__day--off">27</span><span class="cal__day cal__day--off">28</span><span class="cal__day cal__day--off">29</span><span class="cal__day cal__day--off">30</span><span class="cal__day cal__day--off">31</span><span class="cal__day cal__day--period-2">1</span>
+          <span class="cal__day cal__day--period-2">2</span><span class="cal__day cal__day--period-2">3</span><span class="cal__day cal__day--period-2 cal__day--start">4</span><span class="cal__day cal__day--range cal__day--period-2">5</span><span class="cal__day cal__day--range cal__day--period-2">6</span><span class="cal__day cal__day--range cal__day--period-2">7</span><span class="cal__day cal__day--range cal__day--period-2">8</span>
+          <span class="cal__day cal__day--range cal__day--period-2">9</span><span class="cal__day cal__day--range cal__day--end">10</span><span class="cal__day">11</span><span class="cal__day">12</span><span class="cal__day cal__day--late">13</span><span class="cal__day">14</span><span class="cal__day cal__day--period-1">15</span>
+          <span class="cal__day cal__day--period-1">16</span><span class="cal__day cal__day--period-1">17</span><span class="cal__day cal__day--period-1">18</span><span class="cal__day cal__day--period-1 cal__day--today">19</span><span class="cal__day cal__day--period-1">20</span><span class="cal__day cal__day--stop-partial">21</span><span class="cal__day cal__day--stop-partial">22</span>
+          <span class="cal__day cal__day--stop-full">23</span><span class="cal__day cal__day--stop-full">24</span><span class="cal__day cal__day--stop-full">25</span><span class="cal__day cal__day--period-1">26</span><span class="cal__day cal__day--period-1">27</span><span class="cal__day cal__day--period-1">28</span><span class="cal__day cal__day--period-1">29</span>
+          <span class="cal__day cal__day--period-1">30</span><span class="cal__day cal__day--off">1</span><span class="cal__day cal__day--off">2</span><span class="cal__day cal__day--off">3</span><span class="cal__day cal__day--off">4</span><span class="cal__day cal__day--off">5</span><span class="cal__day cal__day--off">6</span>
+        </div>
+      </div>
+      <div>
+        <div class="cal__month-head"><span></span><span>July 2026</span><button class="cal__nav">›</button></div>
+        <div class="cal__weekdays"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div>
+        <div class="cal__grid">
+          <span class="cal__day cal__day--off">30</span><span class="cal__day cal__day--period-1">1</span><span class="cal__day cal__day--period-1">2</span><span class="cal__day cal__day--period-1">3</span><span class="cal__day cal__day--period-1">4</span><span class="cal__day cal__day--period-1">5</span><span class="cal__day cal__day--period-1">6</span>
+          <span class="cal__day cal__day--period-1">7</span><span class="cal__day cal__day--period-1">8</span><span class="cal__day cal__day--period-1">9</span><span class="cal__day cal__day--period-1">10</span><span class="cal__day cal__day--period-1">11</span><span class="cal__day cal__day--period-1">12</span><span class="cal__day cal__day--period-1">13</span>
+          <span class="cal__day cal__day--period-1">14</span><span class="cal__day">15</span><span class="cal__day">16</span><span class="cal__day">17</span><span class="cal__day">18</span><span class="cal__day">19</span><span class="cal__day">20</span>
+          <span class="cal__day">21</span><span class="cal__day">22</span><span class="cal__day">23</span><span class="cal__day">24</span><span class="cal__day">25</span><span class="cal__day">26</span><span class="cal__day">27</span>
+          <span class="cal__day">28</span><span class="cal__day">29</span><span class="cal__day">30</span><span class="cal__day">31</span><span class="cal__day cal__day--off">1</span><span class="cal__day cal__day--off">2</span><span class="cal__day cal__day--off">3</span>
+        </div>
+      </div>
+      <div class="cal__legend">
+        <span><i style="background:rgba(4,120,87,.12)"></i>داخِل المَدى</span>
+        <span><i style="background:var(--emerald)"></i>نِهايَتا المَدى</span>
+        <span><i style="background:var(--gold)"></i>فَترة A</span>
+        <span><i style="background:var(--emerald)"></i>فَترة B</span>
+        <span><i style="background:#FCEFEC"></i>إيقاف بَيع كامِل</span>
+        <span><i style="background:var(--gold-soft)"></i>إيقاف جُزئيّ</span>
+        <span><i style="outline:2px solid var(--amber)"></i>حَجز قَريب</span>
+      </div>
+    </div>
+  </div>
+  <div class="feat__notes"><strong>الفائدة:</strong> يَكشِف فَوراً الأيّام المُتاحة، المَحظورة، وَالحَرِجة، دون فَتح شاشة تَفاصيل.</div>
+</section>
+
+<!-- ═══════════ 02 · DATE RANGE PAIR ═══════════ -->
+<section class="feat" id="f02">
+  <header class="feat__head">
+    <div class="feat__idx">02</div>
+    <div class="feat__body">
+      <div class="feat__kicker">DateRangePair · 4 states</div>
+      <h2 class="feat__title">زَوج التَواريخ بِأَربَع حالات</h2>
+      <p class="feat__desc">حَقلا الوُصول وَالمُغادَرة بِحالات بَصَريّة: فارِغ، جُزئيّ، مُكتَمِل، خَطأ. شَريط جِسر بَينَهُما يُحَدِّد عَدَد الليالي.</p>
+    </div>
+    <span class="feat__tag">Component</span>
+  </header>
+  <div class="feat__demo">
+    <h4>Complete state</h4>
+    <div class="drp">
+      <div class="drp__field drp__field--complete">
+        <span class="drp__lbl">Check in</span>
+        <span class="drp__val">04 Jul 2026</span>
+      </div>
+      <div class="drp__bridge"><span class="drp__nights">7 nights</span><i style="width:100%"></i></div>
+      <div class="drp__field drp__field--complete">
+        <span class="drp__lbl">Check out</span>
+        <span class="drp__val">11 Jul 2026</span>
+      </div>
+    </div>
+    <h4>Partial state</h4>
+    <div class="drp">
+      <div class="drp__field drp__field--partial">
+        <span class="drp__lbl">Check in</span>
+        <span class="drp__val">04 Jul 2026</span>
+      </div>
+      <div class="drp__bridge"><i style="width:50%;background:var(--gold)"></i></div>
+      <div class="drp__field drp__field--empty">
+        <span class="drp__lbl">Check out</span>
+        <span class="drp__val">— Select —</span>
+      </div>
+    </div>
+    <h4>Empty & Error states</h4>
+    <div class="drp">
+      <div class="drp__field drp__field--empty">
+        <span class="drp__lbl">Check in</span>
+        <span class="drp__val">— Select —</span>
+      </div>
+      <div class="drp__bridge"><i style="width:0"></i></div>
+      <div class="drp__field drp__field--error">
+        <span class="drp__lbl">Check out</span>
+        <span class="drp__val">Invalid</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 03 · HOTEL SEARCH CARD ═══════════ -->
+<section class="feat" id="f03">
+  <header class="feat__head">
+    <div class="feat__idx">03</div>
+    <div class="feat__body">
+      <div class="feat__kicker">HotelSearchCard · smart cap</div>
+      <h2 class="feat__title">بِطاقة بَحث الفُندُق</h2>
+      <p class="feat__desc">١١ حَقلاً، قَصّ تِلقائيّ لِعُمر الطِفل عِند تَغيير الفُندُق، تَلميح يَشرَح القَصّ، أَزرار ليالي سَريعة، خانة شَهر العَسَل.</p>
+    </div>
+    <span class="feat__tag">Form</span>
+  </header>
+  <div class="feat__demo">
+    <div class="hsc">
+      <div class="hsc__row">
+        <div class="hsc__field" style="flex:2">
+          <label class="hsc__lbl">Hotel</label>
+          <select class="hsc__sel"><option>Sueno Hotels Deluxe Belek</option></select>
+        </div>
+        <div class="hsc__field">
+          <label class="hsc__lbl">Board</label>
+          <select class="hsc__sel"><option>AI · All Inclusive</option></select>
+        </div>
+      </div>
+      <div class="hsc__row">
+        <div class="hsc__field" style="flex:2">
+          <label class="hsc__lbl">Stay</label>
+          <input class="hsc__inp" value="04 Jul → 11 Jul · 7 nights" readonly>
+        </div>
+        <div class="hsc__field">
+          <label class="hsc__lbl">Quick nights</label>
+          <div class="hsc__chips">
+            <span class="hsc__chip">1</span><span class="hsc__chip">2</span><span class="hsc__chip">3</span>
+            <span class="hsc__chip">5</span><span class="hsc__chip hsc__chip--on">7</span>
+          </div>
+        </div>
+      </div>
+      <div class="hsc__row">
+        <div class="hsc__field">
+          <label class="hsc__lbl">Adults</label>
+          <div class="hsc__step"><button>−</button><span>2</span><button>+</button></div>
+        </div>
+        <div class="hsc__field">
+          <label class="hsc__lbl">Children</label>
+          <div class="hsc__step"><button>−</button><span>2</span><button>+</button></div>
+        </div>
+        <div class="hsc__field" style="flex:2">
+          <label class="hsc__lbl">Child ages</label>
+          <div class="hsc__chips">
+            <span class="hsc__age-chip">7 y</span>
+            <span class="hsc__age-chip hsc__age-chip--cut">11 y (was 17)</span>
+          </div>
+          <div class="hsc__tip">هذا الفُندُق يُعامِل الأَعمار ١٢+ كَبالِغين — حَدّ الطِفل ١١ سَنة.</div>
+        </div>
+      </div>
+      <div class="hsc__row">
+        <label class="hsc__honeymoon">
+          <input type="checkbox"> شَهر عَسَل — يَتطَلَّب شَهادة زَواج عِند التَسجيل
+        </label>
+      </div>
+      <button class="btn btn--primary" style="width:100%;padding:14px">Search availability →</button>
+    </div>
+  </div>
+  <div class="feat__notes"><strong>الميزَة الفَريدة:</strong> القَصّ التِلقائيّ يَمنَع الخَطأ الصامِت — لَو كانَ سَقف الفُندُق الجَديد ١٢ فَكُلّ عُمر فَوقَه يُقَصّ مَع تَلميح يَشرَح السَبَب.</div>
+</section>
+
+<!-- ═══════════ 04 · POLICY STRONGEST WARNING ═══════════ -->
+<section class="feat" id="f04">
+  <header class="feat__head">
+    <div class="feat__idx">04</div>
+    <div class="feat__body">
+      <div class="feat__kicker">Policy warnings · strongest-only</div>
+      <h2 class="feat__title">شَريط الأَقوى-فَقَط</h2>
+      <p class="feat__desc">يَعرِض أَقوى تَنبيه فَقَط (مَحظور &gt; عُمر &gt; release &gt; askAndSale)، مَع زِرّ "+N أُخرى" يَفتَح البَقيّة.</p>
+    </div>
+    <span class="feat__tag feat__tag--star">★ Hero</span>
+  </header>
+  <div class="feat__demo">
+    <div class="pwarn">
+      <div class="pwarn__icon">!</div>
+      <div>
+        <div class="pwarn__title">مَحظور لِجِنسيّات مُعَيَّنة</div>
+        <div class="pwarn__msg">الفُندُق لا يَقبَل الجِنسيّات الرُوسيّة وَالأُوكرانيّة لِهَذا المَوسِم. تَحَقَّق مَع المَكتَب قَبل أَيّ تَواصُل مَع العَميل.</div>
+      </div>
+      <button class="pwarn__more">+ 2 أُخرى</button>
+      <div class="pwarn__chips" style="display:none">
+        <span class="pwarn__chip">يَحتاج مُوافَقة</span>
+        <span class="pwarn__chip">حَدّ عُمر ٣+</span>
+      </div>
+    </div>
+  </div>
+  <div class="feat__notes"><strong>المَنطِق:</strong> رَقم أَصغَر = أَقوى. تَرتيب الأَولَويّة: ١. مَحظور ٢. حَدّ عُمر ٣. release ٤. مُوافَقة. يَمنَع زَحمة ٣ شارات مُتَكَدِّسة.</div>
+</section>
+
+<!-- ═══════════ 05 · LATE BOOKING ═══════════ -->
+<section class="feat" id="f05">
+  <header class="feat__head">
+    <div class="feat__idx">05</div>
+    <div class="feat__body">
+      <div class="feat__kicker">Late booking · banner</div>
+      <h2 class="feat__title">تَنبيه الحَجز القَريب</h2>
+      <p class="feat__desc">يَظهَر فَقَط عِندَما يَكون الوُصول الغَد (today &lt; checkIn &lt; today+2 بِتَوقيت إسطنبول).</p>
+    </div>
+    <span class="feat__tag">Banner</span>
+  </header>
+  <div class="feat__demo">
+    <div class="late">
+      <span class="late__icon">⏱</span>
+      <div>
+        <div class="late__title">حَجز قَريب جِدّاً</div>
+        <div class="late__msg">هَذا حَجز بِمَهلَة قَصيرة. الأَسعار أَدناه صَحيحة بِحَسَب العَقد، لكِنَّ التَوَفُّر قَد يَتَغَيَّر سَريعاً خِلال ٤٨ ساعة. <strong>راجِع الفُندُق هاتِفيّاً قَبل التَأكيد.</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 06 · RECEIPT BREAKDOWN ═══════════ -->
+<section class="feat" id="f06">
+  <header class="feat__head">
+    <div class="feat__idx">06</div>
+    <div class="feat__body">
+      <div class="feat__kicker">PriceBreakdownPanel · receipt</div>
+      <h2 class="feat__title">الإيصال التَفصيليّ لِلسِعر</h2>
+      <p class="feat__desc">أَقسام إيصال مَتجَر: سِعر الأَساس × مُعامِل × ليالي، خَصومات، إِضافات، مَجموع نِهائيّ. يَدمُج إيقاف البَيع داخِل المَجموع.</p>
+    </div>
+    <span class="feat__tag feat__tag--star">★ Hero</span>
+  </header>
+  <div class="feat__demo">
+    <div class="rcpt">
+      <header class="rcpt__head">
+        <div class="rcpt__title">Deluxe Room AI · 7 nights</div>
+        <div class="rcpt__sub">SUENO BELEK · 03 JUN → 10 JUN 2026 · 2A + 2C (7y, 1.5y)</div>
+      </header>
+      <div class="rcpt__guests">
+        <strong>2 Adults</strong> · <strong>1 Child</strong> 7y · <strong>1 Infant</strong> 1.5y · المُعامِل المُستَنتَج <strong>×2.5</strong>
+      </div>
+      <div class="rcpt__sect">
+        <div class="rcpt__sect-h"><span>Adult base</span><span>EUR</span></div>
+        <dl class="rcpt__row"><dt>PP · per person per night<span class="formula">€185.00</span></dt><dd>185.00</dd></dl>
+        <dl class="rcpt__row"><dt>2 adults × 7 nights × ×2.5</dt><dd>3,694.00</dd></dl>
+      </div>
+      <div class="rcpt__sect">
+        <div class="rcpt__sect-h"><span>Children · Infants</span><span></span></div>
+        <dl class="rcpt__row"><dt>CHD 7y · included in multiplier</dt><dd>0.00</dd></dl>
+        <dl class="rcpt__row"><dt>INF 1.5y · &lt; infant_age_max (2)</dt><dd>FREE</dd></dl>
+      </div>
+      <div class="rcpt__sect">
+        <div class="rcpt__sect-h"><span>Discounts</span><span></span></div>
+        <dl class="rcpt__row rcpt__row--disc"><dt>− Early Bird · booked &gt; 60 d</dt><dd>−555.10 (30%)</dd></dl>
+        <dl class="rcpt__row rcpt__row--disc"><dt>− Sueno Manager · Haytham (permanent)</dt><dd>−1,291.90 (50%)</dd></dl>
+      </div>
+      <div class="rcpt__sect">
+        <div class="rcpt__sect-h"><span>Supplements</span><span></span></div>
+        <dl class="rcpt__row rcpt__row--add"><dt>Sea view supplement · PER_ROOM</dt><dd>+0.00</dd></dl>
+      </div>
+      <div class="rcpt__total">
+        <span class="rcpt__total-lbl">Total payable · 7 nights</span>
+        <span class="rcpt__total-amt"><span class="ccy">EUR</span>1,847.00</span>
+        <span class="rcpt__save">You save €1,847 · 50%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 07 · TIMELINE ═══════════ -->
+<section class="feat" id="f07">
+  <header class="feat__head">
+    <div class="feat__idx">07</div>
+    <div class="feat__body">
+      <div class="feat__kicker">ContractTimeline · 10 colors</div>
+      <h2 class="feat__title">الشَريط الزَمَنيّ بِعَشَرة أَلوان</h2>
+      <p class="feat__desc">عَرض نِسبيّ دَقيق لِكُلّ فَترة، الفَترة النَشِطة مُحاطة بِهالة، أَلوان مُتَباعِدة لِمَنع التَجاوُر اللَونيّ.</p>
+    </div>
+    <span class="feat__tag feat__tag--star">★ Hero</span>
+  </header>
+  <div class="feat__demo">
+    <div class="tl">
+      <div class="tl__head"><span>1 Apr 2026</span><span>Contract span · 214 days</span><span>31 Oct 2026</span></div>
+      <div class="tl__track">
+        <div class="tl__seg" style="left:0;width:14%;background:var(--r1)">Low</div>
+        <div class="tl__seg" style="left:14%;width:12%;background:var(--r2)">Shoulder</div>
+        <div class="tl__seg tl__seg--active" style="left:26%;width:24%;background:linear-gradient(135deg,var(--r3),#5b1d8f)">High Season</div>
+        <div class="tl__seg" style="left:50%;width:10%;background:var(--r4)">Peak</div>
+        <div class="tl__seg" style="left:60%;width:10%;background:var(--r5)">Aug A</div>
+        <div class="tl__seg" style="left:70%;width:12%;background:var(--r6)">Aug B</div>
+        <div class="tl__seg" style="left:82%;width:18%;background:var(--r7)">Autumn</div>
+      </div>
+      <div class="tl__labels"><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 08 · ROOM CAROUSEL ═══════════ -->
+<section class="feat" id="f08">
+  <header class="feat__head">
+    <div class="feat__idx">08</div>
+    <div class="feat__body">
+      <div class="feat__kicker">RoomCarousel · progress</div>
+      <h2 class="feat__title">قاطِرة الغُرَف بِشَريط التَقَدُّم</h2>
+      <p class="feat__desc">كُلّ غُرفة بِلَون فَريد، شَريط تَقَدُّم سُفليّ يُظهِر نِسبة اكتِمال الأَسعار، ✓ خَضراء عِند الاكتِمال.</p>
+    </div>
+    <span class="feat__tag feat__tag--star">★ Hero</span>
+  </header>
+  <div class="feat__demo">
+    <div class="rcar">
+      <div class="rcar__head">
+        <strong>Sueno Deluxe — 7 rooms</strong>
+        <div class="rcar__nav"><button>‹</button><button>›</button></div>
+      </div>
+      <div class="rcar__track">
+        <div class="rcar__room rcar__room--done"><div class="rcar__room-name">Deluxe AI</div><div class="rcar__room-pct">7/7</div><div class="rcar__room-bar"><i style="width:100%"></i></div></div>
+        <div class="rcar__room rcar__room--done"><div class="rcar__room-name">Sea View</div><div class="rcar__room-pct">7/7</div><div class="rcar__room-bar"><i style="width:100%"></i></div></div>
+        <div class="rcar__room rcar__room--active"><div class="rcar__room-name">Junior Suite</div><div class="rcar__room-pct">5/7</div><div class="rcar__room-bar"><i style="width:71%"></i></div></div>
+        <div class="rcar__room"><div class="rcar__room-name">Family Suite</div><div class="rcar__room-pct">2/7</div><div class="rcar__room-bar"><i style="width:28%;background:var(--gold)"></i></div></div>
+        <div class="rcar__room"><div class="rcar__room-name">Penthouse</div><div class="rcar__room-pct">0/7</div><div class="rcar__room-bar"><i style="width:0"></i></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 09 · COPY PRICES ═══════════ -->
+<section class="feat" id="f09">
+  <header class="feat__head">
+    <div class="feat__idx">09</div>
+    <div class="feat__body">
+      <div class="feat__kicker">SmartActions · copy prices</div>
+      <h2 class="feat__title">نَسخ الأَسعار بِنَقرَتَين</h2>
+      <p class="feat__desc">نافِذة تَنسَخ أَسعار غُرفة لِغُرَف أُخرى مَع تَعديل نِسبة وَاختيار ما يُنسَخ. تَراجُع مَع عَدّاد سِجِلّ.</p>
+    </div>
+    <span class="feat__tag feat__tag--star">★ Hero</span>
+  </header>
+  <div class="feat__demo">
+    <div class="modal">
+      <header class="modal__h">
+        <div>
+          <div class="modal__h-eyebrow">09 · Smart Actions</div>
+          <div class="modal__h-title">Copy prices to other rooms <small>From Deluxe AI</small></div>
+        </div>
+        <button class="modal__x">×</button>
+      </header>
+      <div class="modal__body">
+        <div class="modal__undo"><span>Undo history: <strong>4 steps</strong></span><button>↶ Undo last</button></div>
+        <div>
+          <div class="modal__sect-h"><span>What to copy</span><a>Select all</a></div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="modal__opt modal__opt--on"><span class="modal__check">✓</span><div><div>PP prices</div><small>Base price per period</small></div></div>
+            <div class="modal__opt modal__opt--on"><span class="modal__check">✓</span><div><div>Multipliers</div><small>Per occupancy combination</small></div></div>
+            <div class="modal__opt"><span class="modal__check">✓</span><div><div>Occupancy rows</div><small>Same row structure</small></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal__sect-h"><span>Price adjustment</span></div>
+          <div class="modal__chips">
+            <span class="modal__chip">−20%</span><span class="modal__chip">−10%</span>
+            <span class="modal__chip modal__chip--on">Same</span>
+            <span class="modal__chip">+10%</span><span class="modal__chip">+15%</span><span class="modal__chip">+20%</span><span class="modal__chip">+25%</span>
+          </div>
+        </div>
+        <div>
+          <div class="modal__sect-h"><span>To rooms</span><a>Select all</a></div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="modal__opt modal__opt--on"><span class="modal__check">✓</span><span class="modal__dot" style="background:var(--r1)"></span><div>Superior Sea View</div></div>
+            <div class="modal__opt modal__opt--on"><span class="modal__check">✓</span><span class="modal__dot" style="background:var(--r4)"></span><div>Family Suite</div></div>
+            <div class="modal__opt"><span class="modal__check">✓</span><span class="modal__dot" style="background:var(--r3)"></span><div>Penthouse</div></div>
+          </div>
+        </div>
+      </div>
+      <footer class="modal__f">
+        <span>3 options → 2 rooms</span>
+        <div style="display:flex;gap:8px"><button class="btn btn--ghost">Cancel</button><button class="btn btn--primary">Copy</button></div>
+      </footer>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 10 · FLIPPED PRICING TABLE ═══════════ -->
+<section class="feat" id="f10">
+  <header class="feat__head">
+    <div class="feat__idx">10</div>
+    <div class="feat__body">
+      <div class="feat__kicker">FlippedPricingTable</div>
+      <h2 class="feat__title">الجَدول المَقلوب</h2>
+      <p class="feat__desc">الفَترات أَعمِدة، تَركيبات الإشغال صُفوف، لَون لِكُلّ عَدَد بالِغين، خَلايا ناقِصة بِأَحمَر بارِز.</p>
+    </div>
+    <span class="feat__tag">Table</span>
+  </header>
+  <div class="feat__demo">
+    <div class="ftbl">
+      <table>
+        <thead>
+          <tr>
+            <th>Deluxe AI</th>
+            <th><span class="ph-name">Winter</span><span class="ph-dates">1 Jan → 31 Mar</span></th>
+            <th><span class="ph-name">Spring</span><span class="ph-dates">1 Apr → 30 Jun</span></th>
+            <th><span class="ph-name">Peak Summer</span><span class="ph-dates">1 Jul → 31 Aug</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="pp"><td>PP</td><td>40 €</td><td>60 €</td><td>95 €</td></tr>
+          <tr class="occ-1"><td>1A</td><td><span class="mult">×1.0</span>40</td><td><span class="mult">×1.0</span>60</td><td><span class="mult">×1.0</span>95</td></tr>
+          <tr class="occ-2"><td>2A</td><td><span class="mult">×1.7</span>68</td><td><span class="mult">×1.7</span>102</td><td><span class="mult">×1.7</span>161.5</td></tr>
+          <tr class="occ-2"><td>2A+1C</td><td><span class="mult">×2.1</span>84</td><td class="miss">No rate</td><td><span class="mult">×2.1</span>199.5</td></tr>
+          <tr class="occ-3"><td>3A</td><td><span class="mult">×2.4</span>96</td><td class="miss">No rate</td><td><span class="mult">×2.4</span>228</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 11 · CONTRACT DASHBOARD ═══════════ -->
+<section class="feat" id="f11">
+  <header class="feat__head">
+    <div class="feat__idx">11</div>
+    <div class="feat__body">
+      <div class="feat__kicker">ContractDashboard</div>
+      <h2 class="feat__title">لَوحة العَقد الشامِلة</h2>
+      <p class="feat__desc">صَفحة واحِدة تَجمَع كُلّ بَيانات العَقد: إحصاءات، فَلتَر النَواقِص، خَصومات، إِضافات، إيقاف بَيع.</p>
+    </div>
+    <span class="feat__tag">Dashboard</span>
+  </header>
+  <div class="feat__demo">
+    <div class="cdash__stats">
+      <span class="cdash__stat"><span>Rooms</span><strong>7</strong></span>
+      <span class="cdash__stat"><span>Periods</span><strong>5</strong></span>
+      <span class="cdash__stat cdash__stat--ok"><span>Coverage</span><strong>✓ 100%</strong></span>
+      <span class="cdash__stat"><span>Discounts</span><strong>3</strong></span>
+      <span class="cdash__stat cdash__stat--err"><span>Stop sales</span><strong>1</strong></span>
+    </div>
+    <div class="cdash__filters">
+      <span class="cdash__chip cdash__chip--on"><i></i>Missing only</span>
+      <span class="cdash__chip">Show inactive</span>
+      <span class="cdash__chip">+ Add room</span>
+      <span class="cdash__chip">+ Add period</span>
+    </div>
+    <div class="cdash__rules">
+      <div class="cdash__rule cdash__rule--disc">
+        <h5>Discounts <span>3</span></h5>
+        <div class="cdash__rule-row"><div>Early Booking · 60 d</div><span class="cdash__rule-val" style="color:var(--r3);background:#F5F0FE">−30%</span></div>
+        <div class="cdash__rule-row"><div>Sueno Manager · permanent</div><span class="cdash__rule-val" style="color:var(--r3);background:#F5F0FE">−50%</span></div>
+        <div class="cdash__rule-row"><div>Senior · 60+</div><span class="cdash__rule-val" style="color:var(--r3);background:#F5F0FE">−15%</span></div>
+      </div>
+      <div class="cdash__rule cdash__rule--supp">
+        <h5>Supplements <span>2</span></h5>
+        <div class="cdash__rule-row"><div>Gala dinner · 31 Dec</div><span class="cdash__rule-val" style="color:var(--r1);background:#F0F4FE">+75 €</span></div>
+        <div class="cdash__rule-row"><div>Extra bed · all periods</div><span class="cdash__rule-val" style="color:var(--r1);background:#F0F4FE">+20 €</span></div>
+      </div>
+      <div class="cdash__rule cdash__rule--stop">
+        <h5>Stop sales <span>1</span></h5>
+        <div class="cdash__rule-row"><div>Group block · all rooms</div><span class="cdash__rule-val" style="color:var(--warn);background:var(--warn-soft)">15 → 22 Aug</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 12 · WIZARD PROGRESS ═══════════ -->
+<section class="feat" id="f12">
+  <header class="feat__head">
+    <div class="feat__idx">12</div>
+    <div class="feat__body">
+      <div class="feat__kicker">WizardProgress · 8 steps</div>
+      <h2 class="feat__title">مُؤَشِّر تَقَدُّم المَعالِج</h2>
+      <p class="feat__desc">ثَمانية خُطوات: فُندُق، غُرَف، فَترات، تَسعير، خَصومات، إِضافات، إيقاف، اكتِمال. حالات: مُكتَمِل، نَشِط، قادِم.</p>
+    </div>
+    <span class="feat__tag">Navigation</span>
+  </header>
+  <div class="feat__demo">
+    <div class="wiz">
+      <div class="wiz__bar"><i style="width:50%"></i></div>
+      <div class="wiz__steps">
+        <div class="wiz__step wiz__step--done"><div class="wiz__num">✓</div><div class="wiz__lbl">Hotel</div></div>
+        <div class="wiz__step wiz__step--done"><div class="wiz__num">✓</div><div class="wiz__lbl">Rooms</div></div>
+        <div class="wiz__step wiz__step--done"><div class="wiz__num">✓</div><div class="wiz__lbl">Periods</div></div>
+        <div class="wiz__step wiz__step--done"><div class="wiz__num">✓</div><div class="wiz__lbl">Pricing</div></div>
+        <div class="wiz__step wiz__step--active"><div class="wiz__num">5</div><div class="wiz__lbl">Discounts</div></div>
+        <div class="wiz__step"><div class="wiz__num">6</div><div class="wiz__lbl">Extras</div></div>
+        <div class="wiz__step"><div class="wiz__num">7</div><div class="wiz__lbl">Stops</div></div>
+        <div class="wiz__step"><div class="wiz__num">8</div><div class="wiz__lbl">Complete</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 13 · CONTRACT FILES ═══════════ -->
+<section class="feat" id="f13">
+  <header class="feat__head">
+    <div class="feat__idx">13</div>
+    <div class="feat__body">
+      <div class="feat__kicker">ContractFilesButton</div>
+      <h2 class="feat__title">زِرّ مَرفَقات العَقد</h2>
+      <p class="feat__desc">زِرّ صَغير يَفتَح قائِمة بِكُلّ مَلَفّات العَقد المُرتَبِطة (PDF / XLS) قابِلة لِلتَحميل.</p>
+    </div>
+    <span class="feat__tag">Component</span>
+  </header>
+  <div class="feat__demo">
+    <p style="margin-bottom:14px;font-size:13px">Sueno Deluxe — <button class="cfb">📎 Contract (3)</button></p>
+    <div class="cfb-menu">
+      <ul class="cfb-list" style="list-style:none">
+        <li><a href="#"><span class="cfb-icon cfb-icon--pdf">PDF</span><span class="cfb-name">Sueno-Contract-2026.pdf</span><span class="cfb-meta">1.4 MB</span></a></li>
+        <li><a href="#"><span class="cfb-icon cfb-icon--xls">XLS</span><span class="cfb-name">Sueno-Rates-Summer.xlsx</span><span class="cfb-meta">320 KB</span></a></li>
+        <li><a href="#"><span class="cfb-icon cfb-icon--pdf">PDF</span><span class="cfb-name">Sueno-SPO-May.pdf</span><span class="cfb-meta">180 KB</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 14 · COPY OFFER ═══════════ -->
+<section class="feat" id="f14">
+  <header class="feat__head">
+    <div class="feat__idx">14</div>
+    <div class="feat__body">
+      <div class="feat__kicker">CopyOfferButton</div>
+      <h2 class="feat__title">زِرّ نَسخ العَرض</h2>
+      <p class="feat__desc">يَنسَخ العَرض بِتَنسيق مُحَسَّن لِلصَقِه في تلغرام مَع تَأكيد فَوريّ بِتَغَيُّر لَون الزِرّ.</p>
+    </div>
+    <span class="feat__tag feat__tag--star">★ Hero</span>
+  </header>
+  <div class="feat__demo">
+    <div style="display:flex;gap:14px;margin-bottom:14px">
+      <button class="cob">⧉ Copy</button>
+      <button class="cob cob--copied">✓ Copied</button>
+    </div>
+    <div class="cob-preview">Sueno Deluxe
+Deluxe Room AI
+DBL (2A+1C+1I)
+Jun 15 → 20 · 263.86 EUR/night
+Jun 28 → Jul 3 · 285.10 EUR/night</div>
+  </div>
+</section>
+
+<!-- ═══════════ 15 · PERIOD PRICE LIST ═══════════ -->
+<section class="feat" id="f15">
+  <header class="feat__head">
+    <div class="feat__idx">15</div>
+    <div class="feat__body">
+      <div class="feat__kicker">PeriodPriceList</div>
+      <h2 class="feat__title">قائِمة أَسعار الفَترات</h2>
+      <p class="feat__desc">عِندَ امتِداد الإقامة عَبر فَترَتَين أَو أَكثَر، تَكشِف كَم ليلَة في كُلّ فَترة وَبِأَيّ سِعر.</p>
+    </div>
+    <span class="feat__tag">Component</span>
+  </header>
+  <div class="feat__demo">
+    <div class="ppl">
+      <dl class="ppl__row">
+        <span class="ppl__color" style="background:var(--r1)"></span>
+        <div><div class="ppl__dates">12 Jun → 14 Jun</div><div class="ppl__nights">2 nights · Low Season</div></div>
+        <div class="ppl__price">240.00<span class="ppl__strike">300.00</span></div>
+        <span style="font-family:var(--f-mono);font-size:10px;color:var(--emerald)">EBD −20%</span>
+      </dl>
+      <dl class="ppl__row">
+        <span class="ppl__color" style="background:var(--r3)"></span>
+        <div><div class="ppl__dates">15 Jun → 19 Jun</div><div class="ppl__nights">4 nights · High Season</div></div>
+        <div class="ppl__price">380.00</div>
+        <span style="font-family:var(--f-mono);font-size:10px;color:var(--mute)">no discount</span>
+      </dl>
+      <dl class="ppl__row" style="background:var(--ink);color:#fff;padding:14px 12px;margin-top:8px">
+        <span></span>
+        <div><div class="ppl__dates" style="color:#fff">Total · 6 nights</div></div>
+        <div class="ppl__price" style="color:var(--gold);font-size:18px">EUR 2,000.00</div>
+        <span></span>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 16 · GLOBAL RULES ═══════════ -->
+<section class="feat" id="f16">
+  <header class="feat__head">
+    <div class="feat__idx">16</div>
+    <div class="feat__body">
+      <div class="feat__kicker">GlobalRulesBar + custom</div>
+      <h2 class="feat__title">شَريط القَواعِد العامّة</h2>
+      <p class="feat__desc">قَواعِد مُطَبَّقة على كُلّ الغُرَف، مَع زِرّ "+ قاعِدة مُخَصَّصة" يَفتَح نافِذة.</p>
+    </div>
+    <span class="feat__tag">Bar</span>
+  </header>
+  <div class="feat__demo">
+    <div class="grb">
+      <div class="grb__h"><span>Global pricing rules</span><span>4 active · 1 custom</span></div>
+      <div class="grb__chips">
+        <span class="grb__chip grb__chip--on">☑ Single +30%</span>
+        <span class="grb__chip grb__chip--on">☑ Adult 3 −30%</span>
+        <span class="grb__chip">☐ Adult 4 −50%</span>
+        <span class="grb__chip">☐ Triple −10%</span>
+        <span class="grb__chip grb__chip--ghost">+ Custom rule</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 17 · SEQUENTIAL INPUT ═══════════ -->
+<section class="feat" id="f17">
+  <header class="feat__head">
+    <div class="feat__idx">17</div>
+    <div class="feat__body">
+      <div class="feat__kicker">SequentialPPModal</div>
+      <h2 class="feat__title">الإدخال المُتَتالي</h2>
+      <p class="feat__desc">إدخال فَترة تِلو فَترة بِشَريط تَقَدُّم + نِقاط حالة، يَختَصِر دَقائق العَمَل لِثَوانٍ.</p>
+    </div>
+    <span class="feat__tag">Modal</span>
+  </header>
+  <div class="feat__demo">
+    <div class="seq">
+      <div class="seq__progress"><i style="width:37%"></i></div>
+      <div class="seq__period">
+        <h5>High Season</h5>
+        <div class="range">15 Jun → 31 Aug 2026</div>
+      </div>
+      <input class="seq__inp" value="185">
+      <div class="seq__dots">
+        <span class="seq__dot seq__dot--done"></span>
+        <span class="seq__dot seq__dot--done"></span>
+        <span class="seq__dot seq__dot--curr"></span>
+        <span class="seq__dot"></span><span class="seq__dot"></span>
+        <span class="seq__dot"></span><span class="seq__dot"></span>
+        <span class="seq__dot"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;gap:10px;margin-top:18px">
+        <button class="btn btn--ghost">← Previous</button>
+        <button class="btn btn--primary">Save & Next →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 18 · ROOM CONTEXT ═══════════ -->
+<section class="feat" id="f18">
+  <header class="feat__head">
+    <div class="feat__idx">18</div>
+    <div class="feat__body">
+      <div class="feat__kicker">RoomContextCard</div>
+      <h2 class="feat__title">بِطاقة سياق الغُرفة</h2>
+      <p class="feat__desc">مُلَخَّص الغُرفة الحاليّة (سَعَة، إِعدادات، أَسِرّة) دون العَودة لِلخُطوة السابِقة.</p>
+    </div>
+    <span class="feat__tag">Component</span>
+  </header>
+  <div class="feat__demo">
+    <div class="rcx">
+      <div class="rcx__top">
+        <div class="rcx__icon">D</div>
+        <div>
+          <div class="rcx__name">Deluxe Room AI</div>
+          <div class="rcx__board">UAI · King Bed</div>
+        </div>
+      </div>
+      <div class="rcx__stats">
+        <div class="rcx__stat"><div class="rcx__stat-v">2+2</div><div class="rcx__stat-l">Capacity</div></div>
+        <div class="rcx__stat"><div class="rcx__stat-v">4</div><div class="rcx__stat-l">Max Pax</div></div>
+        <div class="rcx__stat"><div class="rcx__stat-v">3</div><div class="rcx__stat-l">Min Stay</div></div>
+      </div>
+      <div class="rcx__tip">⚠ تَحَقَّق مِن مُعامِل ٢A+١C قَبل التَسعير</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 19 · BATCH PERIODS ═══════════ -->
+<section class="feat" id="f19">
+  <header class="feat__head">
+    <div class="feat__idx">19</div>
+    <div class="feat__body">
+      <div class="feat__kicker">BatchModePanel</div>
+      <h2 class="feat__title">الوَضع الجَماعيّ لِلفَترات</h2>
+      <p class="feat__desc">إدخال عِدّة فَترات دُفعة واحِدة بِاللَصق مِن Excel. يَختَصِر ساعات لِدَقائق.</p>
+    </div>
+    <span class="feat__tag feat__tag--star">★ Hero</span>
+  </header>
+  <div class="feat__demo">
+    <div class="batch">
+      <div class="batch__tip">📋 الصَق ٣ أَعمِدة: <strong>الاسم | مِن | إلى</strong> — DD/MM/YYYY أَو YYYY-MM-DD</div>
+      <table class="batch__table">
+        <thead><tr><th>Period name</th><th>From</th><th>To</th><th></th></tr></thead>
+        <tbody>
+          <tr><td><input value="Low Season"></td><td><input value="2026-04-01"></td><td><input value="2026-05-31"></td><td><button class="batch__x">×</button></td></tr>
+          <tr><td><input value="Shoulder"></td><td><input value="2026-06-01"></td><td><input value="2026-06-14"></td><td><button class="batch__x">×</button></td></tr>
+          <tr><td><input value="High Season"></td><td><input value="2026-06-15"></td><td><input value="2026-08-31"></td><td><button class="batch__x">×</button></td></tr>
+          <tr><td><input value="Peak Aug"></td><td><input value="2026-08-01"></td><td><input value="2026-08-15"></td><td><button class="batch__x">×</button></td></tr>
+        </tbody>
+      </table>
+      <div class="batch__bar">
+        <button class="btn">+ Add row</button>
+        <span>Ready: <strong>4 periods</strong></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 20 · DRAFTS LIST ═══════════ -->
+<section class="feat" id="f20">
+  <header class="feat__head">
+    <div class="feat__idx">20</div>
+    <div class="feat__body">
+      <div class="feat__kicker">DraftsList</div>
+      <h2 class="feat__title">قائِمة المُسَوَّدات</h2>
+      <p class="feat__desc">عُقود غَير مُكتَمِلة مَع رَقم الخُطوة وَتاريخ آخِر تَعديل، استِئناف العَمَل مِن نَفس النُقطة.</p>
+    </div>
+    <span class="feat__tag">List</span>
+  </header>
+  <div class="feat__demo">
+    <div class="drafts">
+      <article class="draft"><div class="draft__name">Rixos Antalya 2027</div><div class="draft__step"><strong>Step 4:</strong> Pricing · 3 hours ago</div><div class="draft__actions"><button class="draft__resume">Resume</button><button class="draft__del">Delete</button></div></article>
+      <article class="draft"><div class="draft__name">Calista Luxury 2026</div><div class="draft__step"><strong>Step 7:</strong> Stops · yesterday</div><div class="draft__actions"><button class="draft__resume">Resume</button><button class="draft__del">Delete</button></div></article>
+      <article class="draft"><div class="draft__name">Maxx Royal Belek</div><div class="draft__step"><strong>Step 2:</strong> Rooms · 5 days ago</div><div class="draft__actions"><button class="draft__resume">Resume</button><button class="draft__del">Delete</button></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 21 · SUCCESS SCREEN ═══════════ -->
+<section class="feat" id="f21">
+  <header class="feat__head">
+    <div class="feat__idx">21</div>
+    <div class="feat__body">
+      <div class="feat__kicker">SuccessScreen</div>
+      <h2 class="feat__title">شاشة النَجاح</h2>
+      <p class="feat__desc">شاشة احتِفائيّة بَعد حِفظ العَقد، مَع مُلَخَّص ما حُفِظ وَأَزرار خُطوات تالية.</p>
+    </div>
+    <span class="feat__tag">Screen</span>
+  </header>
+  <div class="feat__demo">
+    <div class="success">
+      <div class="success__check">✓</div>
+      <h3 class="success__h">Contract saved</h3>
+      <p class="success__sub">Sueno Hotels Deluxe Belek — 2026 season</p>
+      <div class="success__stats">
+        <div><div class="success__stat-v">7</div><div class="success__stat-l">Rooms</div></div>
+        <div><div class="success__stat-v">5</div><div class="success__stat-l">Periods</div></div>
+        <div><div class="success__stat-v">3</div><div class="success__stat-l">Discounts</div></div>
+      </div>
+      <div class="success__id">Hotel ID · BX-26·SUE·001</div>
+      <div class="success__actions">
+        <button class="btn">View contract</button>
+        <button class="btn">Edit again</button>
+        <button class="btn btn--primary">+ New contract</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 22 · ERROR BOUNDARY ═══════════ -->
+<section class="feat" id="f22">
+  <header class="feat__head">
+    <div class="feat__idx">22</div>
+    <div class="feat__body">
+      <div class="feat__kicker">WizardErrorBoundary</div>
+      <h2 class="feat__title">مَصيدة أَخطاء المَعالِج</h2>
+      <p class="feat__desc">حِماية تَمنَع انهيار الصَفحة كامِلة إذا فَشِلَت خُطوة، تَحفَظ البَيانات المُتَراكِمة.</p>
+    </div>
+    <span class="feat__tag">Safety</span>
+  </header>
+  <div class="feat__demo">
+    <div class="err">
+      <div class="err__icon">!</div>
+      <h3 class="err__h">Step 5 hit an error</h3>
+      <p class="err__msg">Something failed in Discounts step. Your data from steps 1-4 is safe. Try again or reload the page.</p>
+      <div class="err__actions">
+        <button class="btn">Try again</button>
+        <button class="btn btn--primary">Reload page</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 23 · BADGE VARIANTS ═══════════ -->
+<section class="feat" id="f23">
+  <header class="feat__head">
+    <div class="feat__idx">23</div>
+    <div class="feat__body">
+      <div class="feat__kicker">Badge · 6 variants</div>
+      <h2 class="feat__title">الشارات الموَحَّدة</h2>
+      <p class="feat__desc">سِتّ أَنواع: نَشِط، مُسَوَّدة، تَحذير، مُؤَرشَف، مَحظور، إعلام. كُلّ واحِدة بِنُقطة لَون مُدمَجة.</p>
+    </div>
+    <span class="feat__tag">Component</span>
+  </header>
+  <div class="feat__demo">
+    <div class="badges">
+      <span class="b b--ok">Active</span>
+      <span class="b b--draft">Draft</span>
+      <span class="b b--warn">Pending</span>
+      <span class="b b--archived">Archived</span>
+      <span class="b b--block">Stop sale</span>
+      <span class="b b--info">Synced</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 24 · TOP BAR ═══════════ -->
+<section class="feat" id="f24">
+  <header class="feat__head">
+    <div class="feat__idx">24</div>
+    <div class="feat__body">
+      <div class="feat__kicker">PageTopBar</div>
+      <h2 class="feat__title">الشَريط العُلويّ المُوَحَّد</h2>
+      <p class="feat__desc">شَريط على كُلّ صَفحة يَحوي زِرّ رُجوع، عُنوان، شارة حالة، وَأَزرار إجراءات.</p>
+    </div>
+    <span class="feat__tag">Layout</span>
+  </header>
+  <div class="feat__demo">
+    <header class="topbar">
+      <div class="topbar__left">
+        <a class="topbar__back" href="#">← Back</a>
+        <div class="topbar__sep"></div>
+        <div>
+          <div class="topbar__title">Rixos Downtown — Contract</div>
+          <div class="topbar__sub">2026 · summer season · 14 rooms</div>
+        </div>
+        <span class="b b--ok">Active</span>
+      </div>
+      <div class="topbar__right">
+        <button class="btn">Export</button>
+        <button class="btn btn--primary">Edit</button>
+      </div>
+    </header>
+  </div>
+</section>
+
+<!-- ═══════════ 25 · NO OFFERS ═══════════ -->
+<section class="feat" id="f25">
+  <header class="feat__head">
+    <div class="feat__idx">25</div>
+    <div class="feat__body">
+      <div class="feat__kicker">NoOffersWarning</div>
+      <h2 class="feat__title">شاشة لا عُروض الذَكيّة</h2>
+      <p class="feat__desc">بَدَلاً مِن شاشة فارِغة، تَشرَح الأَسباب المُحتَمَلة بِأَيقونات وَتَرتيب حَسَب الحِدّة.</p>
+    </div>
+    <span class="feat__tag">Empty state</span>
+  </header>
+  <div class="feat__demo">
+    <div class="noof">
+      <div class="noof__icon">📭</div>
+      <h3 class="noof__h">No offers found</h3>
+      <p class="noof__sub">Checked 12 hotels for your dates · here's why</p>
+      <div class="noof__reasons">
+        <div class="noof__reason">
+          <div class="noof__r-h">🚫 Stop sale active</div>
+          <div class="noof__r-msg">4 hotels closed for 15-22 Aug due to allotment blocks.</div>
+        </div>
+        <div class="noof__reason noof__reason--med">
+          <div class="noof__r-h">👥 Capacity exceeded</div>
+          <div class="noof__r-msg">5 hotels max 4 pax · you searched 2A+3C.</div>
+        </div>
+        <div class="noof__reason noof__reason--info">
+          <div class="noof__r-h">📅 Dates uncovered</div>
+          <div class="noof__r-msg">3 hotels: contract ends Sep 30 · you searched Oct 5.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 26 · PAGINATION ═══════════ -->
+<section class="feat" id="f26">
+  <header class="feat__head">
+    <div class="feat__idx">26</div>
+    <div class="feat__body">
+      <div class="feat__kicker">Pagination</div>
+      <h2 class="feat__title">تَنَقُّل الصَفحات</h2>
+      <p class="feat__desc">«Showing X–Y of Z» + أَزرار Prev/Next + أَرقام بِفَجَوات لِلكَثير.</p>
+    </div>
+    <span class="feat__tag">Component</span>
+  </header>
+  <div class="feat__demo">
+    <nav class="pgn">
+      <div class="pgn__meta">Showing <b>61–80</b> of <b>237</b></div>
+      <div class="pgn__pages">
+        <a class="nav" href="#">← Prev</a>
+        <a href="#">1</a>
+        <span class="gap">…</span>
+        <a href="#">3</a>
+        <a class="curr" href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">6</a>
+        <span class="gap">…</span>
+        <a href="#">12</a>
+        <a class="nav" href="#">Next →</a>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<!-- ───── COLOPHON ───── -->
+<footer class="master" style="text-align:center;padding:32px">
+  <div class="master__kicker">Colophon</div>
+  <p style="margin-top:14px;font-size:13px;color:var(--ink2)">
+    v7.0 · 26 features extracted from production · رَنُّ صَوتيٌّ موحَّد · Inter Tight · IBM Plex Sans Arabic · JetBrains Mono
+    <br>BRIX Travel · pricing engine v15.15 · 2026·05·29
+  </p>
+</footer>
+
+</body>
+</html>
