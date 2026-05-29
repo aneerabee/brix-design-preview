@@ -1,0 +1,5192 @@
+<!doctype html>
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  BRIX-Travel · Studio Build v15.15 — v3-final (طَبَقة التَمييز)    ║
+  ║                                                                    ║
+  ║  مُلَخَّص v3-final (دَمج اقتراحات التَمييز البَصَريّ على v3):           ║
+  ║  • ٢٠ تَمييزاً مُطَبَّقاً (toolbar ghost، stop price، badges board/gold،║
+  ║    عَناوين بِطاقات، draft/archived، wizard steps، هَرَم العَناوين،      ║
+  ║    حُقول مَطلوبة، cstat/kpi، log info/ok، select، stepper،           ║
+  ║    contract-card hover، focus ذَهَبيّ، فَواصِل search-card،           ║
+  ║    strike price، badge mute، nav active، receipt sub، subhead).      ║
+  ║  • ٥ أَدَوات جَديدة في الـCSS:                                       ║
+  ║      ١. .gold-rule    — فاصِل ذَهَبيّ بمَركَز ❖                       ║
+  ║      ٢. .ink-spotlight — تَأطير حِبريّ بظِلّ صَلب وَلَوحة data           ║
+  ║      ٣. .tier-indicator — شَريط tier عَموديّ ٣-مُستَويات              ║
+  ║      ٤. .underline-active — تَسطير ديناميكيّ يَتَوَسَّع                ║
+  ║      ٥. .prefix-dot — نُقطة سِيمِيَّة بحالات ok/warn/err/gold          ║
+  ║  • ٥ صَقَلات إضافيّة من تَحليلنا:                                    ║
+  ║      ١. tabular-nums + ss01 على كُلّ الأَرقام (سِعر، KPI، إحصاءات).    ║
+  ║      ٢. حالة [aria-disabled] / [disabled] مُتَّسِقة لكُلّ المُكَوِّنات.   ║
+  ║      ٣. scroll-padding-top: 84px لتَجَنُّب قَفز sticky nav.          ║
+  ║      ٤. font-smoothing + text-rendering على العَناوين الكَبيرة.      ║
+  ║      ٥. prefers-reduced-motion يُعَطِّل animations التَمييز كُلّها.    ║
+  ║  • التوكِنات الأَصليّة (#FAFAF7, #047857, #C9A961، الـease           ║
+  ║    cubic-bezier(0.16,1,0.3,1)) مَحفوظة دون تَغيير.                  ║
+  ║                                                                    ║
+  ║  ─── النُسخة الثالثة (v3) الأَصليّة أَدناه ───                          ║
+  ║                                                                    ║
+  ║  BRIX-Travel · Studio Build v15.15 — النُسخة الثالثة (v3)         ║
+  ║                                                                    ║
+  ║  مُلَخَّص تَعديلات v3 (إعادة تَصميم بَطاقات النَتائج بنَمَط Borsche):   ║
+  ║  ١. هَيكَل ثَلاثيّ المَناطِق داخل البَطاقة: رَأس (فُندق+غُرفة+شارات) →    ║
+  ║      مِنطَقة السِعر البَطَل (rail جانبيّ + رَقم ضَخم ٥٦px) → ذَيل        ║
+  ║      (مَعلومات الإشغال + الإجراءات).                                ║
+  ║  ٢. تَمييز بَصَريّ قَويّ بَين الفِئات:                                  ║
+  ║      • best  → rail ذَهَبيّ ٤px + إطار emerald + cap ذَهَبيّ +        ║
+  ║                خَلفيّة tint emerald خَفيفة + شارة best بَطَل.           ║
+  ║      • release → rail بُرتُقاليّ ٤px + tint amber + chip مَوقوت.       ║
+  ║      • stop   → rail أَحمر ٤px + tint warn + opacity ٠.٧٢ عَلى        ║
+  ║                السِعر + خَطّ مَشطوب diagonal.                         ║
+  ║      • normal → rail شَفّاف يَظهَر عَلى hover.                          ║
+  ║  ٣. السِعر بَطَل: ٥٦px display، tabular nums، فُسحة ٢٤px،            ║
+  ║      strike على سَطر مُستَقِلّ، per-night chip أَسفَل.                 ║
+  ║  ٤. شارات أَكبَر (١١px مَع padding ٦×١٠) + أَيقونات inline SVG          ║
+  ║      للـbest/EB/discount/honeymoon/stop.                            ║
+  ║  ٥. كُتلة تَفصيل دائِمة (Best Why / Release Window / Stop Reason)     ║
+  ║      ظاهِرة دون نَقر تَحت السِعر.                                       ║
+  ║  ٦. hover: rail يَتَمَدَّد + lift ٤px + glow ذَهَبيّ خَفيف +              ║
+  ║      السِعر يَنبُض ٢٪ scale.                                            ║
+  ║  ٧. التوكِنات الأَصليّة (--ink، --gold، --emerald، الخُطوط)            ║
+  ║      مَحفوظة بالكامِل، لا JS مَكسور.                                  ║
+  ║                                                                    ║
+  ║  ─── النُسخة الثانية (v2) الأَصليّة أَدناه ───                          ║
+  ║                                                                    ║
+  ║  BRIX-Travel · Studio Build v15.15 — النُسخة الثانية (v2)         ║
+  ║  مُلَخَّص التَطبيق:                                                  ║
+  ║  ١٥ تَحسيناً جَماليّاً مُطَبَّقاً (الإيقاع، المُحاذاة، السُلَّم)         ║
+  ║  ٥ لَمسات تَوقيع (خَطّ ذَهَبيّ، نَبض، تَسطير، drop-cap، ظِلّ ذَهَبيّ)    ║
+  ║  ١٢ موشن جَديد (Fade-Up · Count-Up · Ticker · Receipt ·             ║
+  ║              Magnetic · Switch · Drift · Shimmer · Aurora ·        ║
+  ║              Crown · Dot · Wizard Steps)                            ║
+  ║  ١٠ لَمسات ذَهَبيّة (Corner Brackets, Watermark, Noise, Ornament,    ║
+  ║                    Focal Dot, Margin Number, Animated Underline,    ║
+  ║                    Monogram B, BRIX SELECT Ribbon, ❖ Punctuation)   ║
+  ║                                                                    ║
+  ║  + ٥ لَمسات صَقل إضافيّة:                                            ║
+  ║   ١. تَحريك سَلِس لِـscroll-margin-top مَع الـsticky nav                ║
+  ║   ٢. تَفعيل font-feature-settings (ss01, kern, liga) عَلى الـdisplay  ║
+  ║   ٣. selection ذَهَبيّة عَلى تَحديد النَصّ                              ║
+  ║   ٤. تَدَرُّج خَلفيّ هادِئ تَحت .nav عند التَمرير (sticky shadow)        ║
+  ║   ٥. مُؤشّر تَقَدُّم القِراءة (scroll progress bar) ذَهَبيّ ١px           ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BRIX-Travel · Hotel Contract Engine · Studio Build v15.15</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* =====================================================================
+   BRIX-Travel · Bureau Borsche-school redesign
+   Single file, inline tokens, modular scale 1.333.
+   ===================================================================== */
+
+:root {
+  /* Surfaces */
+  --bg: #FAFAF7;
+  --bg-elev: #FFFFFF;
+  --bg-sunk: #F2F1EC;
+  --bg-tint-emerald: #ECF5F1;
+  --bg-tint-gold: #FAF4E6;
+  --bg-tint-warn: #FDF1F0;
+
+  /* Ink */
+  --ink: #0A0A0A;
+  --ink-2: #1F1F1D;
+  --mute: #6B6B6B;
+  --mute-2: #9A9A95;
+  --hair: rgba(10,10,10,0.08);
+  --hair-strong: rgba(10,10,10,0.14);
+
+  /* Brand */
+  --emerald: #047857;
+  --emerald-deep: #03543F;
+  --emerald-ink: #022A20;
+  --gold: #C9A961;
+  --gold-deep: #A6873C;
+  --warn: #DC2626;
+  --warn-soft: #F7CFCC;
+  --amber: #B45309;
+
+  /* Type scale (modular 1.333) */
+  --t-11: 11px;
+  --t-13: 13px;
+  --t-15: 15px;
+  --t-17: 17px;
+  --t-23: 23px;
+  --t-31: 31px;
+  --t-41: 41px;
+  --t-55: 55px;
+  --t-73: 73px;
+
+  /* Radius */
+  --r-6: 6px;
+  --r-10: 10px;
+  --r-14: 14px;
+  --r-20: 20px;
+
+  /* Shadow */
+  --sh-rest: 0 1px 2px rgba(10,10,10,0.04);
+  --sh-hover: 0 12px 32px -12px rgba(10,10,10,0.10);
+  --sh-modal: 0 32px 80px rgba(10,10,10,0.20);
+
+  /* Motion */
+  --ease: cubic-bezier(0.16,1,0.3,1);
+  --t-fast: 120ms;
+  --t-med: 240ms;
+  --t-slow: 400ms;
+
+  /* Fonts */
+  --f-display: 'Inter Tight', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --f-text: 'Inter Tight', system-ui, sans-serif;
+  --f-ar: 'IBM Plex Sans Arabic', 'Inter Tight', system-ui, sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-text);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: var(--t-15);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; padding: 0; }
+
+/* ============================== Display type */
+.display {
+  font-family: var(--f-display);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--ink);
+}
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: var(--t-11);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 500;
+}
+.num {
+  font-family: var(--f-mono);
+  font-feature-settings: "tnum" 1, "zero" 1;
+  font-variant-numeric: tabular-nums;
+}
+.ar {
+  font-family: var(--f-ar);
+  direction: rtl;
+  text-align: right;
+}
+
+/* ============================== Top nav */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(250,250,247,0.86);
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  border-bottom: 1px solid var(--hair);
+}
+.nav__inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 14px 28px;
+  display: grid;
+  grid-template-columns: 220px 1fr auto;
+  align-items: center;
+  gap: 24px;
+}
+.nav__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.nav__brand .mark {
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: var(--t-23);
+  letter-spacing: -0.05em;
+  color: var(--ink);
+}
+.nav__brand .mark::after {
+  content: "·";
+  margin-left: 6px;
+  color: var(--gold);
+}
+.nav__brand .sub {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.nav__links {
+  display: flex;
+  gap: 2px;
+  justify-content: center;
+}
+.nav__link {
+  padding: 8px 14px;
+  font-size: var(--t-13);
+  font-weight: 500;
+  color: var(--mute);
+  border-radius: 8px;
+  transition: color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+  letter-spacing: -0.005em;
+}
+.nav__link:hover { color: var(--ink); background: rgba(10,10,10,0.04); }
+.nav__link.is-active {
+  color: var(--ink);
+  background: rgba(4,120,87,0.08);
+}
+.nav__link.is-active::before {
+  content: "● ";
+  color: var(--emerald);
+  font-size: 8px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+.nav__right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.nav__env {
+  font-family: var(--f-mono);
+  font-size: var(--t-11);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--emerald);
+  padding: 4px 8px;
+  background: var(--bg-tint-emerald);
+  border-radius: 4px;
+  border: 1px solid rgba(4,120,87,0.18);
+}
+.nav__user {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--emerald), var(--gold));
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: var(--t-13);
+  letter-spacing: -0.02em;
+}
+
+/* ============================== Section frames */
+.section {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 64px 28px;
+  position: relative;
+}
+.section__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 32px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--hair);
+  gap: 24px;
+}
+.section__title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-41);
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  margin: 0;
+}
+.section__title .accent { color: var(--emerald); }
+.section__meta {
+  font-family: var(--f-mono);
+  font-size: var(--t-11);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+  text-align: right;
+  white-space: nowrap;
+}
+.section__chapter {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section__chapter::before {
+  content: "";
+  width: 28px; height: 2px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+/* ============================== Cards / generic */
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-14);
+  box-shadow: var(--sh-rest);
+  transition: box-shadow var(--t-med) var(--ease), transform var(--t-med) var(--ease), border-color var(--t-med) var(--ease);
+}
+.card:hover { box-shadow: var(--sh-hover); border-color: var(--hair-strong); }
+.card--gilded { position: relative; overflow: hidden; }
+.card--gilded::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--emerald), var(--gold) 70%, transparent);
+}
+
+/* ============================== Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  font-size: var(--t-13);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  border-radius: 10px;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 2px solid var(--emerald); outline-offset: 2px; }
+
+.btn--primary {
+  background: var(--ink);
+  color: #fff;
+}
+.btn--primary:hover { background: var(--emerald-deep); box-shadow: 0 8px 20px -8px rgba(4,120,87,0.45); }
+
+.btn--emerald {
+  background: var(--emerald);
+  color: #fff;
+}
+.btn--emerald:hover { background: var(--emerald-deep); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--hair-strong);
+}
+.btn--ghost:hover { background: rgba(10,10,10,0.04); border-color: var(--ink); }
+
+.btn--gold {
+  background: var(--gold);
+  color: var(--emerald-ink);
+}
+.btn--gold:hover { background: var(--gold-deep); color: #fff; }
+
+.btn--sm { padding: 7px 12px; font-size: var(--t-11); }
+.btn--lg { padding: 16px 24px; font-size: var(--t-15); }
+
+/* ============================== Form atoms */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field__label {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 500;
+}
+.field__label .req { color: var(--warn); margin-left: 2px; }
+.input, .select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--bg-elev);
+  border: 1px solid var(--hair-strong);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: var(--t-15);
+  color: var(--ink);
+  font-family: var(--f-text);
+  transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+  width: 100%;
+}
+.input:hover, .select:hover { border-color: var(--ink); }
+.input:focus, .select:focus {
+  outline: none;
+  border-color: var(--emerald);
+  box-shadow: 0 0 0 3px rgba(4,120,87,0.14);
+  background: #fff;
+}
+.select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%230A0A0A' stroke-width='2.4'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.field__hint {
+  font-size: var(--t-11);
+  color: var(--mute);
+  margin-top: 2px;
+}
+.field__err {
+  font-size: var(--t-11);
+  color: var(--warn);
+  font-family: var(--f-mono);
+  letter-spacing: 0.02em;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.stepper__btn {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--bg-sunk);
+  font-family: var(--f-mono);
+  font-weight: 700;
+  font-size: var(--t-15);
+  color: var(--ink);
+  display: grid; place-items: center;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+  border: 1px solid var(--hair);
+}
+.stepper__btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.stepper__val {
+  min-width: 38px;
+  text-align: center;
+  font-family: var(--f-mono);
+  font-weight: 700;
+  font-size: var(--t-17);
+}
+
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.switch__track {
+  width: 44px; height: 24px;
+  background: var(--bg-sunk);
+  border: 1px solid var(--hair-strong);
+  border-radius: 999px;
+  position: relative;
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.switch__thumb {
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 18px; height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(10,10,10,0.18);
+  transition: transform var(--t-med) var(--ease);
+}
+.switch.is-on .switch__track { background: var(--emerald); border-color: var(--emerald); }
+.switch.is-on .switch__thumb { transform: translateX(20px); }
+.switch__label {
+  font-size: var(--t-13);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ============================== Tabs */
+.tabs {
+  display: inline-flex;
+  background: var(--bg-sunk);
+  border-radius: 10px;
+  padding: 4px;
+  gap: 2px;
+}
+.tabs__btn {
+  padding: 8px 16px;
+  font-size: var(--t-13);
+  font-weight: 600;
+  color: var(--mute);
+  border-radius: 7px;
+  letter-spacing: -0.005em;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.tabs__btn:hover { color: var(--ink); }
+.tabs__btn.is-active {
+  background: var(--bg-elev);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(10,10,10,0.06);
+}
+
+/* ============================== SEARCH PAGE ============================== */
+.search-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+@media (max-width: 980px) { .search-grid { grid-template-columns: 1fr; } }
+
+.search-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-14);
+  padding: 26px 26px 24px;
+  box-shadow: var(--sh-rest);
+  position: relative;
+  overflow: hidden;
+}
+.search-card--accent::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--emerald), var(--gold));
+}
+.search-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+.search-card__title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-23);
+  letter-spacing: -0.035em;
+}
+.search-card__title .em { color: var(--emerald); }
+.search-card__id {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--mute);
+  text-transform: uppercase;
+}
+
+.row { display: grid; gap: 14px; }
+.row-2 { grid-template-columns: 1fr 1fr; }
+.row-3 { grid-template-columns: 1fr 1fr 1fr; }
+.row-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.row-dates { grid-template-columns: 1fr 1fr; }
+@media (max-width: 640px) { .row-2, .row-3, .row-4 { grid-template-columns: 1fr; } }
+
+.kids-block {
+  background: var(--bg-sunk);
+  border: 1px dashed var(--hair-strong);
+  border-radius: 12px;
+  padding: 14px 14px 12px;
+  margin-top: 4px;
+}
+.kids-block__title {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 10px;
+}
+.kids-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.kid-age {
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.kid-age__label {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--mute);
+  text-transform: uppercase;
+}
+.kid-age__input {
+  border: none;
+  background: transparent;
+  font-family: var(--f-mono);
+  font-weight: 700;
+  font-size: var(--t-17);
+  color: var(--ink);
+  width: 100%;
+  padding: 0;
+}
+
+.honeymoon-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, var(--bg-tint-gold), #fff);
+  border: 1px solid rgba(201,169,97,0.34);
+  border-radius: 12px;
+  margin-top: 4px;
+}
+.honeymoon-toggle__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.honeymoon-toggle__title {
+  font-weight: 700;
+  font-size: var(--t-13);
+  color: var(--gold-deep);
+}
+.honeymoon-toggle__sub {
+  font-size: var(--t-11);
+  color: var(--mute);
+}
+
+.search-card__cta {
+  margin-top: 22px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ============================== RESULTS ============================== */
+.results-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-14);
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.results-toolbar::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--emerald), var(--gold));
+}
+.results-toolbar__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.results-toolbar__title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-23);
+  letter-spacing: -0.035em;
+}
+.results-toolbar__meta {
+  font-size: var(--t-13);
+  color: var(--mute);
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.results-toolbar__meta span { display: inline-flex; align-items: center; gap: 6px; }
+.results-toolbar__meta strong { color: var(--ink); font-weight: 600; }
+.results-toolbar__actions { display: flex; gap: 8px; }
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.brix-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-14);
+  padding: 22px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--sh-rest);
+  transition: box-shadow var(--t-med) var(--ease), transform var(--t-med) var(--ease), border-color var(--t-med) var(--ease);
+}
+.brix-card:hover { box-shadow: var(--sh-hover); border-color: var(--hair-strong); transform: translateY(-2px); }
+.brix-card[data-tier="best"] { border-color: rgba(4,120,87,0.32); }
+.brix-card[data-tier="best"]::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--emerald), var(--gold));
+}
+.brix-card[data-tier="release"] { border-color: rgba(180,83,9,0.28); background: linear-gradient(180deg, #FFFDF5, var(--bg-elev) 30%); }
+.brix-card[data-tier="stop"] { border-color: rgba(220,38,38,0.28); background: linear-gradient(180deg, #FFF7F6, var(--bg-elev) 30%); }
+
+.brix-card__crown {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 22px;
+}
+.brix-badge {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1;
+}
+.brix-badge--best { background: var(--ink); color: #fff; }
+.brix-badge--best::before { content: "✦"; color: var(--gold); margin-right: 2px; }
+.brix-badge--board { background: var(--bg-tint-emerald); color: var(--emerald-deep); border: 1px solid rgba(4,120,87,0.18); }
+.brix-badge--gold { background: var(--bg-tint-gold); color: var(--gold-deep); border: 1px solid rgba(201,169,97,0.34); }
+.brix-badge--alert { background: var(--bg-tint-warn); color: var(--warn); border: 1px solid rgba(220,38,38,0.20); }
+.brix-badge--mute { background: var(--bg-sunk); color: var(--mute); border: 1px solid var(--hair); }
+
+.brix-card__title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-23);
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  color: var(--ink);
+}
+.brix-card__subtitle {
+  font-size: var(--t-13);
+  color: var(--mute);
+  margin-top: -8px;
+}
+.brix-card__meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.brix-stars { color: var(--gold); letter-spacing: 1px; font-size: 12px; line-height: 1; }
+.brix-area { font-size: var(--t-11); color: var(--mute); font-family: var(--f-mono); letter-spacing: 0.05em; }
+
+.brix-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 16px 0 12px;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+.brix-price__num {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-41);
+  letter-spacing: -0.045em;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.brix-price__currency {
+  font-family: var(--f-mono);
+  font-size: var(--t-13);
+  color: var(--mute);
+  letter-spacing: 0.08em;
+}
+.brix-price__strike {
+  font-family: var(--f-mono);
+  font-size: var(--t-13);
+  color: var(--mute);
+  text-decoration: line-through;
+  text-decoration-color: var(--warn);
+  margin-left: auto;
+}
+.brix-price__per {
+  font-size: var(--t-11);
+  color: var(--mute);
+  font-family: var(--f-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.brix-alert {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: var(--t-13);
+  line-height: 1.45;
+}
+.brix-alert--warn { background: var(--bg-tint-warn); color: var(--warn); border: 1px solid rgba(220,38,38,0.16); }
+.brix-alert--info { background: var(--bg-tint-emerald); color: var(--emerald-deep); border: 1px solid rgba(4,120,87,0.16); }
+.brix-alert--amber { background: #FDF6EC; color: var(--amber); border: 1px solid rgba(180,83,9,0.20); }
+.brix-alert__icon { font-size: 14px; line-height: 1; margin-top: 1px; }
+
+.brix-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.brix-foot__occ {
+  font-family: var(--f-mono);
+  font-size: var(--t-11);
+  color: var(--mute);
+  letter-spacing: 0.06em;
+}
+.brix-foot__save {
+  font-family: var(--f-mono);
+  font-size: var(--t-11);
+  color: var(--emerald);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.brix-actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+/* Stop sale state */
+.brix-stop-state {
+  padding: 18px;
+  background: var(--bg-tint-warn);
+  border: 1px dashed var(--warn-soft);
+  border-radius: 10px;
+  text-align: center;
+}
+.brix-stop-state__label {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-17);
+  color: var(--warn);
+  letter-spacing: -0.02em;
+}
+.brix-stop-state__msg {
+  font-size: var(--t-11);
+  color: var(--mute);
+  margin-top: 4px;
+  font-family: var(--f-mono);
+}
+
+/* Hotel result header */
+.results-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 14px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--hair);
+  flex-wrap: wrap;
+}
+.results-header__name {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-23);
+  letter-spacing: -0.035em;
+}
+.results-header__count {
+  margin-left: auto;
+  font-family: var(--f-mono);
+  font-size: var(--t-11);
+  color: var(--mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ============================== MODAL ============================== */
+.modal-shell {
+  background: rgba(10,10,10,0.42);
+  backdrop-filter: blur(4px);
+  border-radius: var(--r-14);
+  padding: 36px;
+}
+.modal {
+  background: var(--bg-elev);
+  border-radius: var(--r-14);
+  box-shadow: var(--sh-modal);
+  max-width: 720px;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+.modal::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--emerald), var(--gold));
+}
+.modal__head {
+  padding: 22px 26px 18px;
+  border-bottom: 1px solid var(--hair);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.modal__title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-23);
+  letter-spacing: -0.035em;
+}
+.modal__sub {
+  font-size: var(--t-13);
+  color: var(--mute);
+  margin-top: 4px;
+  font-family: var(--f-mono);
+  letter-spacing: 0.04em;
+}
+.modal__close {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--bg-sunk);
+  color: var(--ink);
+  display: grid; place-items: center;
+  font-size: 18px;
+  transition: background var(--t-fast) var(--ease);
+}
+.modal__close:hover { background: var(--ink); color: #fff; }
+.modal__body { padding: 22px 26px; }
+
+.receipt {
+  font-family: var(--f-mono);
+  font-size: var(--t-13);
+  line-height: 1.6;
+}
+.receipt__group {
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--hair);
+}
+.receipt__group:last-child { border-bottom: none; }
+.receipt__h {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.receipt__h::after { content: ""; flex: 1; height: 1px; background: var(--hair); }
+.receipt__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  padding: 4px 0;
+}
+.receipt__row .lbl { color: var(--ink-2); }
+.receipt__row .val { font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+.receipt__row--sub .lbl, .receipt__row--sub .val { color: var(--mute); font-weight: 500; }
+.receipt__row--disc .val { color: var(--emerald); }
+.receipt__row--suppl .val { color: var(--amber); }
+.receipt__total {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  padding-top: 16px;
+  margin-top: 8px;
+  border-top: 2px solid var(--ink);
+}
+.receipt__total .lbl {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-17);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.receipt__total .val {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-41);
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.receipt__total .val small { font-family: var(--f-mono); font-size: var(--t-13); color: var(--mute); margin-left: 6px; }
+
+/* ============================== WIZARD ============================== */
+.wizard {
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-14);
+  padding: 0;
+  box-shadow: var(--sh-rest);
+  overflow: hidden;
+}
+.wizard__top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 22px 28px;
+  gap: 24px;
+  border-bottom: 1px solid var(--hair);
+}
+.wizard__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.wizard__chap {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--emerald);
+  font-weight: 600;
+}
+.wizard__title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-31);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.wizard__sub { font-size: var(--t-13); color: var(--mute); margin-top: 4px; }
+
+.wizard__progress {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.wizard__step {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--bg-sunk);
+  border: 1px solid var(--hair);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.wizard__step .n { font-weight: 700; color: var(--ink); }
+.wizard__step.is-done { background: rgba(4,120,87,0.08); color: var(--emerald-deep); border-color: rgba(4,120,87,0.22); }
+.wizard__step.is-done .n { color: var(--emerald); }
+.wizard__step.is-done::after { content: "✓"; color: var(--emerald); font-weight: 700; }
+.wizard__step.is-current { background: var(--ink); color: #fff; border-color: var(--ink); }
+.wizard__step.is-current .n { color: var(--gold); }
+
+.wizard__body { padding: 28px 32px; }
+.wizard__foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 28px;
+  background: var(--bg-sunk);
+  border-top: 1px solid var(--hair);
+}
+.wizard__foot__group { display: flex; gap: 8px; }
+
+.subhead {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-17);
+  letter-spacing: -0.02em;
+  margin: 24px 0 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.subhead .num-tag {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--gold-deep);
+  background: var(--bg-tint-gold);
+  border: 1px solid rgba(201,169,97,0.34);
+  padding: 3px 7px;
+  border-radius: 4px;
+}
+
+/* ============================== TABLE / PRICING ============================== */
+.ptable {
+  border: 1px solid var(--hair);
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+.ptable table { width: 100%; border-collapse: collapse; font-size: var(--t-13); }
+.ptable th, .ptable td {
+  padding: 11px 12px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--f-mono);
+  border-bottom: 1px solid var(--hair);
+  border-right: 1px solid var(--hair);
+}
+.ptable th { background: var(--bg-sunk); font-weight: 700; color: var(--ink); letter-spacing: 0.04em; text-transform: uppercase; font-size: 10px; }
+.ptable th:first-child, .ptable td:first-child { text-align: left; background: var(--bg-sunk); font-family: var(--f-text); font-weight: 600; letter-spacing: -0.005em; text-transform: none; font-size: var(--t-13); }
+.ptable tr:last-child td { border-bottom: none; }
+.ptable td:last-child, .ptable th:last-child { border-right: none; }
+.ptable td.is-empty { color: var(--mute-2); }
+.ptable td.is-bump { background: var(--bg-tint-emerald); color: var(--emerald-deep); font-weight: 700; }
+.ptable td.is-multi { background: var(--bg-tint-gold); color: var(--gold-deep); font-weight: 700; }
+
+.mult-table th:first-child, .mult-table td:first-child { width: 110px; }
+
+/* ============================== CONTRACTS LIST ============================== */
+.contracts-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-14);
+  margin-bottom: 20px;
+}
+.search-inline {
+  position: relative;
+  flex: 1;
+  max-width: 360px;
+}
+.search-inline .input { padding-left: 36px; }
+.search-inline::before {
+  content: "⌕";
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--mute);
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.contract-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+.contract-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-14);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: box-shadow var(--t-med) var(--ease), border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+.contract-card:hover { box-shadow: var(--sh-hover); border-color: var(--hair-strong); transform: translateY(-1px); }
+.contract-card[data-state="live"]::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--emerald), var(--gold));
+}
+.contract-card[data-state="draft"]::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: repeating-linear-gradient(90deg, var(--mute) 0 8px, transparent 8px 14px);
+}
+.contract-card[data-state="archived"]::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--mute-2);
+}
+.contract-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+.contract-card__name {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-17);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+.contract-card__city {
+  font-size: var(--t-11);
+  color: var(--mute);
+  font-family: var(--f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.state-pill {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+  line-height: 1;
+}
+.state-pill--live { background: var(--bg-tint-emerald); color: var(--emerald-deep); }
+.state-pill--draft { background: var(--bg-sunk); color: var(--mute); }
+.state-pill--archived { background: rgba(10,10,10,0.06); color: var(--mute); }
+.contract-card__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px dashed var(--hair);
+  border-bottom: 1px dashed var(--hair);
+}
+.cstat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cstat__v { font-family: var(--f-mono); font-weight: 700; font-size: var(--t-17); color: var(--ink); }
+.cstat__l { font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute); }
+.contract-card__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--t-11);
+  color: var(--mute);
+  font-family: var(--f-mono);
+  letter-spacing: 0.05em;
+}
+
+/* ============================== ADMIN ============================== */
+.admin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+@media (max-width: 980px) { .admin-grid { grid-template-columns: 1fr 1fr; } }
+
+.kpi {
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-14);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow var(--t-med) var(--ease), border-color var(--t-med) var(--ease);
+}
+.kpi:hover { box-shadow: var(--sh-hover); border-color: var(--hair-strong); }
+.kpi__label {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.kpi__val {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-41);
+  letter-spacing: -0.045em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.kpi__trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--f-mono);
+  font-size: var(--t-11);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.kpi__trend.is-up { color: var(--emerald); }
+.kpi__trend.is-down { color: var(--warn); }
+.kpi__spark {
+  height: 36px;
+  margin-top: 4px;
+  background: linear-gradient(180deg, transparent, var(--bg-sunk));
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi__spark svg { width: 100%; height: 100%; display: block; }
+
+.admin-split {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 18px;
+}
+@media (max-width: 980px) { .admin-split { grid-template-columns: 1fr; } }
+
+.panel {
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-14);
+  overflow: hidden;
+}
+.panel__head {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--hair);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.panel__title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-17);
+  letter-spacing: -0.022em;
+}
+.panel__sub { font-size: var(--t-11); color: var(--mute); font-family: var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.panel__body { padding: 0; }
+
+.log {
+  display: flex;
+  flex-direction: column;
+}
+.log__row {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px 80px;
+  gap: 12px;
+  padding: 12px 22px;
+  border-bottom: 1px solid var(--hair);
+  font-size: var(--t-13);
+  align-items: center;
+}
+.log__row:last-child { border-bottom: none; }
+.log__time { font-family: var(--f-mono); font-size: var(--t-11); color: var(--mute); letter-spacing: 0.04em; }
+.log__what { color: var(--ink); font-weight: 500; letter-spacing: -0.005em; }
+.log__who { font-family: var(--f-mono); font-size: var(--t-11); color: var(--mute); }
+.log__tag {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  text-align: center;
+  justify-self: end;
+}
+.log__tag--ok { background: var(--bg-tint-emerald); color: var(--emerald-deep); }
+.log__tag--warn { background: #FDF6EC; color: var(--amber); }
+.log__tag--err { background: var(--bg-tint-warn); color: var(--warn); }
+.log__tag--info { background: var(--bg-sunk); color: var(--mute); }
+
+.quick-list { padding: 14px 22px 18px; }
+.quick-list__item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--hair);
+  align-items: center;
+  font-size: var(--t-13);
+}
+.quick-list__item:last-child { border-bottom: none; }
+.quick-list__lbl { color: var(--ink-2); }
+.quick-list__val { font-family: var(--f-mono); font-weight: 700; color: var(--ink); }
+
+/* ============================== TELEGRAM ============================== */
+.tg-frame {
+  background: linear-gradient(180deg, #ECF0F4, #E1E7ED);
+  border-radius: 18px;
+  padding: 26px 22px;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+  border: 1px solid var(--hair);
+  box-shadow: var(--sh-rest);
+}
+.tg-frame::before {
+  content: "Telegram · @brixprice_bot";
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  text-align: center;
+  margin-bottom: 14px;
+}
+.tg-msg {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  max-width: 88%;
+  font-size: var(--t-13);
+  line-height: 1.5;
+  box-shadow: 0 1px 2px rgba(10,10,10,0.06);
+  position: relative;
+}
+.tg-msg--user {
+  background: #C8E5F4;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.tg-msg--bot {
+  background: #FFFFFF;
+  margin-right: auto;
+  border-bottom-left-radius: 4px;
+}
+.tg-msg__time {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  color: var(--mute);
+  letter-spacing: 0.05em;
+  text-align: right;
+  margin-top: 4px;
+}
+.tg-card {
+  background: linear-gradient(180deg, var(--bg-elev), var(--bg-sunk));
+  border: 1px solid var(--hair);
+  border-radius: 10px;
+  padding: 14px;
+  margin-top: 6px;
+  border-top: 3px solid var(--emerald);
+}
+.tg-card__title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-15);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.tg-card__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--t-11);
+  font-family: var(--f-mono);
+  padding: 3px 0;
+  color: var(--mute);
+}
+.tg-card__row strong { color: var(--ink); }
+.tg-card__price {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--hair);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.tg-card__price .v {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-23);
+  letter-spacing: -0.03em;
+  color: var(--emerald);
+}
+
+/* ============================== TOASTS ============================== */
+.toast-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 420px;
+}
+.toast {
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: 12px;
+  padding: 14px 14px 14px 18px;
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 12px;
+  align-items: flex-start;
+  box-shadow: var(--sh-hover);
+  position: relative;
+  overflow: hidden;
+}
+.toast::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 4px;
+}
+.toast--ok::before { background: var(--emerald); }
+.toast--warn::before { background: var(--amber); }
+.toast--err::before { background: var(--warn); }
+.toast__icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+.toast--ok .toast__icon { background: var(--bg-tint-emerald); color: var(--emerald); }
+.toast--warn .toast__icon { background: #FDF6EC; color: var(--amber); }
+.toast--err .toast__icon { background: var(--bg-tint-warn); color: var(--warn); }
+.toast__body { display: flex; flex-direction: column; gap: 2px; }
+.toast__title { font-weight: 700; font-size: var(--t-13); color: var(--ink); }
+.toast__msg { font-size: var(--t-11); color: var(--mute); font-family: var(--f-mono); letter-spacing: 0.02em; }
+.toast__x { color: var(--mute); padding: 2px 6px; border-radius: 4px; }
+.toast__x:hover { background: var(--bg-sunk); color: var(--ink); }
+
+/* ============================== LOADING ============================== */
+.loading-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+@media (max-width: 880px) { .loading-row { grid-template-columns: 1fr; } }
+
+.spinner {
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-14);
+  padding: 38px 22px;
+  text-align: center;
+}
+.dot-wave {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  height: 22px;
+}
+.dot-wave span {
+  width: 8px; height: 8px;
+  background: var(--emerald);
+  border-radius: 50%;
+  animation: dot-wave 1s var(--ease) infinite;
+}
+.dot-wave span:nth-child(2) { animation-delay: 0.15s; background: var(--gold); }
+.dot-wave span:nth-child(3) { animation-delay: 0.3s; background: var(--ink); }
+@keyframes dot-wave {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-7px); opacity: 1; }
+}
+.spinner__t {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-17);
+  letter-spacing: -0.02em;
+  margin: 18px 0 4px;
+}
+.spinner__s { font-size: var(--t-13); color: var(--mute); }
+
+.skel {
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-14);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.skel__bar {
+  height: 14px;
+  background: linear-gradient(90deg, var(--bg-sunk) 0%, #EAEAE4 50%, var(--bg-sunk) 100%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+  animation: shimmer 1.4s linear infinite;
+}
+.skel__bar--lg { height: 28px; width: 60%; }
+.skel__bar--md { width: 80%; }
+.skel__bar--sm { width: 40%; height: 10px; }
+.skel__bar--btn { height: 38px; width: 100%; margin-top: 4px; }
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================== Hero / index */
+.hero {
+  padding: 96px 28px 64px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.hero__sup {
+  font-family: var(--f-mono);
+  font-size: var(--t-11);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero__sup::before { content: ""; width: 28px; height: 2px; background: var(--gold); }
+.hero__h {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(48px, 8vw, 96px);
+  letter-spacing: -0.05em;
+  line-height: 0.92;
+  margin: 0 0 22px;
+  color: var(--ink);
+}
+.hero__h .em { color: var(--emerald); }
+.hero__h .gold { color: var(--gold-deep); }
+.hero__sub {
+  font-size: var(--t-17);
+  color: var(--mute);
+  max-width: 640px;
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+.hero__chips { display: flex; gap: 10px; flex-wrap: wrap; }
+.chip {
+  font-family: var(--f-mono);
+  font-size: var(--t-11);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--hair-strong);
+  color: var(--ink-2);
+  background: var(--bg-elev);
+}
+.chip--emerald { background: var(--bg-tint-emerald); color: var(--emerald-deep); border-color: rgba(4,120,87,0.22); }
+.chip--gold { background: var(--bg-tint-gold); color: var(--gold-deep); border-color: rgba(201,169,97,0.32); }
+
+/* ============================== Footer */
+.foot {
+  max-width: 1320px;
+  margin: 60px auto 0;
+  padding: 40px 28px 60px;
+  border-top: 1px solid var(--hair);
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+  font-size: var(--t-13);
+}
+.foot__brand { font-family: var(--f-display); font-weight: 900; font-size: var(--t-31); letter-spacing: -0.045em; }
+.foot__sub { color: var(--mute); margin-top: 8px; max-width: 320px; line-height: 1.5; }
+.foot__col h6 {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+.foot__col a {
+  display: block;
+  padding: 4px 0;
+  color: var(--ink-2);
+  transition: color var(--t-fast) var(--ease);
+}
+.foot__col a:hover { color: var(--emerald); }
+.foot__legal {
+  grid-column: 1 / -1;
+  border-top: 1px dashed var(--hair);
+  padding-top: 18px;
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--mute);
+  text-transform: uppercase;
+}
+
+/* ============================== Misc utilities */
+.muted { color: var(--mute); }
+.flex { display: flex; }
+.between { justify-content: space-between; }
+.center { align-items: center; }
+.gap-8 { gap: 8px; }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+.mb-12 { margin-bottom: 12px; }
+.mb-24 { margin-bottom: 24px; }
+.mt-16 { margin-top: 16px; }
+.text-mono { font-family: var(--f-mono); }
+.is-hidden { display: none; }
+
+/* Page indicator (pseudo-nav between mocked screens) */
+.screen-anchor {
+  scroll-margin-top: 80px;
+}
+
+/* tiny dot list */
+.bullet-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.bullet { width: 4px; height: 4px; background: var(--hair-strong); border-radius: 50%; }
+
+/* Helper: rule chip */
+.rule-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  background: var(--bg-sunk);
+  color: var(--ink-2);
+  border: 1px solid var(--hair);
+}
+.rule-chip .v { color: var(--emerald); font-weight: 700; }
+
+/* extras blocks */
+.callout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--bg-tint-emerald);
+  border: 1px solid rgba(4,120,87,0.18);
+  border-radius: 12px;
+  font-size: var(--t-13);
+  color: var(--emerald-ink);
+}
+.callout__mark {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: var(--t-17);
+  color: var(--emerald);
+  letter-spacing: -0.02em;
+}
+
+.callout--warn { background: #FDF6EC; border-color: rgba(180,83,9,0.22); color: var(--amber); }
+.callout--warn .callout__mark { color: var(--amber); }
+
+/* date pair */
+.daterange {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 8px;
+  align-items: end;
+}
+.daterange__sep { color: var(--mute); font-family: var(--f-mono); padding: 0 4px 14px; font-size: var(--t-13); }
+
+/* market chips */
+.chips-list { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 12px; background: var(--bg-sunk); border-radius: 10px; border: 1px solid var(--hair); }
+.chips-list .chip { padding: 4px 9px; font-size: 10px; letter-spacing: 0.1em; }
+
+
+
+/* =====================================================================
+   v2 OVERRIDES — Aesthetic Audit (15) + Signature (5) + Motion (12) + Polish (10) + Extras (5)
+   ===================================================================== */
+
+:root {
+  --ease-brix: cubic-bezier(0.16,1,0.3,1);
+  --t-quick: 120ms;
+  --t-hero:  800ms;
+}
+
+/* Reduced motion guard */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== Aesthetic 01 — Section rhythm ===== */
+.section { padding: 96px 28px 80px; position: relative; }
+.section + .section { padding-top: 64px; }
+.section:first-of-type { padding-top: 48px; }
+
+/* ===== Aesthetic 02 — section__head baseline ===== */
+.section__head { align-items: baseline; }
+.section__meta { transform: translateY(-2px); padding-bottom: 4px; }
+
+/* ===== Aesthetic 03 — title letter-spacing ===== */
+.section__title { letter-spacing: -0.032em; line-height: 1.02; }
+
+/* ===== Aesthetic 04 — nav columns balance ===== */
+.nav__inner { grid-template-columns: 1fr auto 1fr; }
+.nav__links { justify-self: center; }
+.nav__right { justify-self: end; }
+.nav__brand { justify-self: start; }
+
+/* ===== Aesthetic 05 — hero breathing ===== */
+.hero { padding: 120px 28px 96px; position: relative; overflow: hidden; isolation: isolate; }
+.hero__h  { margin-bottom: 32px; }
+.hero__sub { margin-bottom: 36px; max-width: 580px; }
+
+/* ===== Aesthetic 06 — brix-price optical align ===== */
+.brix-price { gap: 6px; align-items: last baseline; padding: 18px 0 14px; }
+.brix-price__currency { transform: translateY(-4px); font-size: 12px; }
+.brix-price__strike { align-self: center; padding-left: 12px; border-left: 1px solid var(--hair); }
+
+/* ===== Aesthetic 07 — card internal rhythm ===== */
+.brix-card { gap: 14px; padding: 24px 22px 20px; position: relative; }
+.brix-card__crown { margin-bottom: -4px; }
+.brix-card__meta  { margin-top: -10px; }
+.brix-card .brix-price { margin: 4px 0; }
+.brix-actions { margin-top: 4px; }
+
+/* ===== Aesthetic 08 — subtitle no-hack ===== */
+.brix-card > header { display: flex; flex-direction: column; gap: 6px; }
+.brix-card__subtitle {
+  margin-top: 0;
+  font-size: var(--t-11);
+  letter-spacing: 0.04em;
+  color: var(--mute);
+  text-transform: uppercase;
+  font-family: var(--f-mono);
+}
+
+/* ===== Aesthetic 09 — toolbar dots ===== */
+.results-toolbar__meta { gap: 0; }
+.results-toolbar__meta > span:not(:last-child)::after {
+  content: "·"; margin: 0 12px; color: var(--mute-2);
+}
+.results-toolbar__meta .brix-badge { font-size: 10px; margin-left: 12px; }
+
+/* ===== Aesthetic 10 — wizard progress balance ===== */
+.wizard__progress { gap: 6px; flex-wrap: wrap; max-width: 480px; justify-content: flex-end; }
+.wizard__step { min-width: 36px; justify-content: center; padding: 6px 8px; }
+.wizard__step.is-current { padding: 6px 12px; }
+.wizard__step:not(.is-current) > .n { font-size: 10px; }
+
+/* ===== Aesthetic 11 — receipt total EUR ===== */
+.receipt__total .val small {
+  margin-left: 10px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 500;
+  vertical-align: 18px;
+}
+
+/* ===== Aesthetic 12 — ptable padding ===== */
+.ptable th { padding: 14px 16px; line-height: 1; }
+.ptable td { padding: 12px 16px; line-height: 1.3; }
+.ptable th:first-child, .ptable td:first-child { padding-left: 20px; }
+.ptable td:last-child, .ptable th:last-child   { padding-right: 20px; }
+
+/* ===== Aesthetic 13 — KPI hero number breathing ===== */
+.kpi { gap: 6px; padding: 22px 22px 18px; }
+.kpi__val   { margin: 2px 0 6px; }
+.kpi__trend { padding-top: 6px; border-top: 1px dashed var(--hair); margin-top: 2px; }
+
+/* ===== Aesthetic 14 — contract stats divider ===== */
+.contract-card__stats { gap: 0; padding: 14px 0; }
+.cstat { padding: 0 14px; position: relative; }
+.cstat + .cstat::before {
+  content: ""; position: absolute; left: 0; top: 4px; bottom: 4px;
+  width: 1px; background: var(--hair);
+}
+.cstat:first-child { padding-left: 0; }
+.cstat:last-child  { padding-right: 0; }
+
+/* ===== Aesthetic 15 — footer columns ===== */
+.foot { grid-template-columns: 2.5fr 1fr 1fr 1fr; gap: 48px; padding: 56px 28px 72px; }
+.foot__col h6 { margin: 0 0 16px; }
+.foot__col a  { padding: 6px 0; font-size: var(--t-13); }
+.foot__sub    { margin-top: 12px; }
+
+/* ===== Signature 1 — gold hairline under section title ===== */
+.section__title::after {
+  content: ""; display: block;
+  width: 32px; height: 1px;
+  background: var(--gold);
+  margin-top: 14px; opacity: 0.6;
+}
+
+/* ===== Signature 2 — gold-pulse on best badge ===== */
+.brix-badge--best::before { animation: gold-pulse 2.4s ease-in-out infinite; }
+@keyframes gold-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+
+/* ===== Signature 3 — gold underline-on-hover for price ===== */
+.brix-card:hover .brix-price__num {
+  background-image: linear-gradient(180deg, transparent 92%, var(--gold) 92%, var(--gold) 96%, transparent 96%);
+  background-size: 100% 100%;
+  transition: background-image var(--t-med) var(--ease);
+}
+
+/* ===== Signature 4 — drop-cap hero ===== */
+.hero__h::first-letter {
+  font-size: 1.15em;
+  color: var(--ink);
+  background: linear-gradient(180deg, transparent 60%, rgba(201,169,97,0.18) 60%);
+  padding: 0 4px 0 0;
+}
+
+/* ===== Signature 5 — soft gold shadow on modal/wizard/best card ===== */
+.modal {
+  box-shadow: var(--sh-modal), 0 1px 0 0 rgba(201,169,97,0.18) inset;
+}
+.wizard {
+  box-shadow: var(--sh-rest), 0 -1px 0 0 rgba(201,169,97,0.12) inset;
+}
+.brix-card[data-tier="best"] {
+  box-shadow: var(--sh-rest), 0 0 0 1px rgba(201,169,97,0.16);
+}
+
+/* ============================================================
+   MOTION (12)
+   ============================================================ */
+
+/* M01 — Section fade-up */
+.section, .hero {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--t-slow) var(--ease-brix),
+              transform var(--t-slow) var(--ease-brix);
+}
+.section.in-view, .hero.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* M02 — Counter visual */
+.kpi__val, .cstat__v {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  transition: opacity var(--t-med) var(--ease-brix);
+}
+.kpi__val[data-counting] { opacity: .85; }
+
+/* M03 — Price ticker reveal */
+.brix-price__num .digit-col {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+  animation: brix-digit-rise var(--t-hero) var(--ease-brix) forwards;
+}
+.brix-price__num .digit-col:nth-child(1) { animation-delay:  40ms; }
+.brix-price__num .digit-col:nth-child(2) { animation-delay:  90ms; }
+.brix-price__num .digit-col:nth-child(3) { animation-delay: 140ms; }
+.brix-price__num .digit-col:nth-child(4) { animation-delay: 190ms; }
+.brix-price__num .digit-col:nth-child(5) { animation-delay: 240ms; }
+.brix-price__num .digit-col:nth-child(6) { animation-delay: 290ms; }
+@keyframes brix-digit-rise {
+  0%   { transform: translateY(100%); opacity: 0; }
+  60%  { opacity: 1; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+/* M04 — Receipt progressive reveal */
+.receipt .receipt__row {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity var(--t-med) var(--ease-brix),
+              transform var(--t-med) var(--ease-brix);
+}
+.receipt.in-view .receipt__row,
+.modal.is-open .receipt .receipt__row { opacity: 1; transform: translateX(0); }
+.receipt .receipt__row:nth-child(1) { transition-delay:  60ms; }
+.receipt .receipt__row:nth-child(2) { transition-delay: 140ms; }
+.receipt .receipt__row:nth-child(3) { transition-delay: 220ms; }
+.receipt .receipt__row:nth-child(4) { transition-delay: 300ms; }
+.receipt .receipt__row:nth-child(5) { transition-delay: 380ms; }
+.receipt .receipt__row:nth-child(6) { transition-delay: 460ms; }
+.receipt .receipt__total            { transition-delay: 580ms; }
+.receipt .receipt__total {
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity var(--t-slow) var(--ease-brix),
+              transform var(--t-slow) var(--ease-brix);
+}
+.receipt.in-view .receipt__total,
+.modal.is-open .receipt .receipt__total { opacity: 1; transform: scale(1); }
+
+/* M05 — Magnetic primary button */
+.btn--primary {
+  transition: transform var(--t-med) var(--ease-brix),
+              box-shadow var(--t-med) var(--ease-brix);
+  will-change: transform;
+}
+.btn--primary:hover {
+  box-shadow: 0 8px 24px -8px rgba(180,144,70,0.45);
+}
+
+/* M06 — Switch thumb morph */
+.switch__track { transition: background var(--t-med) var(--ease-brix); }
+.switch__thumb {
+  transition: transform var(--t-med) var(--ease-brix),
+              box-shadow var(--t-med) var(--ease-brix),
+              background var(--t-med) var(--ease-brix);
+}
+.switch.is-on .switch__thumb {
+  box-shadow: 0 0 0 4px rgba(180,144,70,0.15),
+              0 2px 8px rgba(180,144,70,0.35);
+  animation: brix-switch-pop 240ms var(--ease-brix);
+}
+@keyframes brix-switch-pop {
+  0%   { transform: translateX(20px) scale(1);    }
+  60%  { transform: translateX(20px) scale(1.12); }
+  100% { transform: translateX(20px) scale(1.05); }
+}
+
+/* M07 — Modal accent drift */
+.modal__head { position: relative; overflow: hidden; }
+.modal__head::before {
+  content: "";
+  position: absolute; inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(180,144,70,0.0) 20%,
+    rgba(180,144,70,0.9) 50%,
+    rgba(180,144,70,0.0) 80%, transparent 100%);
+  background-size: 200% 100%;
+  animation: brix-accent-drift 8s var(--ease-brix) infinite;
+}
+@keyframes brix-accent-drift {
+  0%   { background-position: -100% 0; }
+  100% { background-position:  100% 0; }
+}
+
+/* M08 — Stop-sale live shimmer */
+.brix-card[data-tier="stop"],
+.brix-card.is-stopped {
+  position: relative;
+  overflow: hidden;
+}
+.brix-card[data-tier="stop"]::after,
+.brix-card.is-stopped::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(115deg,
+    transparent 30%,
+    rgba(220,38,38,0.10) 48%,
+    rgba(220,38,38,0.22) 50%,
+    rgba(220,38,38,0.10) 52%,
+    transparent 70%);
+  transform: translateX(-100%);
+  animation: brix-stop-shimmer 2.4s var(--ease-brix) infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+@keyframes brix-stop-shimmer {
+  0%   { transform: translateX(-100%); }
+  60%  { transform: translateX(100%);  }
+  100% { transform: translateX(100%);  }
+}
+
+/* M09 — Hero aurora particles */
+.hero::before, .hero::after {
+  pointer-events: none;
+}
+.hero .aurora-a, .hero .aurora-b {
+  position: absolute;
+  width: 540px; height: 540px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.45;
+  z-index: -1;
+  will-change: transform;
+  pointer-events: none;
+}
+.hero .aurora-a {
+  background: radial-gradient(circle, rgba(180,144,70,0.35) 0%, transparent 70%);
+  top: -180px; left: -120px;
+  animation: brix-aurora-a 18s var(--ease-brix) infinite alternate;
+}
+.hero .aurora-b {
+  background: radial-gradient(circle, rgba(4,120,87,0.20) 0%, transparent 70%);
+  bottom: -200px; right: -140px;
+  animation: brix-aurora-b 22s var(--ease-brix) infinite alternate;
+}
+@keyframes brix-aurora-a {
+  0%   { transform: translate(0,0) scale(1); }
+  100% { transform: translate(120px, 60px) scale(1.15); }
+}
+@keyframes brix-aurora-b {
+  0%   { transform: translate(0,0) scale(1); }
+  100% { transform: translate(-90px, -40px) scale(1.1); }
+}
+
+/* M10 — Crown elastic snap */
+.brix-card__crown {
+  transform-origin: top center;
+  opacity: 0;
+  transform: translateY(-12px) scaleY(0.85);
+}
+.brix-card.in-view .brix-card__crown {
+  animation: brix-crown-drop 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 200ms;
+}
+@keyframes brix-crown-drop {
+  0%   { opacity: 0; transform: translateY(-12px) scaleY(0.85); }
+  60%  { opacity: 1; transform: translateY(2px)  scaleY(1.05);  }
+  85%  { transform: translateY(-1px) scaleY(0.98); }
+  100% { opacity: 1; transform: translateY(0)    scaleY(1);     }
+}
+
+/* M11 — Live dot breathing */
+.live-dot {
+  display: inline-block;
+  animation: brix-pulse-dot 1.8s var(--ease-brix) infinite;
+}
+@keyframes brix-pulse-dot {
+  0%, 100% { opacity: 1;    transform: scale(1);    }
+  50%      { opacity: 0.55; transform: scale(0.85); }
+}
+
+/* M12 — Wizard steps sequenced reveal */
+.wizard__step {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--t-med) var(--ease-brix),
+              transform var(--t-med) var(--ease-brix),
+              background var(--t-med) var(--ease-brix),
+              color var(--t-med) var(--ease-brix),
+              border-color var(--t-med) var(--ease-brix);
+}
+.wizard.in-view .wizard__step              { opacity: 1; transform: translateY(0); }
+.wizard.in-view .wizard__step:nth-child(1) { transition-delay:   0ms; }
+.wizard.in-view .wizard__step:nth-child(2) { transition-delay: 120ms; }
+.wizard.in-view .wizard__step:nth-child(3) { transition-delay: 240ms; }
+.wizard.in-view .wizard__step:nth-child(4) { transition-delay: 360ms; }
+.wizard.in-view .wizard__step:nth-child(5) { transition-delay: 480ms; }
+.wizard.in-view .wizard__step:nth-child(6) { transition-delay: 600ms; }
+.wizard__step.is-current {
+  position: relative;
+  animation: brix-step-claim 400ms var(--ease-brix);
+}
+@keyframes brix-step-claim {
+  0%   { box-shadow: 0 0 0 0 rgba(180,144,70,0.45); }
+  60%  { box-shadow: 0 0 0 8px rgba(180,144,70,0.0); }
+  100% { box-shadow: 0 0 0 0 rgba(180,144,70,0.0); }
+}
+
+/* ============================================================
+   POLISH (10)
+   ============================================================ */
+
+/* P1 — Corner brackets on .brix-card hover */
+.brix-card { position: relative; }
+.brix-card .corner-brackets {
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--gold) 0 0) top left/8px 1px no-repeat,
+    linear-gradient(var(--gold) 0 0) top left/1px 8px no-repeat,
+    linear-gradient(var(--gold) 0 0) top right/8px 1px no-repeat,
+    linear-gradient(var(--gold) 0 0) top right/1px 8px no-repeat,
+    linear-gradient(var(--gold) 0 0) bottom left/8px 1px no-repeat,
+    linear-gradient(var(--gold) 0 0) bottom left/1px 8px no-repeat,
+    linear-gradient(var(--gold) 0 0) bottom right/8px 1px no-repeat,
+    linear-gradient(var(--gold) 0 0) bottom right/1px 8px no-repeat;
+  opacity: 0;
+  transition: opacity var(--t-med) var(--ease);
+  z-index: 3;
+}
+.brix-card:hover .corner-brackets { opacity: .9; }
+
+/* P2 — Watermark on hero */
+.hero .watermark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-mono);
+  font-size: 220px;
+  font-weight: 900;
+  color: rgba(10,10,10,0.022);
+  letter-spacing: 0.4em;
+  transform: rotate(-14deg);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero > *:not(.watermark):not(.aurora-a):not(.aurora-b) { position: relative; z-index: 1; }
+
+/* P3 — Noise texture on hero */
+.hero {
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+}
+
+/* P4 — Ornamental divider */
+.rule-ornament {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 18px 0 28px;
+  color: var(--gold-deep);
+}
+.rule-ornament .line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hair-strong) 22%, var(--hair-strong) 78%, transparent);
+}
+.rule-ornament .dot { font-size: 12px; opacity: .8; }
+
+/* P5 — Focal dot on prices */
+.brix-price__num, .receipt__total .val {
+  position: relative;
+  padding-left: 14px;
+}
+.brix-price__num::before, .receipt__total .val::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(201,169,97,0.18);
+}
+
+/* P6 — Margin section numbering (01 / 07) */
+.section::before {
+  content: attr(data-num) " / " attr(data-total);
+  position: absolute;
+  top: 28px;
+  left: -64px;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--mute-2);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+@media (max-width: 1200px) { .section::before { display: none; } }
+
+/* P7 — Animated nav underline */
+.nav__link { position: relative; }
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -6px;
+  height: 1.5px;
+  width: 100%;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-med) var(--ease);
+}
+.nav__link:hover::after { transform: scaleX(1); }
+.nav__link.is-active::after { transform: scaleX(1); background: var(--emerald); }
+
+/* P8 — Monogram B */
+.monogram {
+  position: absolute;
+  right: 32px; bottom: 32px;
+  width: 84px; height: 84px;
+  color: var(--ink);
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* P9 — BRIX SELECT ribbon on data-tier="best" */
+.brix-card[data-tier="best"] { overflow: hidden; }
+.brix-card[data-tier="best"] .select-ribbon {
+  position: absolute;
+  top: 18px;
+  right: -56px;
+  transform: rotate(35deg);
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold));
+  color: #FFF8E7;
+  font-family: var(--f-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  padding: 5px 60px;
+  box-shadow: 0 2px 6px rgba(166,135,60,0.35);
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* P10 — ❖ punctuation between chips */
+.hero__chips { gap: 0; align-items: center; flex-wrap: wrap; }
+.hero__chips > .chip + .chip { margin-left: 6px; }
+.hero__chips > .chip + .chip::before {
+  content: "❖";
+  display: inline-block;
+  margin-right: 10px;
+  color: var(--gold);
+  font-size: 9px;
+  opacity: .6;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   EXTRAS (5) — لَمسات صَقل إضافيّة
+   ============================================================ */
+
+/* E1 — scroll-margin-top for sticky nav anchors */
+.screen-anchor { scroll-margin-top: 84px; }
+
+/* E2 — OpenType features on display type */
+.display, .hero__h, .section__title, .brix-price__num {
+  font-feature-settings: "ss01" 1, "kern" 1, "liga" 1, "calt" 1;
+}
+
+/* E3 — Gold text selection */
+::selection { background: rgba(201,169,97,0.32); color: var(--ink); }
+::-moz-selection { background: rgba(201,169,97,0.32); color: var(--ink); }
+
+/* E4 — Sticky nav shadow when scrolled */
+.nav { transition: box-shadow var(--t-med) var(--ease), border-color var(--t-med) var(--ease); }
+.nav.is-scrolled {
+  box-shadow: 0 6px 24px -16px rgba(10,10,10,0.18);
+  border-bottom-color: transparent;
+}
+
+/* E5 — Reading progress bar (gold hairline) */
+.read-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 1px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-deep));
+  z-index: 9999;
+  transition: width 60ms linear;
+  pointer-events: none;
+}
+
+/* End v2 overrides */
+
+/* ════════════════════════════════════════════════════════════════════
+   v3 — Results card redesign (Borsche, hierarchical, hero price)
+   يَلغي كُلّ ما سَبَق على .brix-card، .brix-price، الشارات داخل النَتائج.
+   ════════════════════════════════════════════════════════════════════ */
+
+#results .results-grid {
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 20px;
+}
+
+/* ── base card ── */
+#results .brix-card {
+  position: relative;
+  background: var(--bg-elev);
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  padding: 0;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: 0;
+  overflow: hidden;
+  box-shadow: 0 1px 0 rgba(20,20,20,0.02), 0 1px 3px rgba(20,20,20,0.04);
+  transition:
+    transform 280ms cubic-bezier(.2,.7,.2,1),
+    box-shadow 280ms cubic-bezier(.2,.7,.2,1),
+    border-color 280ms ease;
+}
+
+/* the side rail — single source of category color */
+#results .brix-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: transparent;
+  transition: width 220ms cubic-bezier(.2,.7,.2,1), background 220ms ease;
+  z-index: 2;
+}
+
+/* category rails */
+#results .brix-card[data-tier="best"]::before    { background: linear-gradient(180deg, var(--gold) 0%, var(--gold-deep) 100%); }
+#results .brix-card[data-tier="release"]::before { background: linear-gradient(180deg, #C97A1A 0%, var(--amber) 100%); }
+#results .brix-card[data-tier="stop"]::before    { background: linear-gradient(180deg, var(--warn) 0%, #9B1C1C 100%); }
+
+/* corner cap on best */
+#results .brix-card[data-tier="best"]::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 56px; height: 56px;
+  background: radial-gradient(circle at top left, rgba(201,169,97,0.18), transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* category surfaces */
+#results .brix-card[data-tier="best"] {
+  border-color: rgba(4,120,87,0.42);
+  background:
+    linear-gradient(180deg, rgba(4,120,87,0.035) 0%, transparent 38%),
+    var(--bg-elev);
+  box-shadow:
+    0 0 0 1px rgba(201,169,97,0.10) inset,
+    0 2px 12px rgba(201,169,97,0.10),
+    0 1px 3px rgba(20,20,20,0.04);
+}
+#results .brix-card[data-tier="release"] {
+  border-color: rgba(180,83,9,0.32);
+  background: linear-gradient(180deg, #FFFBF2 0%, var(--bg-elev) 42%);
+}
+#results .brix-card[data-tier="stop"] {
+  border-color: rgba(220,38,38,0.32);
+  background: linear-gradient(180deg, #FFF6F5 0%, var(--bg-elev) 42%);
+}
+
+/* hover */
+#results .brix-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--hair-strong);
+  box-shadow:
+    0 12px 28px -12px rgba(20,20,20,0.18),
+    0 4px 10px rgba(20,20,20,0.06),
+    0 0 0 1px rgba(201,169,97,0.08) inset;
+}
+#results .brix-card:hover::before { width: 6px; }
+#results .brix-card:not([data-tier])::before,
+#results .brix-card[data-tier=""]::before {
+  background: linear-gradient(180deg, var(--hair-strong), var(--hair));
+  opacity: 0;
+}
+#results .brix-card:hover:not([data-tier])::before,
+#results .brix-card:hover[data-tier=""]::before { opacity: 1; }
+
+/* ── header zone ── */
+#results .brix-card > header {
+  position: relative;
+  z-index: 2;
+  padding: 20px 22px 14px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 1px solid var(--hair);
+}
+#results .brix-card__crown {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 24px;
+  margin: 0;
+}
+#results .brix-card__title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  color: var(--ink);
+  margin: 2px 0 0;
+}
+#results .brix-card__subtitle {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0;
+}
+#results .brix-card__meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+#results .brix-stars { color: var(--gold); letter-spacing: 1.5px; font-size: 13px; line-height: 1; }
+#results .brix-area {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  padding-left: 10px;
+  border-left: 1px solid var(--hair);
+}
+
+/* ── badges (larger, with inline SVG slots) ── */
+#results .brix-badge {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1;
+}
+#results .brix-badge svg { width: 11px; height: 11px; display: block; flex: none; }
+#results .brix-badge--best {
+  background: var(--ink);
+  color: #fff;
+  padding: 7px 12px;
+  font-size: 11px;
+  box-shadow: 0 1px 0 rgba(201,169,97,0.6) inset, 0 0 0 1px rgba(201,169,97,0.35);
+}
+#results .brix-badge--best svg { color: var(--gold); }
+#results .brix-badge--best::before { content: none; }
+#results .brix-badge--board {
+  background: var(--bg-tint-emerald);
+  color: var(--emerald-deep);
+  border: 1px solid rgba(4,120,87,0.24);
+}
+#results .brix-badge--gold {
+  background: var(--bg-tint-gold);
+  color: var(--gold-deep);
+  border: 1px solid rgba(201,169,97,0.40);
+}
+#results .brix-badge--alert {
+  background: var(--bg-tint-warn);
+  color: var(--warn);
+  border: 1px solid rgba(220,38,38,0.26);
+}
+#results .brix-badge--mute {
+  background: var(--bg-sunk);
+  color: var(--mute);
+  border: 1px solid var(--hair);
+}
+
+/* ── HERO PRICE ZONE ── */
+#results .brix-card .brix-price {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "num    cur"
+    "per    strike";
+  align-items: baseline;
+  column-gap: 14px;
+  row-gap: 6px;
+  padding: 22px 22px 16px 26px;
+  border: 0;
+  margin: 0;
+  background: linear-gradient(180deg, transparent, rgba(20,20,20,0.012));
+}
+#results .brix-card .brix-price__num {
+  grid-area: num;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 56px;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "ss01", "kern", "liga", "tnum";
+  transition: transform 260ms cubic-bezier(.2,.7,.2,1);
+  transform-origin: left bottom;
+}
+#results .brix-card:hover .brix-price__num { transform: scale(1.02); }
+#results .brix-card .brix-price__currency {
+  grid-area: cur;
+  align-self: end;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--mute);
+  padding-bottom: 8px;
+}
+#results .brix-card .brix-price__strike {
+  grid-area: strike;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--mute);
+  text-decoration: line-through;
+  text-decoration-color: var(--warn);
+  text-decoration-thickness: 1.5px;
+  margin: 0;
+  text-align: right;
+  align-self: center;
+}
+#results .brix-card .brix-price__per {
+  grid-area: per;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--mute);
+  padding: 0;
+  margin: 0;
+}
+#results .brix-card .brix-price__per::before {
+  content: "";
+  display: inline-block;
+  width: 18px; height: 1px;
+  background: var(--hair-strong);
+}
+
+/* stop-sale price: dim + diagonal strike */
+#results .brix-card[data-tier="stop"] .brix-price__num {
+  color: var(--warn);
+  opacity: 0.72;
+  position: relative;
+}
+#results .brix-card[data-tier="stop"] .brix-price__num::after {
+  content: "";
+  position: absolute;
+  left: -4px; right: -4px;
+  top: 52%;
+  height: 2px;
+  background: var(--warn);
+  transform: rotate(-6deg);
+  transform-origin: left center;
+  opacity: 0.55;
+}
+#results .brix-card[data-tier="stop"] .brix-price__per { color: var(--warn); opacity: 0.85; }
+
+/* ── detail strip (always-visible reason block) ── */
+#results .brix-detail {
+  position: relative;
+  z-index: 2;
+  margin: 0 22px 0 26px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+#results .brix-detail svg { flex: none; width: 14px; height: 14px; margin-top: 2px; }
+#results .brix-detail strong { font-weight: 700; }
+#results .brix-detail--best {
+  background: var(--bg-tint-emerald);
+  color: var(--emerald-deep);
+  border: 1px solid rgba(4,120,87,0.18);
+}
+#results .brix-detail--release {
+  background: #FDF5E7;
+  color: var(--amber);
+  border: 1px solid rgba(180,83,9,0.22);
+}
+#results .brix-detail--stop {
+  background: var(--bg-tint-warn);
+  color: var(--warn);
+  border: 1px solid rgba(220,38,38,0.20);
+}
+#results .brix-detail--info {
+  background: var(--bg-tint-emerald);
+  color: var(--emerald-deep);
+  border: 1px solid rgba(4,120,87,0.16);
+}
+
+/* hide legacy brix-alert inside cards (replaced by brix-detail) but keep
+   it functional if present without brix-detail */
+#results .brix-card .brix-alert {
+  position: relative; z-index: 2;
+  margin: 0 22px 0 26px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+/* ── foot zone ── */
+#results .brix-card .brix-foot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 14px 22px 0 26px;
+  margin-top: 14px;
+  border-top: 1px dashed var(--hair);
+}
+#results .brix-card .brix-foot__occ {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+#results .brix-card .brix-foot__save {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  color: var(--emerald);
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--bg-tint-emerald);
+}
+#results .brix-card[data-tier="stop"] .brix-foot__save {
+  color: var(--warn);
+  background: var(--bg-tint-warn);
+}
+
+/* ── actions ── */
+#results .brix-card .brix-actions {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding: 14px 22px 18px 26px;
+}
+
+/* keep best ribbon visible but cleaner */
+#results .brix-card[data-tier="best"] .select-ribbon {
+  z-index: 3;
+}
+
+/* respect reduce-motion */
+@media (prefers-reduced-motion: reduce) {
+  #results .brix-card,
+  #results .brix-card::before,
+  #results .brix-card .brix-price__num {
+    transition: none !important;
+  }
+  #results .brix-card:hover { transform: none; }
+  #results .brix-card:hover .brix-price__num { transform: none; }
+}
+
+/* End v3 results redesign */
+
+/* =====================================================================
+   v3-final · طَبَقة التَمييز البَصَريّ (Distinction Layer)
+   ٢٠ تَمييز + ٥ أَدَوات + ٥ صَقَلات إضافيّة. مَحمول على نَفس التوكِنات.
+   ===================================================================== */
+
+/* ١. أَزرار toolbar الـghost — تَنفَصِل عن الـtoolbar الأَبيَض */
+.results-toolbar .btn--ghost{
+  background: var(--bg-sunk);
+  border-color: var(--hair-strong);
+  box-shadow: inset 0 -1px 0 rgba(10,10,10,0.04);
+}
+.results-toolbar .btn--ghost:hover{
+  background:#fff;
+  border-color: var(--ink);
+}
+
+/* ٢. سِعر بِطاقة stop-sale — مَشطوب + opacity */
+.brix-card[data-tier="stop"] .brix-price__num{
+  color: var(--warn);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(220,38,38,0.55);
+  opacity: 0.7;
+}
+.brix-card[data-tier="stop"] .brix-price__num::before{
+  background: var(--warn);
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.18);
+}
+
+/* ٣. فَرق board vs gold badges بشَكل left-bar */
+.brix-badge--board{
+  background: var(--bg-tint-emerald);
+  border-left: 3px solid var(--emerald);
+  border-radius: 4px 6px 6px 4px;
+  padding-left: 10px;
+}
+.brix-badge--gold{
+  background: var(--bg-tint-gold);
+  border-left: 3px solid var(--gold-deep);
+  border-radius: 4px 6px 6px 4px;
+  padding-left: 10px;
+}
+
+/* ٤. عَنوان البِطاقة — تَسطير صَغير تَحته */
+.brix-card__title{
+  position: relative;
+  padding-bottom: 6px;
+}
+.brix-card__title::after{
+  content:"";
+  position:absolute;
+  inset-inline-start: 0;
+  bottom: 0;
+  width: 24px;
+  height: 2px;
+  background: var(--ink);
+  opacity: 0.9;
+}
+.brix-card[data-tier="best"] .brix-card__title::after{ background: var(--gold); }
+
+/* ٥. حالات draft/archived بألوان مُتَمَيِّزة */
+.state-pill--draft{
+  background: transparent;
+  color: var(--amber);
+  border: 1px dashed rgba(180,83,9,0.35);
+}
+.state-pill--archived{
+  background: rgba(10,10,10,0.06);
+  color: var(--mute-2);
+  border: 1px solid var(--hair);
+  text-decoration: line-through;
+  text-decoration-color: var(--mute-2);
+}
+
+/* ٦. خَطوات wizard المُستَقبَليَّة — مَنقوطة وَخافِتة */
+.wizard__step:not(.is-done):not(.is-current){
+  background: transparent;
+  border: 1px dashed var(--hair-strong);
+  color: var(--mute-2);
+  opacity: 0.6;
+}
+.wizard__step:not(.is-done):not(.is-current) .n{
+  color: var(--mute-2);
+}
+
+/* ٧. هَرَم حَجم العَناوين — section > brix-card > search-card */
+.results-toolbar__title{ font-weight: 700; }
+.search-card__title{
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.brix-card__title{ font-size: 21px; }
+
+/* ٨. الحُقول المَطلوبة — نُقطة حَمراء بَدَل النَجمة */
+.field:has(.req) .field__label{
+  color: var(--ink);
+  font-weight: 700;
+}
+.field__label .req{
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warn);
+  margin-inline-start: 4px;
+  vertical-align: middle;
+  text-indent: -9999px;
+  overflow: hidden;
+}
+
+/* ٩. cstat vs kpi — هَرَم بَين إحصاءات العَقد وKPIs */
+.cstat__v{
+  font-size: var(--t-17);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* １０. log__tag info vs ok — info شَفّاف، ok أَخضَر مُشَبَّع */
+.log__tag--info{
+  background: transparent;
+  color: var(--ink-2);
+  border: 1px solid var(--hair-strong);
+}
+.log__tag--ok{
+  background: var(--bg-tint-emerald);
+  color: var(--emerald-deep);
+  border: 1px solid rgba(4,120,87,0.32);
+}
+
+/* １１. .select يَدُلّ على قابِليّة الاختيار */
+.select{
+  background-color: #FCFCFA;
+  border-color: var(--ink);
+  cursor: pointer;
+  font-weight: 500;
+}
+.select:hover{
+  background-color: #FFF;
+  box-shadow: 0 0 0 3px rgba(10,10,10,0.06);
+}
+
+/* １２. stepper buttons أَكثَر تَمييزاً عن المُربَّعات الأُخرى */
+.stepper__btn{
+  background: #fff;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  font-weight: 800;
+}
+.stepper__btn:hover{
+  background: var(--ink);
+  color: var(--gold);
+  transform: scale(1.05);
+}
+
+/* １３. hover أَقوى لِبِطاقة العَقد */
+.contract-card{
+  transition: transform 240ms var(--ease), border-color 240ms var(--ease), box-shadow 240ms var(--ease);
+}
+.contract-card:hover{
+  transform: translateY(-4px);
+  border-color: var(--ink);
+  box-shadow:
+    0 12px 32px -16px rgba(10,10,10,0.18),
+    0 0 0 1px var(--ink);
+}
+
+/* １４. focus state ذَهَبيّ سَميك */
+.btn:focus-visible,
+.input:focus,
+.select:focus{
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(201,169,97,0.18);
+}
+
+/* １５. فَواصِل مَنقوطة بَين أَقسام search-card */
+.search-card .row + .row,
+.search-card .row + .kids-block,
+.search-card .kids-block + .row,
+.search-card .row + .honeymoon-toggle{
+  padding-top: 18px;
+  border-top: 1px dashed var(--hair);
+  margin-top: 18px;
+}
+
+/* １６. السِعر المَشطوب أَوضَح */
+.brix-price__strike{
+  color: var(--ink-2);
+  font-weight: 600;
+  text-decoration: line-through;
+  text-decoration-color: var(--warn);
+  text-decoration-thickness: 1.5px;
+  background: rgba(220,38,38,0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* １７. شارة No-discount مُمَيَّزة */
+.brix-badge--mute{
+  background: #fff;
+  color: var(--ink-2);
+  border: 1px dashed var(--mute);
+  letter-spacing: 0.18em;
+}
+.brix-badge--mute::before{ content:"·"; margin-inline-end: 4px; }
+
+/* １８. nav__link النَشِط — حِبريّ بِنَصّ أَبيَض وَلَمسة ذَهَبيّة */
+.nav__link.is-active{
+  background: var(--ink);
+  color: #fff;
+  font-weight: 700;
+}
+.nav__link.is-active::before{ color: var(--gold); }
+.nav__link.is-active::after{ background: var(--gold); }
+
+/* １９. receipt__row--sub بمُحاذاة وَسَهم */
+.receipt__row--sub{
+  padding-inline-start: 16px;
+  border-inline-start: 2px solid var(--hair);
+  font-size: 12px;
+  opacity: 0.85;
+}
+.receipt__row--sub .lbl::before{
+  content: "↳ ";
+  color: var(--mute-2);
+  margin-inline-end: 4px;
+}
+
+/* ２０. subhead داخِل wizard أَصغَر وَكقِسم وَظيفيّ */
+.wizard__body .subhead{
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+  border-bottom: 1px solid var(--hair);
+  padding-bottom: 8px;
+}
+.wizard__body .subhead .num-tag{
+  background: var(--ink);
+  color: var(--gold);
+  border: none;
+  font-weight: 700;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   الأَدَوات الخَمس الجَديدة (Utility Distinctions)
+   ───────────────────────────────────────────────────────────────────── */
+
+/* أَداة ١: gold-rule — فاصِل ذَهَبيّ بمَركَز ❖ */
+.gold-rule{
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--gold) 30%,
+    var(--gold-deep) 50%,
+    var(--gold) 70%,
+    transparent 100%);
+  margin: 16px 0;
+  position: relative;
+}
+.gold-rule::before{
+  content: "❖";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-elev);
+  padding: 0 8px;
+  color: var(--gold-deep);
+  font-size: 10px;
+}
+
+/* أَداة ٢: ink-spotlight — تَأطير حِبريّ بطابِع ohne-corner ظِلّ صَلب */
+.ink-spotlight{
+  position: relative;
+  padding: 14px 18px;
+  background: var(--bg-elev);
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 4px rgba(10,10,10,0.04),
+    4px 4px 0 0 var(--ink);
+}
+.ink-spotlight::before{
+  content: attr(data-spotlight);
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  background: var(--ink);
+  color: var(--gold);
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+/* أَداة ٣: tier-indicator — شَريط tier عَموديّ */
+.tier-indicator{
+  position: absolute;
+  left: 0;
+  top: 22px;
+  bottom: 22px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--hair-strong);
+}
+.tier-indicator[data-level="1"]{ background: var(--mute-2); height: 30%; }
+.tier-indicator[data-level="2"]{ background: var(--ink-2); height: 55%; }
+.tier-indicator[data-level="3"]{
+  background: linear-gradient(180deg, var(--emerald), var(--gold));
+  height: 100%;
+  box-shadow: 2px 0 8px rgba(201,169,97,0.4);
+}
+
+/* أَداة ٤: underline-active — تَسطير ديناميكيّ يَتَوَسَّع */
+.underline-active{
+  position: relative;
+  display: inline-block;
+}
+.underline-active::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -4px;
+  height: 2px;
+  background: var(--gold);
+  transition: right 240ms var(--ease);
+}
+.underline-active:hover::after,
+.underline-active.is-on::after{ right: 0; }
+.underline-active.is-on::after{
+  background: linear-gradient(90deg, var(--emerald), var(--gold));
+  height: 3px;
+}
+
+/* أَداة ٥: prefix-dot — نُقطة سِيمِيَّة قَبل النَصّ بحالات */
+.prefix-dot{
+  position: relative;
+  padding-inline-start: 18px;
+}
+.prefix-dot::before{
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mute-2);
+  box-shadow: 0 0 0 2px var(--bg-elev), 0 0 0 3px var(--hair);
+}
+.prefix-dot[data-kind="ok"]::before{
+  background: var(--emerald);
+  box-shadow: 0 0 0 2px var(--bg-elev), 0 0 0 3px rgba(4,120,87,0.3);
+}
+.prefix-dot[data-kind="warn"]::before{
+  background: var(--amber);
+  box-shadow: 0 0 0 2px var(--bg-elev), 0 0 0 3px rgba(180,83,9,0.3);
+}
+.prefix-dot[data-kind="err"]::before{
+  background: var(--warn);
+  box-shadow: 0 0 0 2px var(--bg-elev), 0 0 0 3px rgba(220,38,38,0.3);
+  animation: brix-pulse-dot 1.6s var(--ease) infinite;
+}
+.prefix-dot[data-kind="gold"]::before{
+  background: var(--gold);
+  box-shadow: 0 0 0 2px var(--bg-elev), 0 0 0 3px rgba(201,169,97,0.32);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   خَمس صَقَلات إضافيّة (Final polish — من تَحليلنا)
+   ───────────────────────────────────────────────────────────────────── */
+
+/* صَقل ١: مُحاذاة tabular-nums لكُلّ أَرقام السِعر والإحصاءات */
+.brix-price__num,
+.brix-price__strike,
+.cstat__v,
+.kpi__val,
+.receipt__row .val{
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "ss01" 1;
+}
+
+/* صَقل ٢: تَخفيف opacity على العَناصِر المُعَطَّلة بشَكل مُتَّسِق */
+[aria-disabled="true"],
+.btn[disabled],
+.input[disabled],
+.select[disabled]{
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* صَقل ٣: تَجَنُّب layout-shift للـsticky nav بإِضافة scroll-padding */
+html{ scroll-padding-top: 84px; }
+
+/* صَقل ٤: anti-aliasing مُحَكَّم على الخُطوط الكَبيرة */
+.brix-card__title,
+.section__title,
+.brix-price__num,
+.kpi__val{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* صَقل ٥: تَقليص الـmotion عند تَفضيل المُستَخدِم */
+@media (prefers-reduced-motion: reduce){
+  .contract-card,
+  .stepper__btn,
+  .underline-active::after,
+  .results-toolbar .btn--ghost{
+    transition: none !important;
+  }
+  .prefix-dot[data-kind="err"]::before{ animation: none !important; }
+}
+
+/* End v3-final distinction layer */
+
+/* ════════════════════════════════════════════════════════════════════
+   v4 — UNIFIED EDITORIAL RESULT CARD
+   دمج ١٠ مَدارس: Pentagram·Borsche·Swiss·Stripe·Monocle·Bloomberg·Hara·Apple·Linear·Aman
+   ════════════════════════════════════════════════════════════════════ */
+
+#results.v4 .results-grid{
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 24px;
+}
+
+/* ── base shell ─────────────────────────────────────────── */
+.rc-card{
+  --rc-pad: 26px;
+  --rc-ink:#0A0A0A;
+  --rc-ink2:#3A3A3A;
+  --rc-mute:#7A7A7A;
+  --rc-hair: var(--hair, #E8E6E1);
+  --rc-paper:#FAFAF7;
+  --rc-paper2:#F3F1EA;
+  --rc-emerald: var(--emerald, #047857);
+  --rc-emerald-deep: var(--emerald-deep, #035E45);
+  --rc-gold: var(--gold, #C9A961);
+  --rc-gold-deep: var(--gold-deep, #9C7E3E);
+  --rc-warn: var(--warn, #DC2626);
+  --rc-amber:#B4530A;
+  position: relative;
+  background: var(--rc-paper);
+  border: 1px solid var(--rc-hair);
+  border-radius: 4px;
+  display: grid;
+  grid-template-rows: auto auto auto auto auto auto;
+  isolation: isolate;
+  overflow: hidden;
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  color: var(--rc-ink);
+  transition: transform 280ms cubic-bezier(.2,.7,.2,1),
+              box-shadow 280ms cubic-bezier(.2,.7,.2,1),
+              border-color 220ms ease;
+  box-shadow: 0 1px 0 rgba(20,20,20,.02), 0 1px 3px rgba(20,20,20,.04);
+}
+.rc-card:hover{
+  transform: translateY(-3px);
+  border-color: #1a1a1a;
+  box-shadow:
+    0 14px 32px -14px rgba(20,20,20,.18),
+    0 0 0 1px rgba(201,169,97,.18) inset;
+}
+
+/* tier left rail — single source of category color */
+.rc-card::before{
+  content:"";
+  position:absolute; inset:0 auto 0 0; width:4px;
+  background: linear-gradient(180deg, var(--rc-hair), var(--rc-mute));
+  opacity:.0; z-index:3;
+  transition: opacity 220ms ease, width 220ms ease;
+}
+.rc-card[data-tier="best"]::before{
+  background: linear-gradient(180deg, var(--rc-gold) 0%, var(--rc-gold-deep) 100%);
+  opacity:1;
+}
+.rc-card[data-tier="release"]::before{
+  background: linear-gradient(180deg, #C97A1A 0%, var(--rc-amber) 100%);
+  opacity:1;
+}
+.rc-card[data-tier="stop"]::before{
+  background: linear-gradient(180deg, var(--rc-warn) 0%, #9B1C1C 100%);
+  opacity:1;
+}
+.rc-card:hover::before{ width:6px; }
+
+/* watermark numeral (Borsche) */
+.rc-card__wm{
+  position:absolute; top:-14px; right:-8px;
+  font-family:'Inter Tight', sans-serif;
+  font-weight:800; font-size:180px; line-height:.78;
+  letter-spacing:-.06em;
+  color: var(--rc-paper2);
+  pointer-events:none; user-select:none;
+  z-index:0;
+  opacity:.55;
+}
+.rc-card[data-tier="best"] .rc-card__wm{ color: #F3EBD4; opacity:.7; }
+.rc-card[data-tier="release"] .rc-card__wm{ color:#FDEBC8; }
+.rc-card[data-tier="stop"] .rc-card__wm{ color:#FCD8D5; }
+
+/* corner brackets — appear on hover */
+.rc-card__bracket{
+  position:absolute; width:14px; height:14px;
+  border: 1.5px solid var(--rc-gold);
+  opacity:0; transition: opacity 220ms ease;
+  z-index:4; pointer-events:none;
+}
+.rc-card__bracket.tl{top:8px; left:8px; border-right:none; border-bottom:none;}
+.rc-card__bracket.tr{top:8px; right:8px; border-left:none; border-bottom:none;}
+.rc-card__bracket.bl{bottom:8px; left:8px; border-right:none; border-top:none;}
+.rc-card__bracket.br{bottom:8px; right:8px; border-left:none; border-top:none;}
+.rc-card:hover .rc-card__bracket{ opacity:.85; }
+
+/* ── ROW 1 · TICKER ─────────────────────────────────────── */
+.rc-ticker{
+  display:grid;
+  grid-template-columns: auto 1fr auto;
+  align-items:center;
+  gap:12px;
+  padding: 11px var(--rc-pad);
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:9.5px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--rc-mute);
+  border-bottom: 1px solid var(--rc-hair);
+  background: rgba(243,241,234,.4);
+  position:relative; z-index:2;
+}
+.rc-ticker__idx{ color: var(--rc-ink); font-weight:600; }
+.rc-ticker__rule{ height:1px; background: var(--rc-hair); }
+.rc-ticker__select{
+  display:inline-flex; align-items:center; gap:7px;
+  background: var(--rc-ink); color:#fff;
+  padding: 5px 10px;
+  font-size: 9px; letter-spacing:.26em; font-weight:600;
+  border-radius: 2px;
+}
+.rc-ticker__select::before{
+  content:""; width:5px; height:5px; background: var(--rc-gold);
+  border-radius:50%;
+}
+.rc-ticker__select--warn{ background: var(--rc-warn); }
+.rc-ticker__select--warn::before{ background:#FFE; }
+.rc-ticker__select--amber{ background: var(--rc-amber); }
+.rc-ticker__select--amber::before{ background: #FED; }
+
+/* ── ROW 2 · MASTHEAD ───────────────────────────────────── */
+.rc-mast{
+  display:grid;
+  grid-template-columns: 64px 1fr;
+  gap: 18px;
+  padding: 22px var(--rc-pad) 18px;
+  position:relative; z-index:2;
+  border-bottom: 1px solid var(--rc-hair);
+}
+.rc-mast__idx{
+  font-family:'Inter Tight', sans-serif;
+  font-weight:800; font-size:54px; line-height:.82;
+  letter-spacing:-.05em;
+  color: var(--rc-emerald);
+  font-variant-numeric: tabular-nums;
+  align-self:start;
+}
+.rc-card[data-tier="best"] .rc-mast__idx{ color: var(--rc-gold-deep); }
+.rc-card[data-tier="release"] .rc-mast__idx{ color: var(--rc-amber); }
+.rc-card[data-tier="stop"] .rc-mast__idx{ color: var(--rc-warn); }
+
+.rc-mast__body{ min-width:0; }
+.rc-mast__kicker{
+  font-family:'JetBrains Mono', monospace;
+  font-size:9.5px; letter-spacing:.20em; text-transform:uppercase;
+  color: var(--rc-gold-deep); font-weight:600;
+  margin:0 0 8px;
+}
+.rc-mast__title{
+  font-family:'Inter Tight', sans-serif;
+  font-weight:800; font-size:26px; line-height:1.02;
+  letter-spacing:-.028em;
+  color: var(--rc-ink);
+  margin:0 0 4px;
+  word-wrap:break-word;
+}
+.rc-mast__sub{
+  font-size: 13px; font-weight:500;
+  color: var(--rc-ink2);
+  margin:0 0 12px;
+  letter-spacing:-.005em;
+}
+.rc-mast__loc{
+  display:grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px; align-items:center;
+  font-family:'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing:.16em; text-transform:uppercase;
+  color: var(--rc-ink2);
+}
+.rc-mast__loc-rule{ height:1px; background: var(--rc-gold); opacity:.5; }
+.rc-mast__loc-stars{ color: var(--rc-gold); letter-spacing:2px; font-size:11px; }
+
+/* ── ROW 3 · SPEC GRID ──────────────────────────────────── */
+.rc-spec{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  position:relative; z-index:2;
+  border-bottom: 1px solid var(--rc-hair);
+}
+.rc-spec > div{
+  padding: 14px 12px 14px var(--rc-pad);
+  border-right: 1px solid var(--rc-hair);
+  display:flex; flex-direction:column; gap:4px;
+  min-width:0;
+}
+.rc-spec > div:first-child{ padding-left: var(--rc-pad); }
+.rc-spec > div:nth-child(n+2){ padding-left: 14px; padding-right: 14px; }
+.rc-spec > div:last-child{ border-right:0; padding-right: var(--rc-pad); }
+.rc-spec dt{
+  font-family:'JetBrains Mono', monospace;
+  font-size: 8.5px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--rc-mute); margin:0;
+}
+.rc-spec dd{
+  margin:0;
+  font-family:'Inter Tight', sans-serif;
+  font-weight:700; font-size:13.5px; line-height:1.15;
+  letter-spacing:-.01em; color: var(--rc-ink);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.rc-spec dd small{
+  display:block; margin-top:2px;
+  font-weight:400; font-size: 9.5px;
+  font-family:'JetBrains Mono', monospace;
+  letter-spacing:.08em; color: var(--rc-mute);
+  text-transform:uppercase;
+}
+
+/* ── ROW 4 · LEDGER (Stripe) ────────────────────────────── */
+.rc-ledger{
+  padding: 18px var(--rc-pad) 6px;
+  position:relative; z-index:2;
+}
+.rc-ledger__head{
+  display:flex; justify-content:space-between; align-items:baseline;
+  font-family:'JetBrains Mono', monospace;
+  font-size:9.5px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--rc-mute);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rc-hair);
+  margin-bottom: 6px;
+}
+.rc-ledger__head .ccy{ color: var(--rc-gold-deep); font-weight:600; }
+.rc-line{
+  display:grid; grid-template-columns: 1fr auto auto;
+  align-items:baseline; column-gap: 16px;
+  padding: 7px 0;
+  font-family:'JetBrains Mono', monospace;
+  font-size: 12px;
+  border-bottom: 1px dotted var(--rc-hair);
+}
+.rc-line:last-of-type{ border-bottom: none; }
+.rc-line dt{ color: var(--rc-ink2); letter-spacing:.02em; margin:0; }
+.rc-line dt small{ display:block; font-size:9.5px; color: var(--rc-mute); margin-top:1px; letter-spacing:.06em; }
+.rc-line .pct{ font-size:10.5px; color: var(--rc-mute); font-variant-numeric: tabular-nums; min-width: 44px; text-align:right; }
+.rc-line dd{ margin:0; color: var(--rc-ink); font-variant-numeric: tabular-nums; font-weight:600; min-width: 80px; text-align:right; }
+.rc-line--discount dt{ color: var(--rc-emerald); }
+.rc-line--discount dd{ color: var(--rc-emerald); }
+.rc-line--discount .pct{ color: var(--rc-emerald); }
+
+/* tier alerts inside ledger */
+.rc-alert{
+  margin: 10px 0 0;
+  padding: 11px 12px;
+  background: var(--rc-paper2);
+  border-left: 3px solid var(--rc-mute);
+  font-size: 12px; color: var(--rc-ink2); line-height:1.5;
+  border-radius: 2px;
+}
+.rc-alert strong{ color: var(--rc-ink); font-weight:700; }
+.rc-alert--warn{ background: #FCEFEC; border-left-color: var(--rc-warn); color: #5C1A12; }
+.rc-alert--amber{ background: #FCF1DE; border-left-color: var(--rc-amber); color: #6B3B0B; }
+.rc-alert--info{ background: var(--rc-paper2); border-left-color: var(--rc-emerald); }
+
+/* ── ROW 5 · TOTAL BLOCK (Pentagram) ────────────────────── */
+.rc-total{
+  margin: 12px var(--rc-pad) 0;
+  padding: 16px 18px 18px;
+  background: var(--rc-ink); color:#fff;
+  position:relative; z-index:2;
+  border-radius: 3px;
+  display:grid; grid-template-columns: 1fr auto;
+  gap: 6px 16px; align-items:end;
+}
+.rc-total__label{
+  grid-column:1 / -1;
+  font-family:'JetBrains Mono', monospace;
+  font-size: 9.5px; letter-spacing:.24em; text-transform:uppercase;
+  color: var(--rc-gold);
+  margin-bottom: 4px;
+}
+.rc-total__amount{
+  font-family:'Inter Tight', sans-serif;
+  font-weight:800;
+  font-size:42px; line-height:.9;
+  letter-spacing:-.04em;
+  font-variant-numeric: tabular-nums;
+  display:flex; align-items:baseline; gap:10px;
+}
+.rc-total__amount .ccy{
+  font-family:'JetBrains Mono', monospace;
+  font-size: 12px; letter-spacing:.18em;
+  color: var(--rc-gold); font-weight:500;
+}
+.rc-total__amount .dec{
+  font-size:24px; opacity:.55; font-weight:700;
+  margin-left:-4px;
+}
+.rc-total__per{
+  text-align:right;
+  font-family:'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing:.08em; text-transform:uppercase;
+  color: rgba(255,255,255,.55);
+  line-height: 1.5;
+}
+.rc-total__per strong{
+  display:block; color:#fff; font-weight:600;
+  font-size: 13px; letter-spacing:.02em; text-transform:none;
+}
+.rc-total__strike{
+  grid-column:1 / -1;
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px; color: rgba(255,255,255,.45);
+  text-decoration: line-through;
+  text-decoration-color: var(--rc-gold);
+  margin-top:6px;
+  font-variant-numeric: tabular-nums;
+}
+.rc-card[data-tier="stop"] .rc-total{
+  background: #2A0E0C;
+  border: 1px solid var(--rc-warn);
+}
+.rc-card[data-tier="stop"] .rc-total__amount{
+  color: #FFB8B0; text-decoration: line-through; text-decoration-thickness:2px;
+  text-decoration-color: rgba(255,184,176,.7);
+}
+.rc-card[data-tier="stop"] .rc-total__label{ color: #FFB8B0; }
+
+/* ── ROW 6 · COLOPHON ───────────────────────────────────── */
+.rc-colophon{
+  margin-top: 14px;
+  padding: 12px var(--rc-pad);
+  border-top: 1px solid var(--rc-hair);
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
+  font-family:'JetBrains Mono', monospace;
+  font-size: 9.5px; letter-spacing:.16em; text-transform:uppercase;
+  color: var(--rc-mute);
+  position:relative; z-index:2;
+  background: rgba(243,241,234,.3);
+}
+.rc-colophon__ref strong{ color: var(--rc-ink); font-weight:600; }
+.rc-colophon__cta{
+  background: transparent; border:0; padding:0;
+  font: inherit; letter-spacing:.20em;
+  color: var(--rc-ink); font-weight:700; cursor:pointer;
+  border-bottom: 1.5px solid var(--rc-ink);
+  padding-bottom: 2px;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+.rc-colophon__cta:hover{ color: var(--rc-emerald); border-color: var(--rc-emerald); }
+.rc-card[data-tier="stop"] .rc-colophon__cta{
+  color: var(--rc-mute); border-color: var(--rc-mute);
+  cursor:not-allowed; pointer-events:none;
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .rc-card, .rc-card::before, .rc-card__bracket{ transition: none !important; }
+  .rc-card:hover{ transform:none; }
+}
+
+/* End v4 unified card */
+
+</style>
+</head>
+<body>
+
+<!-- ==================== TOP NAV ==================== -->
+<nav class="nav">
+  <div class="nav__inner">
+    <div class="nav__brand">
+      <span class="mark">BRIX</span>
+      <span class="sub">Hotel Contract Engine · v15.15</span>
+    </div>
+    <div class="nav__links">
+      <a class="nav__link is-active" href="#search">Search</a>
+      <a class="nav__link" href="#results">Results</a>
+      <a class="nav__link" href="#wizard1">Contract Wizard</a>
+      <a class="nav__link" href="#contracts">Contracts</a>
+      <a class="nav__link" href="#admin">Admin</a>
+      <a class="nav__link" href="#telegram">Telegram Bot</a>
+      <a class="nav__link" href="#states">States</a>
+    </div>
+    <div class="nav__right">
+      <span class="nav__env">● Production</span>
+      <span class="nav__user">RH</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<header class="hero">
+  <span class="aurora-a" aria-hidden="true"></span>
+  <span class="aurora-b" aria-hidden="true"></span>
+  <span class="watermark" aria-hidden="true">SPECIMEN — NOT FOR DISTRIBUTION — SPECIMEN</span>
+  <svg class="monogram" viewBox="0 0 100 100" aria-hidden="true">
+    <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width="1"/>
+    <text x="50" y="68" text-anchor="middle" font-family="Inter Tight, serif"
+          font-weight="900" font-size="62" letter-spacing="-0.05em" fill="currentColor">B</text>
+    <text x="50" y="84" text-anchor="middle" font-family="JetBrains Mono, monospace"
+          font-size="6" letter-spacing="0.3em" fill="currentColor">EST · MMXXVI</text>
+  </svg>
+  <div class="hero__sup">Studio Build · 27 May 2026</div>
+  <h1 class="hero__h">
+    Price <span class="em">every room,</span><br>
+    <span class="gold">every night</span> — without<br>
+    touching a contract.
+  </h1>
+  <p class="hero__sub">
+    A pricing engine for hand-negotiated hotel contracts. Multipliers, EBD ladders,
+    stop sales, supplements — all surfaced in one receipt, none of them hidden.
+  </p>
+  <div class="hero__chips">
+    <span class="chip chip--emerald"><span class="live-dot">●</span> Live · 14 hotels</span>
+    <span class="chip chip--gold"><span class="live-dot">●</span> 1,868 tests passing</span>
+    <span class="chip">PP × Multiplier engine</span>
+    <span class="chip">EBD · Senior · Honeymoon</span>
+    <span class="chip">Supabase · Next.js 16</span>
+  </div>
+</header>
+
+<!-- ==================== SEARCH ==================== -->
+<section id="search" class="section screen-anchor" data-num="01" data-total="07">
+  <div class="section__head">
+    <div>
+      <div class="section__chapter">Screen 01 / Search</div>
+      <h2 class="section__title">Find a stay. <span class="accent">Two doors.</span></h2>
+    </div>
+    <div class="section__meta">GET /search · 60 req/min</div>
+  </div>
+
+  <div class="search-grid">
+
+    <!-- HOTEL SEARCH CARD -->
+    <article class="search-card search-card--accent">
+      <header class="search-card__head">
+        <div class="search-card__title">By <span class="em">Hotel</span></div>
+        <span class="search-card__id">SRCH-H · v15.8</span>
+      </header>
+
+      <div class="row" style="grid-template-columns: 1fr;">
+        <div class="field">
+          <label class="field__label">Hotel <span class="req">*</span></label>
+          <select class="select">
+            <option>Sueno Hotels Deluxe Belek · Belek, TR</option>
+            <option>Rixos Downtown Antalya · Antalya, TR</option>
+            <option>Maxx Royal Belek · Belek, TR</option>
+          </select>
+          <div class="field__hint">12 hotels · last sync 14:02 · €/EUR</div>
+        </div>
+      </div>
+
+      <div class="row row-dates mt-16">
+        <div class="field">
+          <label class="field__label">Check-in <span class="req">*</span></label>
+          <input class="input" type="text" value="03 Jun 2026" />
+        </div>
+        <div class="field">
+          <label class="field__label">Check-out <span class="req">*</span></label>
+          <input class="input" type="text" value="10 Jun 2026" />
+        </div>
+      </div>
+
+      <div class="row row-2 mt-16">
+        <div class="field">
+          <label class="field__label">Adults</label>
+          <div class="stepper">
+            <button class="stepper__btn">−</button>
+            <span class="stepper__val num">2</span>
+            <button class="stepper__btn">+</button>
+            <span class="muted text-mono" style="font-size:11px; letter-spacing:.08em;">18+ years</span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label">Children</label>
+          <div class="stepper">
+            <button class="stepper__btn">−</button>
+            <span class="stepper__val num">2</span>
+            <button class="stepper__btn">+</button>
+            <span class="muted text-mono" style="font-size:11px; letter-spacing:.08em;">0–12 years</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="kids-block">
+        <div class="kids-block__title">Child ages · derives infant rules</div>
+        <div class="kids-grid">
+          <div class="kid-age">
+            <span class="kid-age__label">Child 1</span>
+            <input class="kid-age__input" value="7" />
+          </div>
+          <div class="kid-age">
+            <span class="kid-age__label">Child 2</span>
+            <input class="kid-age__input" value="1.5" />
+          </div>
+          <div class="kid-age">
+            <span class="kid-age__label">Adult Age</span>
+            <input class="kid-age__input" value="34" />
+          </div>
+          <div class="kid-age">
+            <span class="kid-age__label">Lead Pax</span>
+            <input class="kid-age__input" value="34" />
+          </div>
+        </div>
+      </div>
+
+      <div class="row row-2 mt-16">
+        <div class="field">
+          <label class="field__label">Board</label>
+          <select class="select">
+            <option>Any</option>
+            <option selected>All Inclusive · AI</option>
+            <option>Half Board · HB</option>
+            <option>Bed & Breakfast · BB</option>
+            <option>Room Only · RO</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field__label">Market</label>
+          <select class="select">
+            <option>EU · Default</option>
+            <option>RU</option>
+            <option>UK</option>
+            <option>TR Domestic</option>
+          </select>
+        </div>
+      </div>
+
+      <label class="honeymoon-toggle mt-16">
+        <div class="honeymoon-toggle__text">
+          <span class="honeymoon-toggle__title">Honeymoon</span>
+          <span class="honeymoon-toggle__sub">Requires marriage certificate · adds gold tier discount when eligible</span>
+        </div>
+        <span class="switch is-on">
+          <span class="switch__track"><span class="switch__thumb"></span></span>
+        </span>
+      </label>
+
+      <div class="search-card__cta">
+        <span class="muted text-mono" style="font-size:11px; letter-spacing:.08em;">7 nights · 2A + 2C</span>
+        <div class="flex gap-8">
+          <button class="btn btn--ghost btn--sm">Reset</button>
+          <button class="btn btn--primary">Search Hotel →</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- CITY SEARCH CARD -->
+    <article class="search-card">
+      <header class="search-card__head">
+        <div class="search-card__title">By <span class="em">City</span></div>
+        <span class="search-card__id">SRCH-C · v15.8</span>
+      </header>
+
+      <div class="row row-2">
+        <div class="field">
+          <label class="field__label">City <span class="req">*</span></label>
+          <select class="select">
+            <option>Antalya · TR</option>
+            <option selected>Belek · TR</option>
+            <option>Bodrum · TR</option>
+            <option>Sharm El Sheikh · EG</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field__label">Area</label>
+          <select class="select">
+            <option>All areas</option>
+            <option selected>Belek Centre</option>
+            <option>Kadriye</option>
+            <option>Boğazkent</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row row-dates mt-16">
+        <div class="field">
+          <label class="field__label">Check-in</label>
+          <input class="input" type="text" value="05 Jun 2026" />
+        </div>
+        <div class="field">
+          <label class="field__label">Check-out</label>
+          <input class="input" type="text" value="12 Jun 2026" />
+        </div>
+      </div>
+
+      <div class="row row-2 mt-16">
+        <div class="field">
+          <label class="field__label">Adults</label>
+          <div class="stepper">
+            <button class="stepper__btn">−</button>
+            <span class="stepper__val num">2</span>
+            <button class="stepper__btn">+</button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label">Children</label>
+          <div class="stepper">
+            <button class="stepper__btn">−</button>
+            <span class="stepper__val num">1</span>
+            <button class="stepper__btn">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kids-block">
+        <div class="kids-block__title">Child ages</div>
+        <div class="kids-grid">
+          <div class="kid-age">
+            <span class="kid-age__label">Child 1</span>
+            <input class="kid-age__input" value="9" />
+          </div>
+          <div class="kid-age">
+            <span class="kid-age__label">Adult age</span>
+            <input class="kid-age__input" value="31" />
+          </div>
+          <div class="kid-age" style="opacity:0.4">
+            <span class="kid-age__label">—</span>
+            <input class="kid-age__input" value="" />
+          </div>
+          <div class="kid-age" style="opacity:0.4">
+            <span class="kid-age__label">—</span>
+            <input class="kid-age__input" value="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="row row-2 mt-16">
+        <div class="field">
+          <label class="field__label">Board</label>
+          <select class="select">
+            <option>Any</option>
+            <option selected>All Inclusive · AI</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field__label">Honeymoon</label>
+          <label class="switch" style="margin-top:8px;">
+            <span class="switch__track"><span class="switch__thumb"></span></span>
+            <span class="switch__label muted">Off</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="search-card__cta">
+        <span class="muted text-mono" style="font-size:11px; letter-spacing:.08em;">7 nights · 2A + 1C</span>
+        <div class="flex gap-8">
+          <button class="btn btn--ghost btn--sm">Reset</button>
+          <button class="btn btn--primary">Search City →</button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ==================== RESULTS ==================== -->
+<section id="results" class="section screen-anchor v4" data-num="02" data-total="07">
+  <div class="section__head">
+    <div>
+      <div class="section__chapter">Screen 02 / Results</div>
+      <h2 class="section__title">7 rooms · <span class="accent">Sueno Hotels Deluxe Belek</span></h2>
+    </div>
+    <div class="section__meta">7 nights · 2A + 2C · AI</div>
+  </div>
+
+  <div class="results-toolbar">
+    <div class="results-toolbar__summary">
+      <div class="results-toolbar__title">Sueno Hotels Deluxe Belek <span style="color:var(--gold); font-size:16px; letter-spacing:1px;">★★★★★</span></div>
+      <div class="results-toolbar__meta">
+        <span><strong>Belek Centre</strong> · TR</span>
+        <span>03 Jun → 10 Jun 2026 · <strong>7 nights</strong></span>
+        <span>2 Adults + 2 Children (7, 1.5y)</span>
+        <span class="brix-badge brix-badge--board" style="font-size:9px">AI · All Inclusive</span>
+      </div>
+    </div>
+    <div class="results-toolbar__actions">
+      <button class="btn btn--ghost btn--sm">⤓ Contract PDF</button>
+      <button class="btn btn--ghost btn--sm">≡ Sort: Price ↑</button>
+      <button class="btn btn--primary btn--sm">Modify search</button>
+    </div>
+  </div>
+
+  <div class="results-grid">
+
+    <!-- ═══ CARD 01 · BEST ════════════════════════════════════════ -->
+    <article class="rc-card" data-tier="best">
+      <span class="rc-card__wm" aria-hidden="true">01</span>
+      <span class="rc-card__bracket tl" aria-hidden="true"></span>
+      <span class="rc-card__bracket tr" aria-hidden="true"></span>
+      <span class="rc-card__bracket bl" aria-hidden="true"></span>
+      <span class="rc-card__bracket br" aria-hidden="true"></span>
+
+      <header class="rc-ticker">
+        <span class="rc-ticker__idx">№ 01 / 07</span>
+        <span class="rc-ticker__rule"></span>
+        <span class="rc-ticker__select">BEST · BRIX SELECT</span>
+      </header>
+
+      <section class="rc-mast">
+        <div class="rc-mast__idx">01</div>
+        <div class="rc-mast__body">
+          <p class="rc-mast__kicker">Sueno Hotels Deluxe · 5★ · All-Inclusive</p>
+          <h3 class="rc-mast__title">Deluxe Room AI</h3>
+          <p class="rc-mast__sub">Sueno Hotels Deluxe Belek</p>
+          <div class="rc-mast__loc">
+            <span class="rc-mast__loc-stars">★★★★★</span>
+            <span class="rc-mast__loc-rule"></span>
+            <span>Belek Centre · TR</span>
+          </div>
+        </div>
+      </section>
+
+      <dl class="rc-spec">
+        <div><dt>Room</dt><dd>Deluxe AI<small>Sea View</small></dd></div>
+        <div><dt>Board</dt><dd>AI<small>All Incl.</small></dd></div>
+        <div><dt>Stay</dt><dd>03 — 10 Jun<small>7 nights</small></dd></div>
+        <div><dt>Guests</dt><dd>2 + 2<small>A · 7y · 1.5y</small></dd></div>
+      </dl>
+
+      <section class="rc-ledger">
+        <div class="rc-ledger__head"><span>Rate Breakdown</span><span class="ccy">EUR · Incl. VAT</span></div>
+        <dl class="rc-line"><dt>Base rate<small>2A × 7 nt</small></dt><span class="pct">100%</span><dd>3,694.00</dd></dl>
+        <dl class="rc-line rc-line--discount"><dt>Early Bird<small>&gt; 60 d advance</small></dt><span class="pct">−30%</span><dd>−555.10</dd></dl>
+        <dl class="rc-line rc-line--discount"><dt>Sueno Manager<small>Haytham · permanent</small></dt><span class="pct">−50%</span><dd>−1,291.90</dd></dl>
+        <div class="rc-alert rc-alert--info"><strong>Lowest total for these dates.</strong> Stacks EB + Manager on AI board — no hidden supplements.</div>
+      </section>
+
+      <section class="rc-total">
+        <span class="rc-total__label">Total Payable · 7 Nights</span>
+        <span class="rc-total__amount"><span class="ccy">EUR</span>1,847<span class="dec">.00</span></span>
+        <span class="rc-total__per"><strong>€263.86</strong>per night</span>
+        <span class="rc-total__strike">Was EUR 3,694 · saved 50%</span>
+      </section>
+
+      <footer class="rc-colophon">
+        <span class="rc-colophon__ref">REF · <strong>BX-26·0529·A01</strong></span>
+        <button class="rc-colophon__cta">Reserve →</button>
+      </footer>
+    </article>
+
+    <!-- ═══ CARD 02 · RELEASE WARNING ═════════════════════════════ -->
+    <article class="rc-card" data-tier="release">
+      <span class="rc-card__wm" aria-hidden="true">02</span>
+      <span class="rc-card__bracket tl"></span><span class="rc-card__bracket tr"></span>
+      <span class="rc-card__bracket bl"></span><span class="rc-card__bracket br"></span>
+
+      <header class="rc-ticker">
+        <span class="rc-ticker__idx">№ 02 / 07</span>
+        <span class="rc-ticker__rule"></span>
+        <span class="rc-ticker__select rc-ticker__select--amber">RELEASE · WARNING</span>
+      </header>
+
+      <section class="rc-mast">
+        <div class="rc-mast__idx">02</div>
+        <div class="rc-mast__body">
+          <p class="rc-mast__kicker">Sueno Hotels Deluxe · 5★ · All-Inclusive</p>
+          <h3 class="rc-mast__title">Deluxe Sea View</h3>
+          <p class="rc-mast__sub">Sueno Hotels Deluxe Belek</p>
+          <div class="rc-mast__loc">
+            <span class="rc-mast__loc-stars">★★★★★</span>
+            <span class="rc-mast__loc-rule"></span>
+            <span>Belek Centre · TR</span>
+          </div>
+        </div>
+      </section>
+
+      <dl class="rc-spec">
+        <div><dt>Room</dt><dd>Sea View<small>Deluxe</small></dd></div>
+        <div><dt>Board</dt><dd>AI<small>All Incl.</small></dd></div>
+        <div><dt>Stay</dt><dd>03 — 10 Jun<small>7 nights</small></dd></div>
+        <div><dt>Guests</dt><dd>2 + 2<small>A · 7y · 1.5y</small></dd></div>
+      </dl>
+
+      <section class="rc-ledger">
+        <div class="rc-ledger__head"><span>Rate Breakdown</span><span class="ccy">EUR · Incl. VAT</span></div>
+        <dl class="rc-line"><dt>Base rate<small>2A × 7 nt</small></dt><span class="pct">100%</span><dd>2,845.00</dd></dl>
+        <dl class="rc-line"><dt>Supplements<small>seaview + late-checkout</small></dt><span class="pct">+0%</span><dd>0.00</dd></dl>
+        <dl class="rc-line rc-line--discount"><dt>Early Bird<small>booked &lt; release</small></dt><span class="pct">−25%</span><dd>−711.00</dd></dl>
+        <div class="rc-alert rc-alert--amber"><strong>Release window crossed.</strong> Inside 14-day release — must confirm with Mr. Haytham before quoting to client.</div>
+      </section>
+
+      <section class="rc-total">
+        <span class="rc-total__label">Total Payable · 7 Nights</span>
+        <span class="rc-total__amount"><span class="ccy">EUR</span>2,134<span class="dec">.00</span></span>
+        <span class="rc-total__per"><strong>€304.86</strong>per night</span>
+        <span class="rc-total__strike">Was EUR 2,845 · saved 25%</span>
+      </section>
+
+      <footer class="rc-colophon">
+        <span class="rc-colophon__ref">REF · <strong>BX-26·0529·A02</strong></span>
+        <button class="rc-colophon__cta">Confirm →</button>
+      </footer>
+    </article>
+
+    <!-- ═══ CARD 03 · HONEYMOON ═══════════════════════════════════ -->
+    <article class="rc-card">
+      <span class="rc-card__wm" aria-hidden="true">03</span>
+      <span class="rc-card__bracket tl"></span><span class="rc-card__bracket tr"></span>
+      <span class="rc-card__bracket bl"></span><span class="rc-card__bracket br"></span>
+
+      <header class="rc-ticker">
+        <span class="rc-ticker__idx">№ 03 / 07</span>
+        <span class="rc-ticker__rule"></span>
+        <span class="rc-ticker__select">HONEYMOON · ENABLED</span>
+      </header>
+
+      <section class="rc-mast">
+        <div class="rc-mast__idx">03</div>
+        <div class="rc-mast__body">
+          <p class="rc-mast__kicker">Sueno Hotels Deluxe · 5★ · All-Inclusive</p>
+          <h3 class="rc-mast__title">Junior Suite AI</h3>
+          <p class="rc-mast__sub">Sueno Hotels Deluxe Belek</p>
+          <div class="rc-mast__loc">
+            <span class="rc-mast__loc-stars">★★★★★</span>
+            <span class="rc-mast__loc-rule"></span>
+            <span>Belek Centre · TR</span>
+          </div>
+        </div>
+      </section>
+
+      <dl class="rc-spec">
+        <div><dt>Room</dt><dd>Junior Suite<small>King</small></dd></div>
+        <div><dt>Board</dt><dd>AI<small>All Incl.</small></dd></div>
+        <div><dt>Stay</dt><dd>03 — 10 Jun<small>7 nights</small></dd></div>
+        <div><dt>Guests</dt><dd>2 + 2<small>A · 7y · 1.5y</small></dd></div>
+      </dl>
+
+      <section class="rc-ledger">
+        <div class="rc-ledger__head"><span>Rate Breakdown</span><span class="ccy">EUR · Incl. VAT</span></div>
+        <dl class="rc-line"><dt>Base rate<small>2A × 7 nt</small></dt><span class="pct">100%</span><dd>3,412.00</dd></dl>
+        <dl class="rc-line rc-line--discount"><dt>Early Bird<small>&gt; 60 d</small></dt><span class="pct">−30%</span><dd>−1,023.60</dd></dl>
+        <div class="rc-alert rc-alert--info"><strong>Honeymoon perks unlocked.</strong> Marriage certificate required at check-in · fruit basket + room upgrade subject to availability.</div>
+      </section>
+
+      <section class="rc-total">
+        <span class="rc-total__label">Total Payable · 7 Nights</span>
+        <span class="rc-total__amount"><span class="ccy">EUR</span>2,389<span class="dec">.00</span></span>
+        <span class="rc-total__per"><strong>€341.29</strong>per night</span>
+        <span class="rc-total__strike">Was EUR 3,412 · saved 30%</span>
+      </section>
+
+      <footer class="rc-colophon">
+        <span class="rc-colophon__ref">REF · <strong>BX-26·0529·A03</strong></span>
+        <button class="rc-colophon__cta">Reserve →</button>
+      </footer>
+    </article>
+
+    <!-- ═══ CARD 04 · STOP SALE ═══════════════════════════════════ -->
+    <article class="rc-card" data-tier="stop">
+      <span class="rc-card__wm" aria-hidden="true">04</span>
+      <span class="rc-card__bracket tl"></span><span class="rc-card__bracket tr"></span>
+      <span class="rc-card__bracket bl"></span><span class="rc-card__bracket br"></span>
+
+      <header class="rc-ticker">
+        <span class="rc-ticker__idx">№ 04 / 07</span>
+        <span class="rc-ticker__rule"></span>
+        <span class="rc-ticker__select rc-ticker__select--warn">● STOP SALE · BLOCKED</span>
+      </header>
+
+      <section class="rc-mast">
+        <div class="rc-mast__idx">04</div>
+        <div class="rc-mast__body">
+          <p class="rc-mast__kicker">Sueno Hotels Deluxe · 5★ · All-Inclusive</p>
+          <h3 class="rc-mast__title">Family Suite</h3>
+          <p class="rc-mast__sub">Sueno Hotels Deluxe Belek</p>
+          <div class="rc-mast__loc">
+            <span class="rc-mast__loc-stars">★★★★★</span>
+            <span class="rc-mast__loc-rule"></span>
+            <span>Belek Centre · TR</span>
+          </div>
+        </div>
+      </section>
+
+      <dl class="rc-spec">
+        <div><dt>Room</dt><dd>Family Suite<small>2 Bedroom</small></dd></div>
+        <div><dt>Board</dt><dd>AI<small>All Incl.</small></dd></div>
+        <div><dt>Stay</dt><dd>03 — 10 Jun<small>7 nights</small></dd></div>
+        <div><dt>Guests</dt><dd>2 + 2<small>A · 2 CHD</small></dd></div>
+      </dl>
+
+      <section class="rc-ledger">
+        <div class="rc-ledger__head"><span>Reference Only</span><span class="ccy">DO NOT QUOTE</span></div>
+        <dl class="rc-line"><dt>Reference base rate<small>indicative</small></dt><span class="pct">—</span><dd>3,128.00</dd></dl>
+        <div class="rc-alert rc-alert--warn"><strong>Stop Sale 03 — 17 Jun.</strong> Hotel allotment closed for these dates. Confirm with Mr. Haytham before any reservation attempt.</div>
+      </section>
+
+      <section class="rc-total">
+        <span class="rc-total__label">Sales · Blocked</span>
+        <span class="rc-total__amount"><span class="ccy">EUR</span>3,128<span class="dec">.00</span></span>
+        <span class="rc-total__per"><strong>—</strong>not quotable</span>
+      </section>
+
+      <footer class="rc-colophon">
+        <span class="rc-colophon__ref">REF · <strong>BX-26·0529·A04</strong></span>
+        <button class="rc-colophon__cta" disabled>Locked ✕</button>
+      </footer>
+    </article>
+
+    <!-- ═══ CARD 05 · RIXOS DOWNTOWN ══════════════════════════════ -->
+    <article class="rc-card">
+      <span class="rc-card__wm" aria-hidden="true">05</span>
+      <span class="rc-card__bracket tl"></span><span class="rc-card__bracket tr"></span>
+      <span class="rc-card__bracket bl"></span><span class="rc-card__bracket br"></span>
+
+      <header class="rc-ticker">
+        <span class="rc-ticker__idx">№ 05 / 07</span>
+        <span class="rc-ticker__rule"></span>
+        <span class="rc-ticker__select">CITY · ANTALYA</span>
+      </header>
+
+      <section class="rc-mast">
+        <div class="rc-mast__idx">05</div>
+        <div class="rc-mast__body">
+          <p class="rc-mast__kicker">Rixos Downtown · 5★ · Ultra All-Incl.</p>
+          <h3 class="rc-mast__title">Land View Standard</h3>
+          <p class="rc-mast__sub">Rixos Downtown Antalya</p>
+          <div class="rc-mast__loc">
+            <span class="rc-mast__loc-stars">★★★★★</span>
+            <span class="rc-mast__loc-rule"></span>
+            <span>Konyaaltı · Antalya · TR</span>
+          </div>
+        </div>
+      </section>
+
+      <dl class="rc-spec">
+        <div><dt>Room</dt><dd>Land View<small>Standard</small></dd></div>
+        <div><dt>Board</dt><dd>UAI<small>Ultra All-Incl.</small></dd></div>
+        <div><dt>Stay</dt><dd>03 — 10 Jun<small>7 nights</small></dd></div>
+        <div><dt>Guests</dt><dd>2 + 2<small>A · 7y · 1.5y</small></dd></div>
+      </dl>
+
+      <section class="rc-ledger">
+        <div class="rc-ledger__head"><span>Rate Breakdown</span><span class="ccy">EUR · Incl. VAT</span></div>
+        <dl class="rc-line"><dt>Base rate<small>2A × 7 nt</small></dt><span class="pct">100%</span><dd>3,265.00</dd></dl>
+        <dl class="rc-line rc-line--discount"><dt>Early Bird<small>&gt; 45 d</small></dt><span class="pct">−20%</span><dd>−653.00</dd></dl>
+      </section>
+
+      <section class="rc-total">
+        <span class="rc-total__label">Total Payable · 7 Nights</span>
+        <span class="rc-total__amount"><span class="ccy">EUR</span>2,612<span class="dec">.00</span></span>
+        <span class="rc-total__per"><strong>€373.14</strong>per night</span>
+        <span class="rc-total__strike">Was EUR 3,265 · saved 20%</span>
+      </section>
+
+      <footer class="rc-colophon">
+        <span class="rc-colophon__ref">REF · <strong>BX-26·0529·A05</strong></span>
+        <button class="rc-colophon__cta">Reserve →</button>
+      </footer>
+    </article>
+
+    <!-- ═══ CARD 06 · MAXX ROYAL ═══════════════════════════════════ -->
+    <article class="rc-card">
+      <span class="rc-card__wm" aria-hidden="true">06</span>
+      <span class="rc-card__bracket tl"></span><span class="rc-card__bracket tr"></span>
+      <span class="rc-card__bracket bl"></span><span class="rc-card__bracket br"></span>
+
+      <header class="rc-ticker">
+        <span class="rc-ticker__idx">№ 06 / 07</span>
+        <span class="rc-ticker__rule"></span>
+        <span class="rc-ticker__select">RACK · NO PROMO</span>
+      </header>
+
+      <section class="rc-mast">
+        <div class="rc-mast__idx">06</div>
+        <div class="rc-mast__body">
+          <p class="rc-mast__kicker">Maxx Royal · 5★ · All-Inclusive</p>
+          <h3 class="rc-mast__title">Standard Garden</h3>
+          <p class="rc-mast__sub">Maxx Royal Belek</p>
+          <div class="rc-mast__loc">
+            <span class="rc-mast__loc-stars">★★★★★</span>
+            <span class="rc-mast__loc-rule"></span>
+            <span>Belek Centre · TR</span>
+          </div>
+        </div>
+      </section>
+
+      <dl class="rc-spec">
+        <div><dt>Room</dt><dd>Garden<small>Standard</small></dd></div>
+        <div><dt>Board</dt><dd>AI<small>All Incl.</small></dd></div>
+        <div><dt>Stay</dt><dd>03 — 10 Jun<small>7 nights</small></dd></div>
+        <div><dt>Guests</dt><dd>2 + 2<small>A · 7y · 1.5y</small></dd></div>
+      </dl>
+
+      <section class="rc-ledger">
+        <div class="rc-ledger__head"><span>Rack Rate</span><span class="ccy">EUR · Incl. VAT</span></div>
+        <dl class="rc-line"><dt>Base rate<small>2A × 7 nt</small></dt><span class="pct">100%</span><dd>2,945.00</dd></dl>
+        <dl class="rc-line"><dt>Discount<small>none applicable</small></dt><span class="pct">0%</span><dd>0.00</dd></dl>
+      </section>
+
+      <section class="rc-total">
+        <span class="rc-total__label">Total Payable · 7 Nights</span>
+        <span class="rc-total__amount"><span class="ccy">EUR</span>2,945<span class="dec">.00</span></span>
+        <span class="rc-total__per"><strong>€420.71</strong>per night</span>
+      </section>
+
+      <footer class="rc-colophon">
+        <span class="rc-colophon__ref">REF · <strong>BX-26·0529·A06</strong></span>
+        <button class="rc-colophon__cta">Reserve →</button>
+      </footer>
+    </article>
+
+    <!-- ═══ CARD 07 · CALISTA SENIOR ══════════════════════════════ -->
+    <article class="rc-card">
+      <span class="rc-card__wm" aria-hidden="true">07</span>
+      <span class="rc-card__bracket tl"></span><span class="rc-card__bracket tr"></span>
+      <span class="rc-card__bracket bl"></span><span class="rc-card__bracket br"></span>
+
+      <header class="rc-ticker">
+        <span class="rc-ticker__idx">№ 07 / 07</span>
+        <span class="rc-ticker__rule"></span>
+        <span class="rc-ticker__select">SENIOR · STACKED</span>
+      </header>
+
+      <section class="rc-mast">
+        <div class="rc-mast__idx">07</div>
+        <div class="rc-mast__body">
+          <p class="rc-mast__kicker">Calista Luxury Resort · 5★ · Half Board</p>
+          <h3 class="rc-mast__title">Twin Garden Bungalow</h3>
+          <p class="rc-mast__sub">Calista Luxury Resort</p>
+          <div class="rc-mast__loc">
+            <span class="rc-mast__loc-stars">★★★★★</span>
+            <span class="rc-mast__loc-rule"></span>
+            <span>Belek · TR</span>
+          </div>
+        </div>
+      </section>
+
+      <dl class="rc-spec">
+        <div><dt>Room</dt><dd>Bungalow<small>Twin · Garden</small></dd></div>
+        <div><dt>Board</dt><dd>HB<small>Half Board</small></dd></div>
+        <div><dt>Stay</dt><dd>03 — 10 Jun<small>7 nights</small></dd></div>
+        <div><dt>Guests</dt><dd>2 + 0<small>Adults · 62y</small></dd></div>
+      </dl>
+
+      <section class="rc-ledger">
+        <div class="rc-ledger__head"><span>Rate Breakdown</span><span class="ccy">EUR · Incl. VAT</span></div>
+        <dl class="rc-line"><dt>Base rate<small>2A × 7 nt</small></dt><span class="pct">100%</span><dd>2,510.00</dd></dl>
+        <dl class="rc-line rc-line--discount"><dt>Early Bird<small>&gt; 45 d</small></dt><span class="pct">−25%</span><dd>−627.50</dd></dl>
+        <dl class="rc-line rc-line--discount"><dt>Senior bonus<small>lead pax 62y</small></dt><span class="pct">−15%</span><dd>−207.50</dd></dl>
+        <div class="rc-alert rc-alert--info"><strong>Senior discount stacks.</strong> Lead pax verified ≥ 60y at check-in · combines with EB on HB board.</div>
+      </section>
+
+      <section class="rc-total">
+        <span class="rc-total__label">Total Payable · 7 Nights</span>
+        <span class="rc-total__amount"><span class="ccy">EUR</span>1,675<span class="dec">.00</span></span>
+        <span class="rc-total__per"><strong>€239.29</strong>per night</span>
+        <span class="rc-total__strike">Was EUR 2,510 · saved 33%</span>
+      </section>
+
+      <footer class="rc-colophon">
+        <span class="rc-colophon__ref">REF · <strong>BX-26·0529·A07</strong></span>
+        <button class="rc-colophon__cta">Reserve →</button>
+      </footer>
+    </article>
+
+  </div>
+</section>
+
+<!-- ==================== BREAKDOWN MODAL ==================== -->
+<section id="modal" class="section screen-anchor" data-num="03" data-total="07">
+  <div class="section__head">
+    <div>
+      <div class="section__chapter">Screen 03 / Price Breakdown</div>
+      <h2 class="section__title">The <span class="accent">receipt</span> — nothing hidden.</h2>
+    </div>
+    <div class="section__meta">Modal · v15.3 receipt layout</div>
+  </div>
+
+  <div class="modal-shell">
+    <div class="modal">
+      <header class="modal__head">
+        <div>
+          <div class="modal__title">Deluxe Room AI · 7 nights</div>
+          <div class="modal__sub">SUENO BELEK · 03 JUN → 10 JUN 2026 · 2A + 2C (7, 1.5y)</div>
+        </div>
+        <button class="modal__close" aria-label="Close">×</button>
+      </header>
+      <div class="modal__body">
+        <div class="receipt">
+
+          <div class="receipt__group">
+            <div class="receipt__h">Adult Base</div>
+            <div class="receipt__row"><span class="lbl">PP · per person per night</span><span class="val">€185.00</span></div>
+            <div class="receipt__row receipt__row--sub"><span class="lbl">2 adults × 7 nights</span><span class="val">€2,590.00</span></div>
+            <div class="receipt__row"><span class="lbl">Occupancy multiplier · 2A + 1 CHD + 1 INF</span><span class="val">×1.428</span></div>
+            <div class="receipt__row"><span class="lbl">Subtotal · adults · all-in</span><span class="val">€3,694.00</span></div>
+          </div>
+
+          <div class="receipt__group">
+            <div class="receipt__h">Children · Infants</div>
+            <div class="receipt__row receipt__row--sub"><span class="lbl">CHD 7y · included in multiplier</span><span class="val">€0.00</span></div>
+            <div class="receipt__row receipt__row--sub"><span class="lbl">INF 1.5y · &lt; infant_age_max (2)</span><span class="val">FREE</span></div>
+          </div>
+
+          <div class="receipt__group">
+            <div class="receipt__h">Board</div>
+            <div class="receipt__row"><span class="lbl">All Inclusive · included in PP</span><span class="val">€0.00</span></div>
+          </div>
+
+          <div class="receipt__group">
+            <div class="receipt__h">Discounts · CAN_COMBINE</div>
+            <div class="receipt__row receipt__row--disc"><span class="lbl">Early Bird · booked &gt; 60 days out</span><span class="val">−30%</span></div>
+            <div class="receipt__row receipt__row--disc"><span class="lbl">Sueno Manager Special (Haytham) · permanent</span><span class="val">−50%</span></div>
+            <div class="receipt__row"><span class="lbl">Subtotal · after discounts</span><span class="val">€1,847.00</span></div>
+          </div>
+
+          <div class="receipt__group">
+            <div class="receipt__h">Supplements</div>
+            <div class="receipt__row receipt__row--suppl"><span class="lbl">— none for this period —</span><span class="val">€0.00</span></div>
+          </div>
+
+          <div class="receipt__total">
+            <span class="lbl">Total · stay</span>
+            <span class="val">€1,847<small>EUR</small></span>
+          </div>
+
+          <div class="callout" style="margin-top:18px;">
+            <span class="callout__mark">i</span>
+            <div>
+              Infant (1.5y) is below <code>infant_age_max = 2</code> and <strong>not counted in capacity</strong>. Treated as free. Multiplier already accounts for the older child.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WIZARD STEP 1 ==================== -->
+<section id="wizard1" class="section screen-anchor">
+  <div class="section__head">
+    <div>
+      <div class="section__chapter">Screen 04 / Contract Wizard</div>
+      <h2 class="section__title">Step 1 · <span class="accent">Hotel identity</span></h2>
+    </div>
+    <div class="section__meta">/contract-wizard/step-1 · v15.8</div>
+  </div>
+
+  <article class="wizard">
+    <header class="wizard__top">
+      <div class="wizard__heading">
+        <div class="wizard__chap">Chapter 01 · Foundation</div>
+        <h3 class="wizard__title">Tell us the hotel.</h3>
+        <p class="wizard__sub">Name, city, area, currency, contract window, age limits. Everything else is derived from this.</p>
+      </div>
+      <div class="wizard__progress">
+        <span class="wizard__step is-current"><span class="n">01</span> Hotel</span>
+        <span class="wizard__step"><span class="n">02</span> Rooms</span>
+        <span class="wizard__step"><span class="n">03</span> Periods</span>
+        <span class="wizard__step"><span class="n">04</span> Pricing</span>
+        <span class="wizard__step"><span class="n">05</span> Discounts</span>
+        <span class="wizard__step"><span class="n">06</span> Supplements</span>
+        <span class="wizard__step"><span class="n">07</span> Stop Sales</span>
+        <span class="wizard__step"><span class="n">08</span> Review</span>
+      </div>
+    </header>
+
+    <div class="wizard__body">
+
+      <div class="subhead"><span class="num-tag">A</span> Identity</div>
+      <div class="row row-2">
+        <div class="field">
+          <label class="field__label">Hotel name <span class="req">*</span></label>
+          <input class="input" value="Sueno Hotels Deluxe Belek" />
+        </div>
+        <div class="field">
+          <label class="field__label">Star rating</label>
+          <select class="select">
+            <option>3 ★</option>
+            <option>4 ★</option>
+            <option selected>5 ★</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row row-3 mt-16">
+        <div class="field">
+          <label class="field__label">City <span class="req">*</span></label>
+          <select class="select"><option selected>Belek · TR</option><option>+ Add new city</option></select>
+        </div>
+        <div class="field">
+          <label class="field__label">Area</label>
+          <select class="select"><option selected>Belek Centre</option><option>+ Add new area</option></select>
+        </div>
+        <div class="field">
+          <label class="field__label">Currency <span class="req">*</span></label>
+          <select class="select">
+            <option selected>EUR · €</option>
+            <option>USD · $</option>
+            <option>TRY · ₺</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="subhead"><span class="num-tag">B</span> Contract window</div>
+      <div class="row row-2">
+        <div class="field">
+          <label class="field__label">Contract start <span class="req">*</span></label>
+          <input class="input" value="01 May 2026" />
+        </div>
+        <div class="field">
+          <label class="field__label">Contract end <span class="req">*</span></label>
+          <input class="input" value="31 Oct 2026" />
+        </div>
+      </div>
+
+      <div class="subhead"><span class="num-tag">C</span> Default board & age limits</div>
+      <div class="row row-3">
+        <div class="field">
+          <label class="field__label">Default board</label>
+          <select class="select"><option selected>All Inclusive · AI</option><option>HB</option><option>BB</option></select>
+        </div>
+        <div class="field">
+          <label class="field__label">Infant age max</label>
+          <input class="input num" value="2" />
+          <span class="field__hint">Children &lt; this age = infants (often free)</span>
+        </div>
+        <div class="field">
+          <label class="field__label">Child age max</label>
+          <input class="input num" value="12" />
+          <span class="field__hint">Must be greater than infant_age_max</span>
+        </div>
+      </div>
+
+      <div class="subhead"><span class="num-tag">D</span> Market policy</div>
+      <div class="field">
+        <label class="field__label">Excluded markets <span class="muted">(optional)</span></label>
+        <div class="chips-list">
+          <span class="chip">+ Add market</span>
+          <span class="chip chip--emerald">RU ×</span>
+          <span class="chip chip--emerald">UA ×</span>
+          <span class="chip chip--emerald">IL ×</span>
+        </div>
+      </div>
+
+      <div class="row row-2 mt-16">
+        <div class="field">
+          <label class="field__label">Min guest age</label>
+          <input class="input num" value="18" />
+        </div>
+        <div class="field">
+          <label class="field__label">Sale mode</label>
+          <select class="select">
+            <option selected>AUTO</option>
+            <option>MANUAL</option>
+            <option>ON_REQUEST</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:24px;">
+        <span class="callout__mark">✓</span>
+        <div>All required fields completed. Multiplier engine ready to ingest rooms in Step 2.</div>
+      </div>
+    </div>
+
+    <footer class="wizard__foot">
+      <div class="wizard__foot__group">
+        <button class="btn btn--ghost">← Save & exit</button>
+      </div>
+      <div class="wizard__foot__group">
+        <button class="btn btn--ghost">Save draft</button>
+        <button class="btn btn--primary">Continue to Rooms →</button>
+      </div>
+    </footer>
+  </article>
+</section>
+
+<!-- ==================== WIZARD STEP 4 PRICING ==================== -->
+<section id="wizard4" class="section screen-anchor">
+  <div class="section__head">
+    <div>
+      <div class="section__chapter">Screen 05 / Contract Wizard</div>
+      <h2 class="section__title">Step 4 · <span class="accent">Pricing × multipliers</span></h2>
+    </div>
+    <div class="section__meta">/contract-wizard/step-4 · merged (v14.4)</div>
+  </div>
+
+  <article class="wizard">
+    <header class="wizard__top">
+      <div class="wizard__heading">
+        <div class="wizard__chap">Chapter 04 · The engine's truth</div>
+        <h3 class="wizard__title">PP × occupancy multiplier.</h3>
+        <p class="wizard__sub">One person price per period, multipliers for every combination. The multiplier already includes children & infants — no extra rules.</p>
+      </div>
+      <div class="wizard__progress">
+        <span class="wizard__step is-done"><span class="n">01</span></span>
+        <span class="wizard__step is-done"><span class="n">02</span></span>
+        <span class="wizard__step is-done"><span class="n">03</span></span>
+        <span class="wizard__step is-current"><span class="n">04</span> Pricing</span>
+        <span class="wizard__step"><span class="n">05</span></span>
+        <span class="wizard__step"><span class="n">06</span></span>
+        <span class="wizard__step"><span class="n">07</span></span>
+        <span class="wizard__step"><span class="n">08</span></span>
+      </div>
+    </header>
+
+    <div class="wizard__body">
+
+      <div class="subhead"><span class="num-tag">A</span> PP — adult base · per night
+        <span class="rule-chip">Room: <span class="v">Deluxe AI</span></span>
+        <span class="rule-chip">Currency: <span class="v">EUR</span></span>
+      </div>
+
+      <div class="ptable">
+        <table>
+          <thead>
+            <tr>
+              <th>Person</th>
+              <th>P1 · Low<br><span class="muted">01–14 May</span></th>
+              <th>P2 · Mid<br><span class="muted">15 May–14 Jun</span></th>
+              <th>P3 · High<br><span class="muted">15 Jun–31 Aug</span></th>
+              <th>P4 · Shoulder<br><span class="muted">01 Sep–31 Oct</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PP · adult</td>
+              <td>€145.00</td>
+              <td>€185.00</td>
+              <td class="is-bump">€245.00</td>
+              <td>€175.00</td>
+            </tr>
+            <tr>
+              <td>Min stay</td>
+              <td>2n</td>
+              <td>3n</td>
+              <td>4n</td>
+              <td>3n</td>
+            </tr>
+            <tr>
+              <td>Release · days</td>
+              <td>7</td>
+              <td>14</td>
+              <td>21</td>
+              <td>10</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="subhead"><span class="num-tag">B</span> Occupancy multipliers
+        <span class="rule-chip">Auto-generated <span class="v">12 combos</span></span>
+        <span class="rule-chip">Manual rows <span class="v">+ 2</span></span>
+      </div>
+
+      <div class="ptable mult-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Composition</th>
+              <th>P1</th>
+              <th>P2</th>
+              <th>P3</th>
+              <th>P4</th>
+              <th>Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1A</td><td>0.7</td><td>0.7</td><td>0.7</td><td>0.7</td><td class="is-empty">Auto</td></tr>
+            <tr><td>2A</td><td class="is-multi">1.000</td><td class="is-multi">1.000</td><td class="is-multi">1.000</td><td class="is-multi">1.000</td><td class="is-empty">Auto · base</td></tr>
+            <tr><td>2A + 1 CHD</td><td>1.214</td><td>1.214</td><td>1.214</td><td>1.214</td><td class="is-empty">Auto</td></tr>
+            <tr><td>2A + 1 CHD + 1 INF</td><td>1.428</td><td>1.428</td><td>1.428</td><td>1.428</td><td class="is-empty">Manual</td></tr>
+            <tr><td>2A + 2 CHD</td><td>1.500</td><td>1.500</td><td>1.500</td><td>1.500</td><td class="is-empty">Auto</td></tr>
+            <tr><td>3A</td><td>1.400</td><td>1.400</td><td>1.400</td><td>1.400</td><td class="is-empty">Auto</td></tr>
+            <tr><td>3A + 1 CHD</td><td>1.700</td><td>1.700</td><td>1.700</td><td>1.700</td><td class="is-empty">Manual</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout" style="margin-top:18px;">
+        <span class="callout__mark">!</span>
+        <div>
+          Multiplier mode: <strong>the engine treats this as the whole truth</strong>. Child/infant rule tabs were removed in v14.4. To price 2A + 1 CHD, the engine uses PP × 1.214 × nights — no extra child math.
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="wizard__foot">
+      <div class="wizard__foot__group">
+        <button class="btn btn--ghost">← Periods</button>
+      </div>
+      <div class="wizard__foot__group">
+        <button class="btn btn--ghost">Validate & preview</button>
+        <button class="btn btn--primary">Continue to Discounts →</button>
+      </div>
+    </footer>
+  </article>
+</section>
+
+<!-- ==================== WIZARD STEP 10 REVIEW ==================== -->
+<section id="wizard10" class="section screen-anchor">
+  <div class="section__head">
+    <div>
+      <div class="section__chapter">Screen 06 / Contract Wizard</div>
+      <h2 class="section__title">Step 10 · <span class="accent">Review & submit</span></h2>
+    </div>
+    <div class="section__meta">/contract-wizard/step-10 · final gate</div>
+  </div>
+
+  <article class="wizard">
+    <header class="wizard__top">
+      <div class="wizard__heading">
+        <div class="wizard__chap">Chapter 10 · Final review</div>
+        <h3 class="wizard__title">Sign-off — last chance.</h3>
+        <p class="wizard__sub">Everything below was entered in steps 1–9. Nothing is hidden. Once submitted, it goes live in <code>/results</code>.</p>
+      </div>
+      <div class="wizard__progress">
+        <span class="wizard__step is-done"><span class="n">01</span></span>
+        <span class="wizard__step is-done"><span class="n">02</span></span>
+        <span class="wizard__step is-done"><span class="n">03</span></span>
+        <span class="wizard__step is-done"><span class="n">04</span></span>
+        <span class="wizard__step is-done"><span class="n">05</span></span>
+        <span class="wizard__step is-done"><span class="n">06</span></span>
+        <span class="wizard__step is-done"><span class="n">07</span></span>
+        <span class="wizard__step is-current"><span class="n">08</span> Review</span>
+      </div>
+    </header>
+
+    <div class="wizard__body">
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 22px;">
+        <div>
+          <div class="subhead"><span class="num-tag">·</span> Hotel</div>
+          <div class="receipt" style="font-size:13px;">
+            <div class="receipt__row"><span class="lbl">Name</span><span class="val">Sueno Hotels Deluxe Belek</span></div>
+            <div class="receipt__row"><span class="lbl">City · Area</span><span class="val">Belek · Belek Centre</span></div>
+            <div class="receipt__row"><span class="lbl">Stars</span><span class="val">★★★★★</span></div>
+            <div class="receipt__row"><span class="lbl">Currency</span><span class="val">EUR</span></div>
+            <div class="receipt__row"><span class="lbl">Contract</span><span class="val">01 May → 31 Oct 2026</span></div>
+            <div class="receipt__row"><span class="lbl">Default board</span><span class="val">AI</span></div>
+            <div class="receipt__row"><span class="lbl">Infant age max</span><span class="val">2</span></div>
+            <div class="receipt__row"><span class="lbl">Child age max</span><span class="val">12</span></div>
+            <div class="receipt__row"><span class="lbl">Excluded markets</span><span class="val">RU · UA · IL</span></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="subhead"><span class="num-tag">·</span> Counts</div>
+          <div class="admin-grid" style="grid-template-columns:1fr 1fr;">
+            <div class="kpi"><span class="kpi__label">Rooms</span><span class="kpi__val">7</span><span class="kpi__trend is-up">All Deluxe AI</span></div>
+            <div class="kpi"><span class="kpi__label">Periods</span><span class="kpi__val">4</span><span class="kpi__trend is-up">No overlap</span></div>
+            <div class="kpi"><span class="kpi__label">Multipliers</span><span class="kpi__val">14</span><span class="kpi__trend is-up">12 auto · 2 manual</span></div>
+            <div class="kpi"><span class="kpi__label">Discounts</span><span class="kpi__val">3</span><span class="kpi__trend is-up">EB · Sueno · Senior</span></div>
+            <div class="kpi"><span class="kpi__label">Supplements</span><span class="kpi__val">2</span><span class="kpi__trend is-up">Gala · Suppl AI</span></div>
+            <div class="kpi"><span class="kpi__label">Stop Sales</span><span class="kpi__val">1</span><span class="kpi__trend is-down">Family Suite</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subhead" style="margin-top:24px;"><span class="num-tag">·</span> Rule highlights</div>
+      <div class="bullet-row">
+        <span class="rule-chip">EB ladder <span class="v">−10 / −20 / −30%</span></span>
+        <span class="rule-chip">Sueno Manager <span class="v">−50% perm</span></span>
+        <span class="rule-chip">Senior <span class="v">−15% · 55+</span></span>
+        <span class="rule-chip">Honeymoon <span class="v">−10% gift</span></span>
+        <span class="rule-chip">Gala suppl <span class="v">+€85 PP · 31 Dec</span></span>
+        <span class="rule-chip">Stop Family Suite <span class="v">03–17 Jun</span></span>
+      </div>
+
+      <div class="callout" style="margin-top:24px; border-style:dashed;">
+        <span class="callout__mark">⚐</span>
+        <div>
+          On submit: the engine runs 1,868 regression tests against this contract before activation. If any test fails, the contract goes to draft and an audit row is written.
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="wizard__foot">
+      <div class="wizard__foot__group">
+        <button class="btn btn--ghost">← Stop Sales</button>
+      </div>
+      <div class="wizard__foot__group">
+        <button class="btn btn--ghost">Save as draft</button>
+        <button class="btn btn--emerald">✓ Submit contract — go live</button>
+      </div>
+    </footer>
+  </article>
+</section>
+
+<!-- ==================== CONTRACTS LIST ==================== -->
+<section id="contracts" class="section screen-anchor" data-num="04" data-total="07">
+  <div class="section__head">
+    <div>
+      <div class="section__chapter">Screen 07 / Contracts</div>
+      <h2 class="section__title">All <span class="accent">contracts</span>.</h2>
+    </div>
+    <div class="section__meta">14 live · 3 draft · 2 archived</div>
+  </div>
+
+  <div class="contracts-toolbar">
+    <div class="search-inline">
+      <input class="input" placeholder="Search hotel, city, area, season…" />
+    </div>
+    <div class="flex gap-8">
+      <div class="tabs">
+        <button class="tabs__btn is-active">All</button>
+        <button class="tabs__btn">Live</button>
+        <button class="tabs__btn">Draft</button>
+        <button class="tabs__btn">Archived</button>
+      </div>
+      <button class="btn btn--ghost btn--sm">⤓ Export CSV</button>
+      <button class="btn btn--primary">+ New Contract</button>
+    </div>
+  </div>
+
+  <div class="contract-grid">
+
+    <article class="contract-card" data-state="live">
+      <header class="contract-card__head">
+        <div>
+          <div class="contract-card__name">Sueno Hotels Deluxe Belek</div>
+          <div class="contract-card__city">Belek · Belek Centre · TR</div>
+        </div>
+        <span class="state-pill state-pill--live">● Live</span>
+      </header>
+      <div class="contract-card__stats">
+        <div class="cstat"><span class="cstat__v">7</span><span class="cstat__l">Rooms</span></div>
+        <div class="cstat"><span class="cstat__v">4</span><span class="cstat__l">Periods</span></div>
+        <div class="cstat"><span class="cstat__v">14</span><span class="cstat__l">Multipliers</span></div>
+      </div>
+      <div class="contract-card__foot">
+        <span>01 May → 31 Oct 2026</span>
+        <span>★★★★★ · EUR</span>
+      </div>
+    </article>
+
+    <article class="contract-card" data-state="live">
+      <header class="contract-card__head">
+        <div>
+          <div class="contract-card__name">Rixos Downtown Antalya</div>
+          <div class="contract-card__city">Antalya · Konyaaltı · TR</div>
+        </div>
+        <span class="state-pill state-pill--live">● Live</span>
+      </header>
+      <div class="contract-card__stats">
+        <div class="cstat"><span class="cstat__v">11</span><span class="cstat__l">Rooms</span></div>
+        <div class="cstat"><span class="cstat__v">5</span><span class="cstat__l">Periods</span></div>
+        <div class="cstat"><span class="cstat__v">22</span><span class="cstat__l">Multipliers</span></div>
+      </div>
+      <div class="contract-card__foot">
+        <span>15 Apr → 15 Nov 2026</span>
+        <span>★★★★★ · EUR</span>
+      </div>
+    </article>
+
+    <article class="contract-card" data-state="live">
+      <header class="contract-card__head">
+        <div>
+          <div class="contract-card__name">Maxx Royal Belek</div>
+          <div class="contract-card__city">Belek · TR</div>
+        </div>
+        <span class="state-pill state-pill--live">● Live</span>
+      </header>
+      <div class="contract-card__stats">
+        <div class="cstat"><span class="cstat__v">9</span><span class="cstat__l">Rooms</span></div>
+        <div class="cstat"><span class="cstat__v">6</span><span class="cstat__l">Periods</span></div>
+        <div class="cstat"><span class="cstat__v">18</span><span class="cstat__l">Multipliers</span></div>
+      </div>
+      <div class="contract-card__foot">
+        <span>10 Apr → 05 Nov 2026</span>
+        <span>★★★★★ · EUR</span>
+      </div>
+    </article>
+
+    <article class="contract-card" data-state="draft">
+      <header class="contract-card__head">
+        <div>
+          <div class="contract-card__name">Calista Luxury Resort</div>
+          <div class="contract-card__city">Belek · TR</div>
+        </div>
+        <span class="state-pill state-pill--draft">○ Draft</span>
+      </header>
+      <div class="contract-card__stats">
+        <div class="cstat"><span class="cstat__v">6</span><span class="cstat__l">Rooms</span></div>
+        <div class="cstat"><span class="cstat__v">3</span><span class="cstat__l">Periods</span></div>
+        <div class="cstat"><span class="cstat__v">0</span><span class="cstat__l">Multipliers</span></div>
+      </div>
+      <div class="contract-card__foot">
+        <span>Draft saved 14:02</span>
+        <span>Step 4 of 8</span>
+      </div>
+    </article>
+
+    <article class="contract-card" data-state="live">
+      <header class="contract-card__head">
+        <div>
+          <div class="contract-card__name">Regnum Carya Golf</div>
+          <div class="contract-card__city">Belek · TR</div>
+        </div>
+        <span class="state-pill state-pill--live">● Live</span>
+      </header>
+      <div class="contract-card__stats">
+        <div class="cstat"><span class="cstat__v">8</span><span class="cstat__l">Rooms</span></div>
+        <div class="cstat"><span class="cstat__v">4</span><span class="cstat__l">Periods</span></div>
+        <div class="cstat"><span class="cstat__v">16</span><span class="cstat__l">Multipliers</span></div>
+      </div>
+      <div class="contract-card__foot">
+        <span>01 May → 31 Oct 2026</span>
+        <span>★★★★★ · EUR</span>
+      </div>
+    </article>
+
+    <article class="contract-card" data-state="archived">
+      <header class="contract-card__head">
+        <div>
+          <div class="contract-card__name">Titanic Mardan Palace</div>
+          <div class="contract-card__city">Antalya · TR</div>
+        </div>
+        <span class="state-pill state-pill--archived">⌫ Archived</span>
+      </header>
+      <div class="contract-card__stats">
+        <div class="cstat"><span class="cstat__v">12</span><span class="cstat__l">Rooms</span></div>
+        <div class="cstat"><span class="cstat__v">4</span><span class="cstat__l">Periods</span></div>
+        <div class="cstat"><span class="cstat__v">20</span><span class="cstat__l">Multipliers</span></div>
+      </div>
+      <div class="contract-card__foot">
+        <span>2025 season · archived</span>
+        <span>★★★★★ · EUR</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ==================== ADMIN ==================== -->
+<section id="admin" class="section screen-anchor" data-num="05" data-total="07">
+  <div class="section__head">
+    <div>
+      <div class="section__chapter">Screen 08 / Admin</div>
+      <h2 class="section__title">Operator <span class="accent">dashboard</span>.</h2>
+    </div>
+    <div class="section__meta">/admin · Mr. Haytham · last login 13:48</div>
+  </div>
+
+  <div class="admin-grid">
+    <article class="kpi">
+      <span class="kpi__label">Searches · 24h</span>
+      <span class="kpi__val num">1,247</span>
+      <span class="kpi__trend is-up">▲ +14.2% vs yesterday</span>
+      <div class="kpi__spark">
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+          <polyline fill="none" stroke="#047857" stroke-width="1.8"
+            points="0,30 18,24 34,28 52,18 70,22 88,12 106,18 124,8 142,14 160,6 178,10 200,4" />
+        </svg>
+      </div>
+    </article>
+    <article class="kpi">
+      <span class="kpi__label">Quotes sent</span>
+      <span class="kpi__val num">412</span>
+      <span class="kpi__trend is-up">▲ +6.1%</span>
+      <div class="kpi__spark">
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+          <polyline fill="none" stroke="#C9A961" stroke-width="1.8"
+            points="0,22 20,20 40,24 60,18 80,16 100,14 120,18 140,10 160,12 180,8 200,11" />
+        </svg>
+      </div>
+    </article>
+    <article class="kpi">
+      <span class="kpi__label">Avg. discount</span>
+      <span class="kpi__val num">32.4<span style="font-size:24px;color:var(--mute)">%</span></span>
+      <span class="kpi__trend is-up">▲ +1.8 pts</span>
+      <div class="kpi__spark">
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+          <polyline fill="none" stroke="#0A0A0A" stroke-width="1.8"
+            points="0,28 22,26 44,24 66,22 88,22 110,18 132,20 154,14 176,16 200,12" />
+        </svg>
+      </div>
+    </article>
+    <article class="kpi">
+      <span class="kpi__label">Stop sale alerts</span>
+      <span class="kpi__val num">3</span>
+      <span class="kpi__trend is-down">▼ requires action</span>
+      <div class="kpi__spark">
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+          <polyline fill="none" stroke="#DC2626" stroke-width="1.8"
+            points="0,30 30,28 60,26 90,16 120,22 150,14 180,20 200,10" />
+        </svg>
+      </div>
+    </article>
+  </div>
+
+  <div class="admin-split">
+    <article class="panel">
+      <header class="panel__head">
+        <div>
+          <div class="panel__title">Audit log</div>
+          <div class="panel__sub">Last 48 hours · 1,247 events · streaming</div>
+        </div>
+        <button class="btn btn--ghost btn--sm">View all →</button>
+      </header>
+      <div class="panel__body">
+        <div class="log">
+          <div class="log__row">
+            <span class="log__time">13:48:02</span>
+            <span class="log__what">Contract <strong>Sueno Belek</strong> updated · period 3 release days 14 → 21</span>
+            <span class="log__who">haytham@brix</span>
+            <span class="log__tag log__tag--ok">UPDATE</span>
+          </div>
+          <div class="log__row">
+            <span class="log__time">13:42:18</span>
+            <span class="log__what">Stop sale created · <strong>Sueno · Family Suite</strong> · 03 → 17 Jun</span>
+            <span class="log__who">haytham@brix</span>
+            <span class="log__tag log__tag--warn">STOP</span>
+          </div>
+          <div class="log__row">
+            <span class="log__time">13:36:55</span>
+            <span class="log__what">Search executed · 2A+2C · Belek · 7 nights</span>
+            <span class="log__who">+90··861</span>
+            <span class="log__tag log__tag--info">SEARCH</span>
+          </div>
+          <div class="log__row">
+            <span class="log__time">13:33:11</span>
+            <span class="log__what">Pricing engine warning · multiplier missing for 3A+2C · auto-derived</span>
+            <span class="log__who">engine</span>
+            <span class="log__tag log__tag--warn">WARN</span>
+          </div>
+          <div class="log__row">
+            <span class="log__time">13:30:04</span>
+            <span class="log__what">Authentication failed · 3rd attempt · rate-limited 30s</span>
+            <span class="log__who">94.55.··.··</span>
+            <span class="log__tag log__tag--err">AUTH</span>
+          </div>
+          <div class="log__row">
+            <span class="log__time">13:28:42</span>
+            <span class="log__what">Contract <strong>Rixos Downtown</strong> · Suite Garden price P2 €310 → €325</span>
+            <span class="log__who">haytham@brix</span>
+            <span class="log__tag log__tag--ok">UPDATE</span>
+          </div>
+          <div class="log__row">
+            <span class="log__time">13:18:27</span>
+            <span class="log__what">Honeymoon discount applied · search HT-9821 · marriage cert flagged</span>
+            <span class="log__who">engine</span>
+            <span class="log__tag log__tag--info">DISC</span>
+          </div>
+          <div class="log__row">
+            <span class="log__time">12:54:09</span>
+            <span class="log__what">EB ladder triggered · 30% · Sueno DBL · 7 nights · saved €1,847</span>
+            <span class="log__who">engine</span>
+            <span class="log__tag log__tag--ok">DISC</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="panel">
+      <header class="panel__head">
+        <div>
+          <div class="panel__title">Quick stats</div>
+          <div class="panel__sub">Live · refreshes every 60s</div>
+        </div>
+      </header>
+      <div class="quick-list">
+        <div class="quick-list__item"><span class="quick-list__lbl">Active hotels</span><span class="quick-list__val">12 / 14</span></div>
+        <div class="quick-list__item"><span class="quick-list__lbl">Total room types</span><span class="quick-list__val">87</span></div>
+        <div class="quick-list__item"><span class="quick-list__lbl">Live multipliers</span><span class="quick-list__val">214</span></div>
+        <div class="quick-list__item"><span class="quick-list__lbl">Discount rules</span><span class="quick-list__val">39</span></div>
+        <div class="quick-list__item"><span class="quick-list__lbl">Stop sale windows</span><span class="quick-list__val">8</span></div>
+        <div class="quick-list__item"><span class="quick-list__lbl">Avg. quote build · ms</span><span class="quick-list__val">218</span></div>
+        <div class="quick-list__item"><span class="quick-list__lbl">Test scenarios</span><span class="quick-list__val">1,868</span></div>
+        <div class="quick-list__item"><span class="quick-list__lbl">Engine version</span><span class="quick-list__val">v15.15</span></div>
+        <div class="quick-list__item"><span class="quick-list__lbl">Last sync · Supabase</span><span class="quick-list__val">14:02:17</span></div>
+        <div class="quick-list__item"><span class="quick-list__lbl">Rate limit · search</span><span class="quick-list__val">60/min</span></div>
+      </div>
+    </article>
+  </div>
+
+</section>
+
+<!-- ==================== TELEGRAM ==================== -->
+<section id="telegram" class="section screen-anchor" data-num="06" data-total="07">
+  <div class="section__head">
+    <div>
+      <div class="section__chapter">Screen 09 / Telegram</div>
+      <h2 class="section__title">Field channel · <span class="accent">@brixprice_bot</span></h2>
+    </div>
+    <div class="section__meta">Chat · 278516861 · TR</div>
+  </div>
+
+  <div class="tg-frame">
+    <div class="tg-msg tg-msg--user">
+      <div>Quote please:<br>
+      Sueno Belek · 3 Jun → 10 Jun · 2 adults + 2 kids (7, 1.5y) · AI</div>
+      <div class="tg-msg__time">13:36</div>
+    </div>
+
+    <div class="tg-msg tg-msg--bot">
+      <div>Searching Sueno Hotels Deluxe Belek · 7 nights · 2A + 1 CHD + 1 INF…</div>
+      <div class="tg-msg__time">13:36</div>
+    </div>
+
+    <div class="tg-msg tg-msg--bot" style="max-width:96%;">
+      <div class="tg-card">
+        <div class="tg-card__title">✦ Sueno · Deluxe AI · BEST</div>
+        <div class="tg-card__row"><span>Stay</span><strong>3 → 10 Jun · 7n</strong></div>
+        <div class="tg-card__row"><span>Pax</span><strong>2A + 1 CHD + 1 INF (free)</strong></div>
+        <div class="tg-card__row"><span>Multiplier</span><strong>×1.428</strong></div>
+        <div class="tg-card__row"><span>EB discount</span><strong>−30%</strong></div>
+        <div class="tg-card__row"><span>Sueno special</span><strong>−50%</strong></div>
+        <div class="tg-card__row"><span>Was</span><strong style="text-decoration:line-through;color:var(--warn)">€3,694</strong></div>
+        <div class="tg-card__price">
+          <span style="font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);">TOTAL</span>
+          <span class="v">€1,847</span>
+        </div>
+      </div>
+      <div class="tg-msg__time">13:36</div>
+    </div>
+
+    <div class="tg-msg tg-msg--bot">
+      <div>+2 more rooms available. Reply <code>more</code> for list, or <code>book 1</code> to confirm best.</div>
+      <div class="tg-msg__time">13:36</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== STATES (toasts + loading) ==================== -->
+<section id="states" class="section screen-anchor" data-num="07" data-total="07">
+  <div class="section__head">
+    <div>
+      <div class="section__chapter">Screen 10 / States</div>
+      <h2 class="section__title">Toasts · <span class="accent">loading</span> · skeletons</h2>
+    </div>
+    <div class="section__meta">Micro-states · the engine's voice</div>
+  </div>
+
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start;">
+    <div>
+      <div class="subhead"><span class="num-tag">A</span> Toast stack · top-right</div>
+      <div class="toast-stack">
+        <div class="toast toast--ok">
+          <span class="toast__icon">✓</span>
+          <div class="toast__body">
+            <span class="toast__title">Contract saved.</span>
+            <span class="toast__msg">SUENO BELEK · v17 · 14:02:18</span>
+          </div>
+          <button class="toast__x">×</button>
+        </div>
+        <div class="toast toast--warn">
+          <span class="toast__icon">!</span>
+          <div class="toast__body">
+            <span class="toast__title">Release window approaching.</span>
+            <span class="toast__msg">P3 high · 21 days · 4 quotes flagged</span>
+          </div>
+          <button class="toast__x">×</button>
+        </div>
+        <div class="toast toast--err">
+          <span class="toast__icon">×</span>
+          <div class="toast__body">
+            <span class="toast__title">Pricing engine error.</span>
+            <span class="toast__msg">Multiplier missing for 3A+2C · period P2 · contract-id sueno-2026</span>
+          </div>
+          <button class="toast__x">×</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="subhead"><span class="num-tag">B</span> Loading · spinner & skeleton</div>
+      <div class="loading-row">
+        <div class="spinner">
+          <div class="dot-wave"><span></span><span></span><span></span></div>
+          <div class="spinner__t">Building quote…</div>
+          <div class="spinner__s">Fetching multipliers · running EB ladder</div>
+        </div>
+        <div class="skel">
+          <div class="skel__bar skel__bar--sm"></div>
+          <div class="skel__bar skel__bar--lg"></div>
+          <div class="skel__bar skel__bar--md"></div>
+          <div class="skel__bar"></div>
+          <div class="skel__bar skel__bar--sm"></div>
+          <div class="skel__bar skel__bar--btn"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subhead" style="margin-top:36px;"><span class="num-tag">C</span> A note in Arabic — operator brief
+    <span class="rule-chip">IBM Plex Sans Arabic</span>
+  </div>
+  <div class="callout ar" style="padding:18px 22px;">
+    <span class="callout__mark">٠</span>
+    <div>
+      محرّك السعر يتعامل مع كلّ فندق كقطعة ليقو مستقلّة. التعديل البصريّ لا يلمس <code>lib/pricing/</code> أبداً. كلّ تغيير على الفترات أو المعاملات يمرّ بألف وثمانمئة وثمانية وستّين اختباراً قبل أن يصل إلى الواجهة.
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="foot">
+  <div>
+    <div class="foot__brand">BRIX<span style="color:var(--gold)">·</span></div>
+    <p class="foot__sub">Hotel contract engine for operators who negotiate by hand. Built for Mr. Haytham's desk and his Telegram thumb.</p>
+  </div>
+  <div class="foot__col">
+    <h6>Product</h6>
+    <a>Search</a>
+    <a>Results</a>
+    <a>Wizard</a>
+    <a>Contracts</a>
+  </div>
+  <div class="foot__col">
+    <h6>Engine</h6>
+    <a>Pricing rules</a>
+    <a>Multipliers</a>
+    <a>Test scenarios</a>
+    <a>Audit log</a>
+  </div>
+  <div class="foot__col">
+    <h6>System</h6>
+    <a>Status · ● live</a>
+    <a>Changelog</a>
+    <a>v15.15 release</a>
+    <a>Railway · prod</a>
+  </div>
+  <div class="foot__legal">
+    <span>BRIX-Travel · 2026 · all rights reserved</span>
+    <span>Engine v15.15 · 1,868 tests passing · ce47fa3</span>
+  </div>
+</footer>
+
+
+<div class="read-progress" id="brixReadProgress" aria-hidden="true"></div>
+<script>
+(function(){
+  'use strict';
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- M01 / M04 / M10 / M12 : single IntersectionObserver ---- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in-view');
+        // M02 — count-up when KPI/cstat enters
+        if (e.target.matches('.kpi__val, .cstat__v')) {
+          startCountUp(e.target);
+          io.unobserve(e.target);
+        }
+      }
+    });
+  }, { threshold: 0.18 });
+
+  document.querySelectorAll('.section, .hero, .wizard, .receipt, .brix-card, .kpi__val, .cstat__v')
+    .forEach(el => io.observe(el));
+
+  /* ---- M02 : count-up ---- */
+  function startCountUp(el){
+    if (reduced) return;
+    const raw = (el.textContent || '').replace(/[^\d.\-]/g, '');
+    const target = parseFloat(raw);
+    if (!isFinite(target) || target === 0) return;
+    const suffix = (el.textContent.match(/[^\d.,\-\s]+$/) || [''])[0];
+    const prefix = (el.textContent.match(/^[^\d.\-]+/) || [''])[0];
+    const dur = 800;
+    const start = performance.now();
+    el.setAttribute('data-counting', '');
+    const isInt = Number.isInteger(target);
+    function tick(now){
+      const p = Math.min(1, (now - start) / dur);
+      const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+      const v = target * eased;
+      el.textContent = prefix + (isInt ? Math.round(v).toLocaleString() : v.toFixed(1)) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.removeAttribute('data-counting');
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* ---- M03 : Price ticker reveal — split digits ---- */
+  document.querySelectorAll('.brix-price__num').forEach(el => {
+    if (el.dataset.brixSplit) return;
+    const txt = el.textContent;
+    el.textContent = '';
+    [...txt].forEach(ch => {
+      const span = document.createElement('span');
+      span.className = 'digit-col';
+      span.textContent = ch;
+      el.appendChild(span);
+    });
+    el.dataset.brixSplit = '1';
+  });
+
+  /* ---- M05 : Magnetic primary buttons ---- */
+  if (!reduced) {
+    document.querySelectorAll('.btn--primary').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) / r.width;
+        const y = (e.clientY - r.top  - r.height / 2) / r.height;
+        btn.style.transform = 'translate(' + (x*4).toFixed(2) + 'px,' + (y*4).toFixed(2) + 'px)';
+      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+    });
+  }
+
+  /* ---- E4 : Sticky nav shadow ---- */
+  const nav = document.querySelector('.nav');
+  const progress = document.getElementById('brixReadProgress');
+  function onScroll(){
+    if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 6);
+    if (progress) {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+      progress.style.width = pct.toFixed(2) + '%';
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
