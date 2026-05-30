@@ -1253,12 +1253,12 @@ body{
         </div>
       </div>
       <div class="cal__legend">
-        <span><i style="background:rgba(4,120,87,.12)"></i>داخِل المَدى</span>
         <span><i style="background:var(--emerald)"></i>نِهايَتا المَدى</span>
-        <span><i style="background:var(--gold)"></i>فَترة A</span>
-        <span><i style="background:var(--emerald)"></i>فَترة B</span>
-        <span><i style="background:#FCEFEC"></i>إيقاف بَيع كامِل</span>
-        <span><i style="background:var(--gold-soft)"></i>إيقاف جُزئيّ</span>
+        <span><i style="background:rgba(4,120,87,.12)"></i>داخِل المَدى</span>
+        <span><i style="background:#fff;box-shadow:inset 0 -3px 0 var(--gold)"></i>فَترة ١</span>
+        <span><i style="background:#fff;box-shadow:inset 0 -3px 0 var(--emerald)"></i>فَترة ٢</span>
+        <span><i style="background:repeating-linear-gradient(45deg,#FEE,#FEE 3px,var(--warn) 3px,var(--warn) 6px)"></i>إيقاف كامِل</span>
+        <span><i style="background:repeating-linear-gradient(45deg,#FED,#FED 3px,var(--gold) 3px,var(--gold) 6px)"></i>إيقاف جُزئيّ</span>
         <span><i style="outline:2px solid var(--amber)"></i>حَجز قَريب</span>
       </div>
     </div>
@@ -1755,24 +1755,24 @@ Jun 28 → Jul 3 · 285.10 EUR/night</div>
   </header>
   <div class="feat__demo">
     <div class="ppl">
-      <dl class="ppl__row">
+      <div class="ppl__row">
         <span class="ppl__color" style="background:var(--r1)"></span>
         <div><div class="ppl__dates">12 Jun → 14 Jun</div><div class="ppl__nights">2 nights · Low Season</div></div>
         <div class="ppl__price">240.00<span class="ppl__strike">300.00</span></div>
         <span style="font-family:var(--f-mono);font-size:10px;color:var(--emerald)">EBD −20%</span>
-      </dl>
-      <dl class="ppl__row">
+      </div>
+      <div class="ppl__row">
         <span class="ppl__color" style="background:var(--r3)"></span>
-        <div><div class="ppl__dates">15 Jun → 19 Jun</div><div class="ppl__nights">4 nights · High Season</div></div>
+        <div><div class="ppl__dates">14 Jun → 18 Jun</div><div class="ppl__nights">4 nights · High Season</div></div>
         <div class="ppl__price">380.00</div>
         <span style="font-family:var(--f-mono);font-size:10px;color:var(--mute)">no discount</span>
-      </dl>
-      <dl class="ppl__row" style="background:var(--ink);color:#fff;padding:14px 12px;margin-top:8px">
+      </div>
+      <div class="ppl__row" style="background:var(--ink);color:#fff;padding:14px 12px;margin-top:8px">
         <span></span>
         <div><div class="ppl__dates" style="color:#fff">Total · 6 nights</div></div>
         <div class="ppl__price" style="color:var(--gold);font-size:18px">EUR 2,000.00</div>
         <span></span>
-      </dl>
+      </div>
     </div>
   </div>
 </section>
@@ -2039,20 +2039,20 @@ Jun 28 → Jul 3 · 285.10 EUR/night</div>
   </header>
   <div class="feat__demo">
     <div class="noof">
-      <div class="noof__icon">📭</div>
+      <div class="noof__icon" style="font-family:var(--f-display);font-weight:800;color:var(--mute)">∅</div>
       <h3 class="noof__h">No offers found</h3>
       <p class="noof__sub">Checked 12 hotels for your dates · here's why</p>
       <div class="noof__reasons">
         <div class="noof__reason">
-          <div class="noof__r-h">🚫 Stop sale active</div>
-          <div class="noof__r-msg">4 hotels closed for 15-22 Aug due to allotment blocks.</div>
+          <div class="noof__r-h"><span style="color:var(--warn)">●</span> Stop sale active</div>
+          <div class="noof__r-msg">4 hotels closed for your dates due to allotment blocks.</div>
         </div>
         <div class="noof__reason noof__reason--med">
-          <div class="noof__r-h">👥 Capacity exceeded</div>
+          <div class="noof__r-h"><span style="color:var(--amber)">●</span> Capacity exceeded</div>
           <div class="noof__r-msg">5 hotels max 4 pax · you searched 2A+3C.</div>
         </div>
         <div class="noof__reason noof__reason--info">
-          <div class="noof__r-h">📅 Dates uncovered</div>
+          <div class="noof__r-h"><span style="color:var(--info)">●</span> Dates uncovered</div>
           <div class="noof__r-msg">3 hotels: contract ends Sep 30 · you searched Oct 5.</div>
         </div>
       </div>
