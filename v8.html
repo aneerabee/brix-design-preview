@@ -2143,6 +2143,154 @@ Jun 28 → Jul 3 · 285.10 EUR/night</div>
   </div>
 </section>
 
+  <!-- ═══════════ 27 · AUDIT LOG ═══════════ -->
+  <section class="feat" id="f27">
+    <header class="feat__head">
+      <div class="feat__idx">27</div>
+      <div class="feat__body">
+        <div class="feat__kicker">Audit Log · who changed what</div>
+        <h2 class="feat__title">سِجِلّ التَدقيق</h2>
+        <p class="feat__desc">جَدول يَعرِض كُلّ تَعديل: الوَقت، نَوع العَمَليّة، الكِيان، الفُندُق، القيمة قَبل/بَعد، المُستَخدِم — مَع فَلاتِر.</p>
+      </div>
+      <span class="feat__tag feat__tag--star">★ Hero</span>
+    </header>
+    <div class="feat__demo">
+      <div class="cdash__filters" style="padding:0 0 14px">
+        <span class="cdash__chip cdash__chip--on">All actions</span>
+        <span class="cdash__chip">Create</span>
+        <span class="cdash__chip">Update</span>
+        <span class="cdash__chip">Delete</span>
+        <span class="cdash__chip">Hotel: Sueno</span>
+      </div>
+      <div class="ftbl">
+        <table class="alog">
+          <thead><tr><th>Time</th><th>Action</th><th>Entity</th><th>Hotel</th><th>Change</th><th>User</th></tr></thead>
+          <tbody>
+            <tr><td>10:42 · 29 May</td><td><span class="alog__act alog__act--update">Update</span></td><td>Discount Rule</td><td>Sueno Deluxe</td><td class="alog__val">value <s>45%</s> &rarr; <b>50%</b></td><td>admin</td></tr>
+            <tr><td>10:31 · 29 May</td><td><span class="alog__act alog__act--create">Create</span></td><td>Stop Sale</td><td>Rixos Downtown</td><td class="alog__val">15 &rarr; 22 Aug · all rooms</td><td>admin</td></tr>
+            <tr><td>09:58 · 29 May</td><td><span class="alog__act alog__act--delete">Delete</span></td><td>Supplement</td><td>Calista Luxury</td><td class="alog__val"><s>Gala dinner +75</s></td><td>admin</td></tr>
+            <tr><td>09:12 · 28 May</td><td><span class="alog__act alog__act--update">Update</span></td><td>Base Rate</td><td>Sueno Deluxe</td><td class="alog__val">PP <s>180</s> &rarr; <b>185</b></td><td>haytham</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="feat__notes"><strong>الفائدة:</strong> أَيّ تَعديل عَلى العَقد يُسَجَّل بِالقيمة القَديمة وَالجَديدة وَاسم مَن غَيَّرَها — مَرجِع كامِل لِلمُساءَلة.</div>
+  </section>
+
+  <!-- ═══════════ 28 · TIME MACHINE ═══════════ -->
+  <section class="feat" id="f28">
+    <header class="feat__head">
+      <div class="feat__idx">28</div>
+      <div class="feat__body">
+        <div class="feat__kicker">Time Machine · snapshots</div>
+        <h2 class="feat__title">آلة الزَمَن لِلعُقود</h2>
+        <p class="feat__desc">خَطّ زَمَنيّ لِكُلّ اللَقطات المَحفوظة لِلعَقد، مَع استِرجاع أَيّ حالة بِنَقرة — وَحِفظ لَقطة أَمان قَبل الاستِرجاع.</p>
+      </div>
+      <span class="feat__tag feat__tag--star">★ Hero</span>
+    </header>
+    <div class="feat__demo">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <strong>Sueno Deluxe — 6 save points</strong>
+        <button type="button" class="btn btn--primary">+ Create save point</button>
+      </div>
+      <div class="tmachine">
+        <div class="tsnap tsnap--pinned">
+          <div class="tsnap__head"><span class="tsnap__when">10:42 · 29 May 2026</span><button type="button" class="tsnap__restore">Restore</button></div>
+          <div class="tsnap__trigger">Manual save point · pinned</div>
+          <div class="tsnap__meta">42 KB · by admin</div>
+        </div>
+        <div class="tsnap">
+          <div class="tsnap__head"><span class="tsnap__when">10:42 · 29 May 2026</span><button type="button" class="tsnap__restore">Restore</button></div>
+          <div class="tsnap__trigger">After edit · discount 45&rarr;50%</div>
+          <div class="tsnap__meta">41 KB · by admin</div>
+        </div>
+        <div class="tsnap">
+          <div class="tsnap__head"><span class="tsnap__when">02:00 · 29 May 2026</span><button type="button" class="tsnap__restore">Restore</button></div>
+          <div class="tsnap__trigger">Daily snapshot</div>
+          <div class="tsnap__meta">41 KB · by system</div>
+        </div>
+        <div class="tsnap">
+          <div class="tsnap__head"><span class="tsnap__when">18:15 · 28 May 2026</span><button type="button" class="tsnap__restore">Restore</button></div>
+          <div class="tsnap__trigger">After create · stop-sale</div>
+          <div class="tsnap__meta">40 KB · by haytham</div>
+        </div>
+      </div>
+    </div>
+    <div class="feat__notes"><strong>الأَمان:</strong> الاستِرجاع يَحفَظ لَقطة مِن الحالة الحاليّة أَوّلاً، فَلا تَضيع أَيّ بَيانات حَتّى لَو تَراجَعتَ بِالغَلَط.</div>
+  </section>
+
+  <!-- ═══════════ 29 · EB ALERTS ═══════════ -->
+  <section class="feat" id="f29">
+    <header class="feat__head">
+      <div class="feat__idx">29</div>
+      <div class="feat__body">
+        <div class="feat__kicker">Early-Booking Alerts</div>
+        <h2 class="feat__title">تَنبيهات الحَجز المُبَكِّر</h2>
+        <p class="feat__desc">خُصومات الحَجز المُبَكِّر الَّتي تَنتَهي خِلال ٧ أيّام، مُصَنَّفة بِثَلاث دَرَجات إلحاح مَع رابِط تَعديل مُباشِر.</p>
+      </div>
+      <span class="feat__tag">Dashboard</span>
+    </header>
+    <div class="feat__demo">
+      <div class="success__stats" style="margin-bottom:18px">
+        <div><div class="success__stat-v" style="color:var(--warn)">2</div><div class="success__stat-l">Critical</div></div>
+        <div><div class="success__stat-v" style="color:var(--amber)">3</div><div class="success__stat-l">Warning</div></div>
+        <div><div class="success__stat-v" style="color:var(--info)">5</div><div class="success__stat-l">Notice</div></div>
+      </div>
+      <div class="eba">
+        <div class="eba__row eba__row--crit">
+          <div class="eba__days">1<small>day</small></div>
+          <div><div class="eba__hotel">Rixos Downtown Antalya</div><div class="eba__disc">Early Bird &minus;30%</div></div>
+          <div class="eba__date">ends 31 May</div>
+          <button type="button" class="tsnap__restore">Edit</button>
+        </div>
+        <div class="eba__row eba__row--warn">
+          <div class="eba__days">4<small>days</small></div>
+          <div><div class="eba__hotel">Calista Luxury Resort</div><div class="eba__disc">Early Bird &minus;25%</div></div>
+          <div class="eba__date">ends 03 Jun</div>
+          <button type="button" class="tsnap__restore">Edit</button>
+        </div>
+        <div class="eba__row eba__row--info">
+          <div class="eba__days">7<small>days</small></div>
+          <div><div class="eba__hotel">Maxx Royal Belek</div><div class="eba__disc">Early Bird &minus;20%</div></div>
+          <div class="eba__date">ends 06 Jun</div>
+          <button type="button" class="tsnap__restore">Edit</button>
+        </div>
+      </div>
+    </div>
+    <div class="feat__notes"><strong>لِماذا مُهِمّ:</strong> خُصومات الحَجز المُبَكِّر تَنتَهي بِتَواريخ — هَذِه الشاشة تُنَبِّهُك قَبل انتِهائِها حَتّى تُجَدِّدها أَو تُبَلِّغ العُمَلاء.</div>
+  </section>
+
+  <!-- ═══════════ 30 · PRICING HEALTH ═══════════ -->
+  <section class="feat" id="f30">
+    <header class="feat__head">
+      <div class="feat__idx">30</div>
+      <div class="feat__body">
+        <div class="feat__kicker">Test Scenarios · pricing health</div>
+        <h2 class="feat__title">صِحّة التَسعير</h2>
+        <p class="feat__desc">أَداة تَتَحَقَّق مِن دِقّة مُحَرِّك التَسعير: تُقارِن السِعر المُتَوَقَّع بِالفِعليّ وَتُبَيِّن التَباينات بِدَرجة صِحّة.</p>
+      </div>
+      <span class="feat__tag">Admin</span>
+    </header>
+    <div class="feat__demo">
+      <div class="health">
+        <div class="health__score"><span class="health__num">86<small>%</small></span></div>
+        <div class="health__stats">
+          <div class="health__stat health__stat--pass"><span>Passing scenarios</span><b>43 / 50</b></div>
+          <div class="health__stat health__stat--fail"><span>Failing scenarios</span><b>5 / 50</b></div>
+          <div class="health__stat"><span>Not yet tested</span><b>2 / 50</b></div>
+          <div class="health__stat"><span>Avg deviation</span><b>0.4%</b></div>
+        </div>
+      </div>
+      <div class="cdash__filters" style="margin-top:18px;padding:0">
+        <span class="cdash__chip cdash__chip--on">All (50)</span>
+        <span class="cdash__chip">Passing (43)</span>
+        <span class="cdash__chip">Failing (5)</span>
+        <span class="cdash__chip">Untested (2)</span>
+      </div>
+    </div>
+    <div class="feat__notes"><strong>الضَمان:</strong> قَبل أَيّ تَعديل عَلى مُحَرِّك التَسعير، تُشَغَّل عَشَرات السيناريوهات لِلتَأَكُّد أنّ الأَسعار لم تَنكَسِر — صِفر نِسبة خَطأ.</div>
+  </section>
+
 <!-- ───── COLOPHON ───── -->
 <footer class="master" style="text-align:center;padding:32px">
   <div class="master__kicker">Colophon</div>
