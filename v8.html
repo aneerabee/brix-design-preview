@@ -1355,7 +1355,7 @@ body{
     <a class="toc__item" href="#f31"><span class="toc__num">31</span>تَعريف الخَصم بِأَنواعِه</a>
     <a class="toc__item" href="#f32"><span class="toc__num">32</span>مَصفوفة أَسعار الإقامة</a>
     <a class="toc__item" href="#f33"><span class="toc__num">33</span>تَعريف الغُرفة بِالأَلوان</a>
-    <a class="toc__item" href="#f34"><span class="toc__num">34</span>فَرز وَتَصفية النَتائج</a>
+    <a class="toc__item" href="#f34"><span class="toc__num">34</span>تَصفية المَدينة بِالنُجوم</a>
     <a class="toc__item" href="#f35"><span class="toc__num">35</span>هَيكَل التَحميل</a>
     <a class="toc__item" href="#f36"><span class="toc__num">36</span>المُراجَعة النِهائيّة</a>
     <a class="toc__item" href="#f37"><span class="toc__num">37</span>نِطاقات تاريخ مُتَعَدِّدة</a>
@@ -1799,7 +1799,7 @@ body{
         <h5>Discounts <span>3</span></h5>
         <div class="cdash__rule-row"><div>Early Booking · 60 d</div><span class="cdash__rule-val" style="color:var(--r3);background:#F5F0FE">−30%</span></div>
         <div class="cdash__rule-row"><div>Sueno Manager · permanent</div><span class="cdash__rule-val" style="color:var(--r3);background:#F5F0FE">−50%</span></div>
-        <div class="cdash__rule-row"><div>Senior · 60+</div><span class="cdash__rule-val" style="color:var(--r3);background:#F5F0FE">−15%</span></div>
+        <div class="cdash__rule-row"><div>Senior · 65+</div><span class="cdash__rule-val" style="color:var(--r3);background:#F5F0FE">−10%</span></div>
       </div>
       <div class="cdash__rule cdash__rule--supp">
         <h5>Supplements <span>2</span></h5>
@@ -2361,13 +2361,13 @@ Jun 28 → Jul 3 · 285.10 EUR/night</div>
       <div class="feat__body">
         <div class="feat__kicker">Test Scenarios · pricing health</div>
         <h2 class="feat__title">صِحّة التَسعير</h2>
-        <p class="feat__desc">أَداة تَتَحَقَّق مِن دِقّة مُحَرِّك التَسعير: تُقارِن السِعر المُتَوَقَّع بِالفِعليّ وَتُبَيِّن التَباينات بِدَرجة صِحّة.</p>
+        <p class="feat__desc">أَداة تَتَحَقَّق مِن دِقّة مُحَرِّك التَسعير: تُقارِن السِعر المُتَوَقَّع بِالفِعليّ. العَدّادات مُنَفَّذة فِعلاً؛ دائِرة الصِحّة مُقتَرَحة (قادِمة).</p>
       </div>
       <span class="feat__tag">Admin</span>
     </header>
     <div class="feat__demo">
       <div class="health">
-        <div class="health__score"><span class="health__num">86<small>%</small></span></div>
+        <div class="health__score"><span class="health__num">86<small>%</small></span><span style="position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-family:var(--f-mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);z-index:1">proposed</span></div>
         <div class="health__stats">
           <div class="health__stat health__stat--pass"><span>Passing scenarios</span><b>43 / 50</b></div>
           <div class="health__stat health__stat--fail"><span>Failing scenarios</span><b>5 / 50</b></div>
@@ -2418,7 +2418,7 @@ Jun 28 → Jul 3 · 285.10 EUR/night</div>
             <span class="dbld__tpl">EB −20% · 30d</span>
             <span class="dbld__tpl">Long 7n −10%</span>
             <span class="dbld__tpl">Long 14n −15%</span>
-            <span class="dbld__tpl">Senior 60+ −15%</span>
+            <span class="dbld__tpl">Senior 65+ −10%</span>
           </div>
         </div>
         <div>
@@ -2443,14 +2443,14 @@ Jun 28 → Jul 3 · 285.10 EUR/night</div>
       <div class="feat__body">
         <div class="feat__kicker">Board Rates Matrix</div>
         <h2 class="feat__title">مَصفوفة أَسعار الإقامة</h2>
-        <p class="feat__desc">لِكُلّ فَترة، تَفعيل أَنواع الإقامة (إفطار، نِصف، كامِل) مَع إِضافة فَوق سِعر الغُرفة — مَبلَغ ثابِت أَو نِسبة.</p>
+        <p class="feat__desc">سِعر الغُرفة فَقَط (RO) هُوَ الأَساس المُضَمَّن، وَلِكُلّ فَترة تُضاف أَنواع الإقامة (إفطار، نِصف، كامِل) — مَبلَغ ثابِت أَو نِسبة فَوقَه.</p>
       </div>
       <span class="feat__tag">Table</span>
     </header>
     <div class="feat__demo">
       <div class="ftbl">
         <table class="bmat">
-          <thead><tr><th>Period</th><th>RO base</th><th>BB</th><th>HB</th><th>AI</th></tr></thead>
+          <thead><tr><th>Period</th><th>RO · base</th><th>BB</th><th>HB</th><th>AI</th></tr></thead>
           <tbody>
             <tr><td>Low Season</td><td class="on">included</td><td class="on">+12<span class="bmat__pct">per pax/nt</span></td><td class="on">+28<span class="bmat__pct">per pax/nt</span></td><td class="off">—</td></tr>
             <tr><td>High Season</td><td class="on">included</td><td class="on">+15<span class="bmat__pct">per pax/nt</span></td><td class="on">+34<span class="bmat__pct">per pax/nt</span></td><td class="on">+58<span class="bmat__pct">per pax/nt</span></td></tr>
@@ -2494,9 +2494,8 @@ Jun 28 → Jul 3 · 285.10 EUR/night</div>
           <div>
             <div class="rfilt__lbl" style="margin-bottom:6px">Sale mode</div>
             <div class="rdef__sale">
-              <button type="button" class="yrt">Yield</button>
-              <button type="button">Direct sale</button>
-              <button type="button" class="ask">Ask &amp; sale</button>
+              <button type="button" class="yrt">Yield (Direct sale)</button>
+              <button type="button" class="ask">Ask &amp; Sale</button>
             </div>
           </div>
         </div>
@@ -2505,38 +2504,32 @@ Jun 28 → Jul 3 · 285.10 EUR/night</div>
     <div class="feat__notes"><strong>الهُويّة البَصَريّة:</strong> لَون كُلّ غُرفة يَتبَعُها عَبر كُلّ النِظام (القاطِرة، الجَدول، الخَطّ الزَمَنيّ) — فَتُمَيِّزها العَين فَوراً.</div>
   </section>
 
-  <!-- ═══════════ 34 · SORT / FILTER RESULTS ═══════════ -->
+  <!-- ═══════════ 34 · CITY STAR FILTER ═══════════ -->
   <section class="feat" id="f34">
     <header class="feat__head">
       <div class="feat__idx">34</div>
       <div class="feat__body">
-        <div class="feat__kicker">Results · sort + filter + price range</div>
-        <h2 class="feat__title">فَرز وَتَصفية النَتائج</h2>
-        <p class="feat__desc">فَرز بِالسِعر/النُجوم، تَصفية بِعَدَد النُجوم، وَشَريط يُظهِر أَرخَص وَأَغلى سِعر في كُلّ النَتائج.</p>
+        <div class="feat__kicker">City Search · star filter</div>
+        <h2 class="feat__title">تَصفية المَدينة بِالنُجوم</h2>
+        <p class="feat__desc">في بَحث المَدينة، أَزرار تُظهِر فَنادِق ٥ نُجوم أَو ٤ فَقَط بِنَقرة واحِدة فَوقَ شَبكة الفَنادِق.</p>
       </div>
-      <span class="feat__tag">Toolbar</span>
+      <span class="feat__tag">Filter</span>
     </header>
     <div class="feat__demo">
       <div class="rfilt">
         <div class="rfilt__group">
-          <span class="rfilt__lbl">Sort</span>
-          <span class="rfilt__chip rfilt__chip--on">Price ↑</span>
-          <span class="rfilt__chip">Price ↓</span>
-          <span class="rfilt__chip">Stars</span>
+          <span class="rfilt__lbl">Stars</span>
+          <span class="rfilt__chip rfilt__chip--on">All hotels</span>
+          <span class="rfilt__chip">5★ only</span>
+          <span class="rfilt__chip">4★ only</span>
         </div>
         <div class="rfilt__group">
-          <span class="rfilt__lbl">Stars</span>
-          <span class="rfilt__chip rfilt__chip--on">All</span>
-          <span class="rfilt__chip">5★</span>
-          <span class="rfilt__chip">4★</span>
-        </div>
-        <div class="rfilt__range">
-          <span class="rfilt__lbl">Range</span>
-          <b>1,600</b><span class="bar"></span><b>2,945 EUR</b>
+          <span class="rfilt__lbl">Showing</span>
+          <span style="font-family:var(--f-mono);font-size:12px;color:var(--ink);font-weight:600">8 of 12 hotels</span>
         </div>
       </div>
     </div>
-    <div class="feat__notes"><strong>سُرعة القَرار:</strong> المُشَغِّل يَرى مَدى الأَسعار كامِلاً وَيُرَتِّب وَيُصَفّي بِنَقرة — بَدَل تَصَفُّح كُلّ بِطاقة.</div>
+    <div class="feat__notes"><strong>الواقِع:</strong> هَذا الفِلتَر مَوجود فِعلاً في بَحث المَدينة فَقَط. (صَفحة النَتائج لا تَملِك فَرزاً بِالسِعر بَعد — ميزة مُقتَرَحة لِلمُستَقبَل.)</div>
   </section>
 
   <!-- ═══════════ 35 · SKELETON LOADING ═══════════ -->
